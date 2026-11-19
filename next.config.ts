@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // cacheComponents / partialPrefetching are deliberately OFF. Under the
+  // Cloudflare Workers runtime (OpenNext), Cache Components' request-time
+  // render relies on Node's setTimeout() task semantics, which workerd
+  // doesn't match — every page render hung until workerd cancelled it
+  // (Error 1101 / "code had hung"). Next.js warns about exactly this at
+  // runtime. Nothing here uses "use cache"/cacheLife/connection() — pages
+  // hydrate client-side from /api/store — so the conventional renderer
+  // loses nothing. Don't re-enable without verifying under `preview:cf`.
   images: {
     remotePatterns: [
       {

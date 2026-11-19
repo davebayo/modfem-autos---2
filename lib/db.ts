@@ -472,6 +472,12 @@ async function readStateFromJsonFile(): Promise<StoreState> {
 let queue: Promise<unknown> = Promise.resolve();
 
 function withLock<T>(fn: () => Promise<T>): Promise<T> {
+  // Not on Workers: a promise chain shared across requests lets one
+  // cancelled/stalled request (whose I/O workerd tears down, so its promise
+  // never settles) wedge every later request in the isolate — workerd then
+  // kills them as "code had hung". The lock never gave cross-isolate
+  // guarantees anyway (see the header comment).
+  if (isWorkerRuntime()) return fn();
   const result = queue.then(fn, fn);
   queue = result.catch(() => undefined);
   return result;

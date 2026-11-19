@@ -6,7 +6,12 @@
   // wrangler (check node_modules/workerd/package.json — "1.YYYYMMDD.x").
   // OpenNext warns at build time once this is more than six months old.
   "compatibility_date": "2026-11-01",
-  "compatibility_flags": ["nodejs_compat"],
+  // global_fetch_strictly_public: server-side fetch() always goes out over
+  // the public internet (OpenNext's recommended default).
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "observability": {
+    "logs": { "enabled": true, "invocation_logs": true }
+  },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
