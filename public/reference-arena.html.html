@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modfem &amp; Co. — Canadian Vehicle Sourcing, Swap &amp; Lagos Distress-Sale Concierge</title>
+<meta name="description" content="Modfem Autos Canada — vehicle sourcing from Vaughan, Ontario to Lagos, Nigeria. Verified inspections, transparent CAD-to-NGN landed cost breakdowns, VREG &amp; VIN verification and immediate Lagos pickup." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script>
+/* ============================================================================
+   MODFEM & CO. — QUARANTINED SINGLE-SOURCE CONFIG
+   Every business datum and image URL in the product reads from here.
+   ========================================================================== */
+window.MODFEM_CONFIG = {
+  isDemoMode: true,
+  operator: {
+    brand: "Modfem Autos Canada",
+    editorialTitle: "Modfem & Co.",
+    base: "Vaughan, Ontario, Canada",
+    lagosHub: "Lagos, Nigeria (Tin Can / PTML & Mainland Pickup)",
+    whatsappCanadaE164: "14377765303",
+    whatsappCanadaDisplay: "+1 (437) 776-5303",
+    whatsappNigeriaDisplay: "+234 807 42961 [VERIFY 11TH DIGIT]",
+    email: "Modfemtidings@yahoo.com",
+    fxRateCadToNgn: 1180,
+    fxUpdatedDate: "Nov 2026"
+  },
+  getWhatsAppUrl: function (message) {
+    var n = (window.MODFEM_CONFIG && window.MODFEM_CONFIG.operator) ? window.MODFEM_CONFIG.operator.whatsappCanadaE164 : "14377765303";
+    return "https://wa.me/" + n + "?text=" + encodeURIComponent(message || "");
+  },
+  images: {
+    heroRoad: "https://images.pexels.com/photos/10642990/pexels-photo-10642990.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080&w=1920",
+    heroRoadAlt: "https://images.pexels.com/photos/2715012/pexels-photo-2715012.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080&w=1920",
+    heroCar: "https://images.pexels.com/photos/9927973/pexels-photo-9927973.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=900",
+    heroCarAlt: "https://images.pexels.com/photos/11396006/pexels-photo-11396006.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400",
+    editorialOverhead: "/images/modfem-editorial-overhead.png",
+    glaInspection: [
+      { n: "01", label: "Cockpit & Steering",    src: "https://images.pexels.com/photos/40720737/pexels-photo-40720737.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400" },
+      { n: "02", label: "2.0L Turbo Engine Bay",  src: "https://images.pexels.com/photos/14277599/pexels-photo-14277599.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400" },
+      { n: "03", label: "Open Trunk",             src: "https://images.pexels.com/photos/14667486/pexels-photo-14667486.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400" },
+      { n: "04", label: "Rear Leather Cabin",     src: "https://images.pexels.com/photos/34628074/pexels-photo-34628074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400" },
+      { n: "05", label: "Lagos Street Side Profile", src: "https://images.pexels.com/photos/19939609/pexels-photo-19939609.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400" },
+      { n: "06", label: "Front Open-Door View",   src: "https://images.pexels.com/photos/11770449/pexels-photo-11770449.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400" }
+    ],
+    kiaViews: [
+      { n: "A", label: "Front 3/4 View",  src: "https://images.pexels.com/photos/12920557/pexels-photo-12920557.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400" },
+      { n: "B", label: "Side Profile View", src: "https://images.pexels.com/photos/32841969/pexels-photo-32841969.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400" }
+    ],
+    archive: [
+      { src: "https://images.pexels.com/photos/13598897/pexels-photo-13598897.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=192&w=280" },
+      { src: "https://images.pexels.com/photos/16789399/pexels-photo-16789399.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=192&w=280" },
+      { src: "https://images.pexels.com/photos/8332625/pexels-photo-8332625.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=192&w=280" },
+      { src: "https://images.pexels.com/photos/13578691/pexels-photo-13578691.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=192&w=280" }
+    ]
+  }
+};
+window.MODFEM = window.MODFEM_CONFIG;
+</script>
+<style>
+  :root{
+    --ink:#0A0B0E; --panel:#1A1C20; --dock:#1E2024; --steel:#8A9099;
+    --emerald:#10B981; --amber:#F5A524; --alabaster:#EAEAEA;
+    --grade: saturate(1.05) contrast(1.05);
+    --cone: .55;
+    --sun: 0;
+    --mist: .35;
+  }
+  *{ -webkit-tap-highlight-color: transparent; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--ink); color:#fff; font-family:'Plus Jakarta Sans',system-ui,sans-serif; overflow-x:hidden; }
+  .mono{ font-family:'JetBrains Mono',ui-monospace,monospace; font-variant-numeric: tabular-nums; }
+  .serif{ font-family:'Instrument Serif',Georgia,serif; }
+  .eyebrow{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; }
+  .tnum{ font-variant-numeric: tabular-nums; }
+
+  /* ---------- PRELOADER ---------- */
+  #preloader{ position:fixed; inset:0; z-index:200; background:#000; }
+  #preloader .door{ position:absolute; left:0; width:100%; height:50.2%; background:#000; transition:transform .34s cubic-bezier(.7,0,.3,1); will-change:transform; }
+  #preloader .door.top{ top:0; border-bottom:1px solid rgba(255,255,255,.14); }
+  #preloader .door.bot{ bottom:0; border-top:1px solid rgba(255,255,255,.14); }
+  #preloader.split .door.top{ transform:translateY(-101%); }
+  #preloader.split .door.bot{ transform:translateY(101%); }
+  #preloader.gone{ display:none; }
+  .pre-core{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transition:opacity .18s ease; }
+  #preloader.split .pre-core{ opacity:0; }
+  .tach circle.draw{ stroke-dasharray:471; stroke-dashoffset:471; }
+  .tach.run circle.draw{ animation: tachDraw 1s cubic-bezier(.4,0,.2,1) forwards; }
+  @keyframes tachDraw{ to{ stroke-dashoffset:0; } }
+  .crest path.draw{ stroke-dasharray:200; stroke-dashoffset:200; }
+  .tach.run .crest path.draw{ animation: tachDraw 1s cubic-bezier(.4,0,.2,1) .08s forwards; }
+  .pre-letters{ display:flex; align-items:center; gap:.06em; }
+  .pre-letters .ltr{ opacity:0; transform:translateX(14px); transition:opacity .4s ease, transform .5s cubic-bezier(.16,1,.3,1); }
+  #preloader.p2 .pre-letters .ltr{ opacity:1; transform:none; }
+  #preloader.p2 .pre-letters .ltr:nth-child(2){ transition-delay:.05s }
+  #preloader.p2 .pre-letters .ltr:nth-child(3){ transition-delay:.10s }
+  #preloader.p2 .pre-letters .ltr:nth-child(4){ transition-delay:.15s }
+  #preloader.p2 .pre-letters .ltr:nth-child(5){ transition-delay:.20s }
+  #preloader.p2 .pre-letters .ltr:nth-child(6){ transition-delay:.25s }
+  .wheel-spin{ animation: wheelRPM .55s linear infinite; transform-origin:50% 50%; }
+  #preloader.locked .wheel-spin{ animation: wheelLock .42s cubic-bezier(.16,1,.3,1) forwards; }
+  @keyframes wheelRPM{ to{ transform:rotate(360deg); } }
+  @keyframes wheelLock{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+
+  /* ---------- HERO KINETICS ---------- */
+  #stage{ will-change:transform; transform-origin:52% 62%; }
+  #stage.arrive{ transform:scale(1.18) translate3d(-2%,-1.5%,0); }
+  #stage.settle{ transform:scale(1) translate3d(0,0,0); transition:transform 1.8s cubic-bezier(.16,1,.3,1); }
+  #scene{ position:absolute; inset:0; filter:var(--grade); transition:filter .8s ease; }
+  #heroCar{ transition:filter .8s ease; }
+  .cone{ position:absolute; bottom:6%; width:26%; height:46%; pointer-events:none;
+    background:linear-gradient(to top, rgba(255,255,255,.42), rgba(190,220,255,.12) 45%, transparent 78%);
+    clip-path:polygon(46% 100%, 54% 100%, 100% 0%, 0% 0%);
+    opacity:var(--cone); filter:blur(9px); mix-blend-mode:screen; transition:opacity .5s ease, transform .5s ease; }
+  .cone.l{ left:26%; transform-origin:bottom center; }
+  .cone.r{ right:26%; transform-origin:bottom center; }
+  #speedlines{ position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .4s ease;
+    background:repeating-linear-gradient(102deg, rgba(255,255,255,0) 0px, rgba(255,255,255,0) 22px, rgba(255,255,255,.14) 23px, rgba(255,255,255,0) 26px, rgba(255,255,255,0) 60px);
+    mix-blend-mode:screen; }
+  #sunflare{ position:absolute; inset:0; pointer-events:none; opacity:var(--sun); transition:opacity .7s ease;
+    background:radial-gradient(56% 46% at 12% 8%, rgba(255,231,178,.65), rgba(255,196,120,.18) 42%, transparent 70%); mix-blend-mode:screen; }
+  #vignette{ position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 45%, transparent 42%, rgba(0,0,0,.55) 100%); }
+  #fx{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+
+  .glass-pillar{ background:rgba(26,28,32,.78); backdrop-filter:blur(28px); -webkit-backdrop-filter:blur(28px); border-right:1px solid rgba(255,255,255,.12); }
+  .rail-label{ writing-mode:vertical-rl; text-orientation:mixed; }
+  .tip{ position:relative; }
+  .tip::after{ content:attr(data-tip); position:absolute; right:calc(100% + 10px); top:50%; transform:translateY(-50%) translateX(6px);
+    background:#0A0B0E; border:1px solid rgba(255,255,255,.16); color:#fff; font-family:'JetBrains Mono',monospace; font-size:10px;
+    letter-spacing:.1em; text-transform:uppercase; padding:6px 9px; white-space:nowrap; opacity:0; pointer-events:none; transition:.18s ease; border-radius:4px; }
+  .tip:hover::after{ opacity:1; transform:translateY(-50%) translateX(0); }
+  .tip.below::after{ right:auto; left:50%; top:calc(100% + 10px); transform:translateX(-50%) translateY(-6px); }
+  .tip.below:hover::after{ transform:translateX(-50%) translateY(0); }
+
+  .distress-dot{ animation:pulseDot 1.6s ease-in-out infinite; }
+  @keyframes pulseDot{ 0%,100%{ opacity:1; box-shadow:0 0 0 0 rgba(239,68,68,.55);} 50%{ opacity:.65; box-shadow:0 0 0 7px rgba(239,68,68,0);} }
+
+  /* ---------- SHARED COCKPIT FURNITURE ---------- */
+  .cross::before,.cross::after{ content:""; position:absolute; width:11px; height:11px; pointer-events:none; opacity:.55; }
+  .cross::before{ top:-1px; left:-1px; border-top:1px solid rgba(255,255,255,.5); border-left:1px solid rgba(255,255,255,.5); }
+  .cross::after{ bottom:-1px; right:-1px; border-bottom:1px solid rgba(255,255,255,.5); border-right:1px solid rgba(255,255,255,.5); }
+  .cross-x{ position:absolute; inset:0; pointer-events:none; }
+  .cross-x i{ position:absolute; font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(255,255,255,.4); font-style:normal; line-height:1; }
+  .led{ width:7px; height:7px; border-radius:99px; display:inline-block; animation:pulseDot 1.8s ease-in-out infinite; }
+  .hairline{ border-color:rgba(255,255,255,.10); }
+  .tilt{ transition:transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease; transform-style:preserve-3d; }
+  .rv{ opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1); }
+  .rv.in{ opacity:1; transform:none; }
+  input,select,textarea{ font-family:'Plus Jakarta Sans',sans-serif; }
+  .field{ background:#12141A; border:1px solid rgba(255,255,255,.12); color:#fff; border-radius:8px; padding:12px 14px; font-size:14px; width:100%; transition:.18s ease; }
+  .field:focus{ outline:none; border-color:var(--emerald); box-shadow:0 0 0 3px rgba(16,185,129,.16); }
+  .field::placeholder{ color:#6C727C; }
+  select.field{ appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A9099' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>"); background-repeat:no-repeat; background-position:right 14px center; }
+  .err{ border-color:#EF4444 !important; box-shadow:0 0 0 3px rgba(239,68,68,.14) !important; }
+  ::-webkit-scrollbar{ width:9px; height:9px; }
+  ::-webkit-scrollbar-track{ background:#0A0B0E; }
+  ::-webkit-scrollbar-thumb{ background:#2A2F38; border-radius:9px; }
+  ::-webkit-scrollbar-thumb:hover{ background:#3A414D; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ===================== 1. OPERATOR PREVIEW RIBBON ===================== -->
+<div id="ribbon" class="fixed top-0 left-0 right-0 z-[90] bg-amber-500/10 border-b border-amber-500/30 text-amber-300">
+  <div class="max-w-[1600px] mx-auto px-3 sm:px-5 h-9 flex items-center justify-between gap-3">
+    <p class="mono text-[10px] sm:text-[11px] tracking-wide truncate">
+      <span class="hidden sm:inline">OPERATOR PREVIEW MODE — Items marked [VERIFY] use indicative estimates pending final sign-off</span>
+      <span class="sm:hidden">OPERATOR PREVIEW — [VERIFY] = indicative</span>
+    </p>
+    <button id="verifyToggle" class="mono text-[10px] sm:text-[11px] shrink-0 border border-amber-500/45 hover:bg-amber-500/15 rounded-full px-3 py-1 transition">View 6 Items to Verify ▾</button>
+  </div>
+  <div id="verifyDrawer" class="hidden border-t border-amber-500/25 bg-[#0A0B0E]/95 backdrop-blur-xl">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-4">
+      <p class="eyebrow text-amber-400/80 mb-3">Outstanding sign-off register // 06 open items</p>
+      <ol class="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+        <li class="mono text-[11px] leading-relaxed text-white/72 border border-white/10 rounded-lg p-3"><span class="text-amber-400">01 //</span> Confirm missing 11th digit on Nigerian WhatsApp (<span class="text-white">+234 807 42961</span> on flyer has 10 digits).</li>
+        <li class="mono text-[11px] leading-relaxed text-white/72 border border-white/10 rounded-lg p-3"><span class="text-amber-400">02 //</span> Confirm legal Ontario business registration number &amp; OMVIC disclosure wording.</li>
+        <li class="mono text-[11px] leading-relaxed text-white/72 border border-white/10 rounded-lg p-3"><span class="text-amber-400">03 //</span> Confirm indicative CAD base prices &amp; mileage on archive vehicles (GLA250 at ₦19M and 2013 Kia Sportage at ₦11.5M are already locked from flyers).</li>
+        <li class="mono text-[11px] leading-relaxed text-white/72 border border-white/10 rounded-lg p-3"><span class="text-amber-400">04 //</span> Clearing agent sign-off on age-tiered Nigerian Customs duty &amp; Tin Can clearing formulas.</li>
+        <li class="mono text-[11px] leading-relaxed text-white/72 border border-white/10 rounded-lg p-3"><span class="text-amber-400">05 //</span> Upgrade <span class="text-white">Modfemtidings@yahoo.com</span> to custom domain email (<span class="text-white">hello@modfemautos.com</span>).</li>
+        <li class="mono text-[11px] leading-relaxed text-white/72 border border-white/10 rounded-lg p-3"><span class="text-amber-400">06 //</span> Supply full-resolution camera photos for the 4 flyer-cutout archive cars (Venza, RX 350, Camry, Acura MDX).</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 2. IGNITION PRELOADER ===================== -->
+<div id="preloader">
+  <div class="door top"></div>
+  <div class="door bot"></div>
+  <button id="preSkip" class="absolute top-4 right-4 z-30 mono text-[10px] tracking-[.18em] uppercase text-white/60 hover:text-white border border-white/20 hover:border-white/45 rounded-full px-4 py-2 transition">Skip / Replay Ignition</button>
+
+  <div class="pre-core">
+    <div id="preStage" class="flex items-center gap-0">
+      <!-- Tach ring + M crest -->
+      <div id="tachWrap" class="relative shrink-0" style="transition:transform .7s cubic-bezier(.16,1,.3,1), opacity .5s ease;">
+        <svg class="tach" id="tachSvg" width="188" height="188" viewBox="0 0 188 188" fill="none">
+          <circle cx="94" cy="94" r="75" stroke="rgba(255,255,255,.16)" stroke-width="1"/>
+          <circle cx="94" cy="94" r="75" stroke="rgba(255,255,255,.55)" stroke-width="1.5" stroke-dasharray="1 6.5" class="ticks"/>
+          <circle cx="94" cy="94" r="64" stroke="rgba(255,255,255,.10)" stroke-width="1"/>
+          <circle cx="94" cy="94" r="75" stroke="#ffffff" stroke-width="2" stroke-linecap="round" class="draw" transform="rotate(-90 94 94)"/>
+          <path class="crest draw" d="M62 122 L62 66 L94 104 L126 66 L126 122" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+          <text x="94" y="152" text-anchor="middle" fill="rgba(255,255,255,.42)" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.24em">IGNITION</text>
+        </svg>
+      </div>
+
+      <!-- Wordmark: M AUT[O]S -->
+      <div class="pre-letters flex items-center" style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;letter-spacing:.16em;">
+        <span class="ltr text-white" style="font-size:clamp(38px,7vw,76px);line-height:1;">M</span>
+        <span class="ltr" style="width:clamp(14px,2.4vw,34px)"></span>
+        <span class="ltr text-white" style="font-size:clamp(30px,5.4vw,60px);line-height:1;">A</span>
+        <span class="ltr text-white" style="font-size:clamp(30px,5.4vw,60px);line-height:1;">U</span>
+        <span class="ltr text-white" style="font-size:clamp(30px,5.4vw,60px);line-height:1;">T</span>
+        <span class="ltr inline-flex items-center justify-center" style="width:clamp(42px,7vw,86px);height:clamp(42px,7vw,86px);">
+          <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none">
+            <g class="wheel-spin">
+              <circle cx="50" cy="50" r="47" fill="#0B0C0F" stroke="#2A2E35" stroke-width="3"/>
+              <circle cx="50" cy="50" r="45" stroke="#14161A" stroke-width="2"/>
+              <path d="M50 6 a44 44 0 0 1 38 22" stroke="rgba(255,255,255,.35)" stroke-width="1.5" fill="none"/>
+              <g stroke="#C9CED6" stroke-width="2.4" stroke-linecap="round">
+                <line x1="50" y1="14" x2="50" y2="34"/><line x1="50" y1="66" x2="50" y2="86"/>
+                <line x1="14" y1="50" x2="34" y2="50"/><line x1="66" y1="50" x2="86" y2="50"/>
+                <line x1="24.5" y1="24.5" x2="38.5" y2="38.5"/><line x1="61.5" y1="61.5" x2="75.5" y2="75.5"/>
+                <line x1="75.5" y1="24.5" x2="61.5" y2="38.5"/><line x1="38.5" y1="61.5" x2="24.5" y2="75.5"/>
+                <line x1="31" y1="17.5" x2="41" y2="34"/><line x1="59" y1="66" x2="69" y2="82.5"/>
+                <line x1="82.5" y1="31" x2="66" y2="41"/><line x1="34" y1="59" x2="17.5" y2="69"/>
+                <line x1="69" y1="17.5" x2="59" y2="34"/><line x1="41" y1="66" x2="31" y2="82.5"/>
+                <line x1="82.5" y1="69" x2="66" y2="59"/><line x1="34" y1="41" x2="17.5" y2="31"/>
+              </g>
+              <circle cx="50" cy="50" r="38.5" stroke="#10B981" stroke-width="6" fill="none" stroke-dasharray="34 14" stroke-dashoffset="8" opacity=".95"/>
+              <circle cx="50" cy="50" r="13" fill="#171A1F" stroke="#8A9099" stroke-width="2"/>
+              <circle cx="50" cy="50" r="5" fill="#10B981"/>
+            </g>
+          </svg>
+        </span>
+        <span class="ltr text-white" style="font-size:clamp(30px,5.4vw,60px);line-height:1;">S</span>
+      </div>
+    </div>
+
+    <div class="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-3 px-6">
+      <div class="mono text-white/70" style="font-size:12px;letter-spacing:.28em;">
+        <span id="preCount">00</span><span class="text-white/35">%</span>
+        <span class="text-white/25 mx-3">|</span>
+        <span id="preStatus" class="text-white/45">TELEMETRY PRIME</span>
+      </div>
+      <div class="h-px w-56 bg-white/12 overflow-hidden"><div id="preBar" class="h-full bg-white/70" style="width:0%"></div></div>
+      <p class="mono text-[9px] tracking-[.3em] text-white/25 uppercase">Modfem Autos Canada · Vaughan ON → Lagos NG</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 3/4. SPLIT-GLASS SCENIC HERO ===================== -->
+<section id="hero" class="relative w-full overflow-hidden">
+  <div id="stage" class="arrive absolute inset-0">
+    <div id="scene">
+      <img id="heroRoad" alt="Mountain highway at dusk" class="absolute inset-0 w-full h-full object-cover" style="object-position:50% 58%;"
+           src="https://images.pexels.com/photos/10642990/pexels-photo-10642990.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080&w=1920"
+           onerror="this.onerror=null;this.src='https://images.pexels.com/photos/2715012/pexels-photo-2715012.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1080&w=1920';">
+      <div id="sunflare"></div>
+      <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(10,11,14,.55) 0%, rgba(10,11,14,0) 30%, rgba(10,11,14,.25) 72%, rgba(10,11,14,.82) 100%);"></div>
+      <img id="heroCar" alt="2016 Mercedes-Benz GLA250 4MATIC in black" class="absolute left-1/2 bottom-[-4%] -translate-x-1/2 h-[74%] w-auto max-w-none"
+           style="object-fit:contain; -webkit-mask-image:radial-gradient(60% 62% at 50% 52%, #000 58%, transparent 92%); mask-image:radial-gradient(60% 62% at 50% 52%, #000 58%, transparent 92%);"
+           src="https://images.pexels.com/photos/9927973/pexels-photo-9927973.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1200&w=900"
+           onerror="this.onerror=null;this.src='https://images.pexels.com/photos/11396006/pexels-photo-11396006.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400';">
+      <div class="cone l"></div>
+      <div class="cone r"></div>
+    </div>
+    <canvas id="fx"></canvas>
+    <div id="speedlines"></div>
+    <div id="vignette"></div>
+  </div>
+
+  <!-- LEFT FROSTED ARCHITECTURAL PILLAR -->
+  <div class="relative z-20 flex flex-col lg:flex-row min-h-[100svh] lg:min-h-screen">
+    <aside class="glass-pillar w-full lg:w-[31%] lg:min-h-screen flex flex-col justify-between p-6 sm:p-8 lg:p-12 pt-16 lg:pt-12">
+      <!-- emblem -->
+      <div class="flex items-center gap-3">
+        <div class="w-[44px] h-[44px] rounded-full bg-[#0E1014]/85 border border-white/15 flex items-center justify-center shrink-0">
+          <svg width="22" height="22" viewBox="0 0 40 40" fill="none"><path d="M7 30 V10 L20 24 L33 10 V30" stroke="#fff" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        </div>
+        <div class="leading-tight">
+          <p class="mono text-[9px] tracking-[.26em] text-white/85">CANADA → NIGERIA</p>
+          <p class="mono text-[9px] tracking-[.18em] text-white/40">43.8361°N / 6.5244°N</p>
+        </div>
+      </div>
+
+      <!-- center stack -->
+      <div class="py-10 lg:py-0">
+        <div class="inline-flex items-center gap-2 rounded-full border border-red-500/40 bg-red-500/12 px-3.5 py-1.5 mb-5">
+          <span class="distress-dot w-1.5 h-1.5 rounded-full bg-red-500"></span>
+          <span class="mono text-[9.5px] tracking-[.16em] text-red-200">DISTRESS SALE // AVAILABLE FOR PICK UP IN LAGOS</span>
+        </div>
+        <h1 class="text-4xl lg:text-[3.25rem] font-bold tracking-tight text-white leading-[1.05]">
+          GLA250 4MATIC.<br>Lagos Distress.
+        </h1>
+        <p class="text-sm lg:text-base text-white/75 mt-4 leading-relaxed max-w-[46ch]">
+          2016 Model physically cleared and ready for immediate inspection and pickup in Lagos. 2.0L Turbo (211 HP), 7G-DCT 4MATIC AWD, Panoramic Sunroof &amp; Full Leather.
+        </p>
+        <button data-open-inspect class="mt-7 inline-flex items-center gap-3 rounded-full bg-[#242830]/95 hover:bg-[#2F3540] border border-white/15 px-7 py-3.5 text-sm font-medium text-white shadow-xl transition">
+          <i data-lucide="camera" class="w-4 h-4"></i> Inspect 6 Real Lagos Photos
+        </button>
+        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 mono text-[10px] tracking-[.14em] text-white/45">
+          <span>LOT · MFC-2016-GLA-01</span><span>VIN · WDDHJ0EB0GF••••• [MATCHED]</span>
+        </div>
+      </div>
+
+      <!-- trust anchor -->
+      <div class="flex items-center gap-3">
+        <div class="w-[42px] h-[42px] rounded-full bg-white/8 border border-white/15 flex items-center justify-center shrink-0">
+          <i data-lucide="shield-check" class="w-4.5 h-4.5 text-emerald-400" style="width:18px;height:18px"></i>
+        </div>
+        <div class="leading-tight">
+          <p class="text-[12.5px] font-bold uppercase tracking-[.13em] text-white">VREG &amp; VIN VERIFIED</p>
+          <p class="text-[12.5px] text-white/55">Physical Inspection in Lagos · <span class="tnum font-semibold text-emerald-400">₦19,000,000</span> Flat</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT STAGE -->
+    <div class="relative w-full lg:w-[69%] flex flex-col justify-between p-5 sm:p-6 lg:p-10">
+      <!-- nav -->
+      <nav class="flex items-center justify-between gap-3 mt-10 lg:mt-0">
+        <div class="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-white/85">
+          <a href="#fleet" class="hover:text-white transition">Sourced Fleet</a>
+          <a href="#process" class="hover:text-white transition">How It Works</a>
+          <a href="#track" class="hover:text-white transition">Track Order</a>
+        </div>
+        <div class="flex items-center gap-2.5 sm:gap-3 ml-auto">
+          <a href="#concierge" class="rounded-full border border-white/30 hover:border-white/70 hover:bg-white/10 px-5 py-2.5 text-[13px] font-medium text-white transition backdrop-blur-md">Car Upgrade &amp; Swap</a>
+          <button data-wa-general class="w-[42px] h-[42px] rounded-full border border-white/25 bg-white/8 hover:bg-white/18 backdrop-blur-md flex items-center justify-center transition tip below" data-tip="WhatsApp Dispatch" aria-label="WhatsApp Dispatch">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </nav>
+
+      <!-- right vertical rail -->
+      <div class="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 flex-col items-center gap-5 z-30">
+        <span class="rail-label mono text-[9.5px] tracking-[.3em] text-white/45 uppercase">Vaughan Ontario // Lagos Nigeria</span>
+        <span class="w-px h-8 bg-white/20"></span>
+        <button id="railHub" class="w-10 h-10 rounded-full border border-white/25 bg-white/8 hover:bg-white/18 backdrop-blur-md flex items-center justify-center transition tip" data-tip="Switch Weather Hub (Lagos NG ↔ Vaughan ON)" aria-label="Switch weather hub"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
+        <button id="railCost" class="w-10 h-10 rounded-full border border-white/25 bg-white/8 hover:bg-white/18 backdrop-blur-md flex items-center justify-center transition tip" data-tip="Open Landed Cost & Spec Sheet Drawer" aria-label="Open landed cost drawer"><i data-lucide="file-text" class="w-4 h-4"></i></button>
+        <button id="railReplay" class="w-10 h-10 rounded-full border border-white/25 bg-white/8 hover:bg-white/18 backdrop-blur-md flex items-center justify-center transition tip" data-tip="Replay Arrival Drive Motion" aria-label="Replay arrival"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
+      </div>
+
+      <!-- bottom bar -->
+      <div class="flex flex-col xl:flex-row items-stretch xl:items-end justify-between gap-4 mt-8">
+        <div class="backdrop-blur-xl bg-[#1E2024]/75 border border-white/12 rounded-2xl px-4 sm:px-7 py-4 grid grid-cols-3 gap-3 sm:gap-6 lg:gap-10 max-w-full">
+          <div class="flex items-start gap-2 sm:gap-2.5">
+            <i data-lucide="circle-check" class="hidden sm:block w-4 h-4 text-white/55 mt-0.5 shrink-0"></i>
+            <div class="leading-tight min-w-0">
+              <p class="text-[12px] sm:text-[15px] font-bold text-white tnum">2.0L / 211 HP</p>
+              <p class="text-[10px] sm:text-[12px] text-white/50 leading-snug">Turbocharged Inline-4</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2 sm:gap-2.5">
+            <i data-lucide="circle-check" class="hidden sm:block w-4 h-4 text-white/55 mt-0.5 shrink-0"></i>
+            <div class="leading-tight min-w-0">
+              <p class="text-[12px] sm:text-[15px] font-bold text-white tnum">7G-DCT AWD</p>
+              <p class="text-[10px] sm:text-[12px] text-white/50 leading-snug">4MATIC Dual-Clutch</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-2 sm:gap-2.5">
+            <i data-lucide="circle-check" class="hidden sm:block w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i>
+            <div class="leading-tight min-w-0">
+              <p class="text-[12px] sm:text-[15px] font-bold text-emerald-400 tnum">₦19,000,000</p>
+              <p class="text-[10px] sm:text-[12px] text-white/50 leading-snug">Distress Price (Lagos)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 justify-end">
+          <button id="weatherPill" class="bg-white text-zinc-950 font-semibold rounded-full px-5 sm:px-6 py-3.5 text-[12.5px] sm:text-sm shadow-lg hover:bg-zinc-100 transition flex items-center gap-2 tnum">
+            <span id="wxIcon">☀</span><span id="wxLabel">LAGOS · 29°C · DUSK [CLICK TO CYCLE WEATHER]</span>
+          </button>
+          <button data-wa-claim class="w-12 h-12 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 flex items-center justify-center shadow-lg transition shrink-0" aria-label="Claim on WhatsApp">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GROUND-TRUTH INSPECTION MODAL ===================== -->
+<div id="inspectModal" class="fixed inset-0 z-[120] hidden">
+  <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" data-close-inspect></div>
+  <div class="relative h-full w-full flex items-center justify-center p-3 sm:p-6">
+    <div class="w-full max-w-6xl max-h-[94vh] overflow-y-auto bg-[#0A0B0E] border border-white/12 rounded-2xl shadow-2xl">
+      <div class="sticky top-0 z-10 flex items-center justify-between gap-4 px-5 sm:px-7 py-4 border-b border-white/10 bg-[#0A0B0E]/95 backdrop-blur">
+        <div>
+          <p class="eyebrow text-emerald-400">Ground-Truth Lagos Inspection // 06 Views</p>
+          <h3 class="text-lg sm:text-xl font-bold mt-1">2016 Mercedes-Benz GLA250 4MATIC — Black</h3>
+        </div>
+        <button data-close-inspect class="w-9 h-9 rounded-full border border-white/20 hover:bg-white/10 flex items-center justify-center transition" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+      <div class="p-5 sm:p-7 grid lg:grid-cols-[1.55fr_1fr] gap-6">
+        <div>
+          <div class="relative rounded-xl overflow-hidden border border-white/12 bg-black cross">
+            <img id="inspectMain" class="w-full aspect-[16/10] object-cover" alt="Inspection view" src="">
+            <div class="absolute left-3 top-3 mono text-[10px] tracking-[.2em] bg-black/70 border border-white/20 px-2.5 py-1"><span id="inspectNum">01</span> // <span id="inspectLabel">Cockpit &amp; Steering</span></div>
+            <div class="absolute right-3 bottom-3 mono text-[10px] tracking-[.16em] text-emerald-300 bg-black/70 border border-emerald-500/40 px-2.5 py-1">RAW · LAGOS ON-GROUND</div>
+          </div>
+          <div id="inspectThumbs" class="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3"></div>
+        </div>
+        <div class="rounded-xl border border-white/12 p-5 bg-[#12141A]">
+          <p class="eyebrow text-white/45 mb-3">Flyer Spec Sheet // Locked Price</p>
+          <dl class="mono text-[12px] divide-y divide-white/8">
+            <div class="flex justify-between py-2.5"><dt class="text-white/50">YEAR</dt><dd>2016</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/50">MODEL</dt><dd>GLA250 4MATIC</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/50">ENGINE</dt><dd>2.0L Turbo · 211 HP</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/50">TRANSMISSION</dt><dd>7G-DCT AWD</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/50">INTERIOR</dt><dd>Full Leather + Panoramic</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/50">STATUS</dt><dd class="text-emerald-400">PHYSICALLY CLEARED</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/50">PICKUP</dt><dd>Lagos, Nigeria</dd></div>
+            <div class="flex justify-between py-3"><dt class="text-white/50">PRICE</dt><dd class="text-emerald-400 font-bold text-[15px]">₦19,000,000 FLAT</dd></div>
+          </dl>
+          <button data-wa-claim class="mt-5 w-full rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-3.5 text-sm transition flex items-center justify-center gap-2">
+            <i data-lucide="message-circle" class="w-4 h-4"></i> Claim this GLA250 on WhatsApp
+          </button>
+          <p class="mono text-[10px] text-white/40 mt-3 leading-relaxed">All six views captured on-ground in Lagos. VIN &amp; VREG records available on request before any transfer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 5. COCKPIT FLEET LEDGER ===================== -->
+<section id="fleet" class="relative bg-[#0A0B0E] border-t border-white/10">
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pt-16 sm:pt-24 pb-6">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-7">
+      <div class="rv">
+        <p class="eyebrow text-emerald-400">Fleet Ledger // Monroney Spec-Sheet Telemetry</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.06]">Two units on the books.<br><span class="text-white/40">Nothing hidden between the lines.</span></h2>
+      </div>
+      <div class="rv mono text-[11px] leading-relaxed text-white/50 max-w-md border-l border-white/15 pl-4">
+        LOT <span class="text-white/80">MFC-2016-GLA-01</span> · VIN matched · Lagos on-ground<br>
+        Prices shown are <span class="text-emerald-400">locked flyer prices</span>, not estimates.
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIMARY UNIT — GLA250 -->
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pb-14">
+    <article class="rv tilt-card relative rounded-2xl border border-white/12 bg-[#101216] overflow-hidden cross">
+      <div class="cross-x"><i style="top:8px;left:8px">+</i><i style="top:8px;right:8px">+</i><i style="bottom:8px;left:8px">+</i><i style="bottom:8px;right:8px">+</i></div>
+      <div class="grid lg:grid-cols-[1.4fr_1fr]">
+        <!-- photo switcher -->
+        <div class="relative bg-black">
+          <div class="relative aspect-[16/10] overflow-hidden">
+            <img id="glaMain" class="w-full h-full object-cover" alt="GLA250 inspection view" src="">
+            <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top, rgba(10,11,14,.55), transparent 45%);"></div>
+            <!-- hotspot pins -->
+            <div id="glaPins" class="absolute inset-0 transition-opacity duration-300">
+              <button class="hot" style="left:34%;top:56%" data-pin="0"><span class="num">01</span><span class="lbl">01 // 2.0L TURBO 211HP</span></button>
+              <button class="hot" style="left:62%;top:33%" data-pin="1"><span class="num">02</span><span class="lbl">02 // PANORAMIC ROOF &amp; LEATHER</span></button>
+              <button class="hot" style="left:78%;top:72%" data-pin="2"><span class="num">03</span><span class="lbl">03 // READY FOR LAGOS PICKUP</span></button>
+            </div>
+            <div class="absolute left-3 top-3 flex items-center gap-2">
+              <span class="led bg-red-500"></span>
+              <span class="mono text-[10px] tracking-[.16em] text-white">● ON GROUND IN LAGOS — DISTRESS SALE</span>
+            </div>
+            <div class="absolute right-3 top-3 mono text-[10px] tracking-[.14em] bg-black/70 border border-white/20 px-2 py-1">RAW · 06 VIEWS</div>
+          </div>
+          <div class="flex items-center gap-2 p-3 overflow-x-auto" id="glaThumbs"></div>
+          <label class="flex items-center gap-2 px-3 pb-3 mono text-[10px] tracking-[.14em] text-white/55 cursor-pointer select-none">
+            <input type="checkbox" id="glaPinToggle" checked class="accent-emerald-500 w-3.5 h-3.5"> SHOW 01 / 02 / 03 INSPECTION HOTSPOT PINS
+          </label>
+        </div>
+        <!-- spec sheet -->
+        <div class="p-5 sm:p-7 border-t lg:border-t-0 lg:border-l border-white/10 flex flex-col">
+          <p class="eyebrow text-white/40">LOT // MFC-2016-GLA-01 · VIN // VERIFIED</p>
+          <h3 class="mt-2 text-2xl sm:text-[27px] font-bold leading-tight">2016 Mercedes-Benz<br>GLA250 4MATIC <span class="text-white/35">(Black)</span></h3>
+          <div class="mt-4 flex items-baseline gap-3">
+            <span class="mono text-3xl font-bold text-emerald-400 tnum">₦19,000,000</span>
+            <span class="mono text-[11px] text-white/45">FLAT · NO DUTY ADD-ONS</span>
+          </div>
+          <dl class="mt-5 mono text-[11.5px] divide-y divide-white/8 border-y border-white/8">
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">ORIGIN</dt><dd>Canada → Lagos</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">DRIVETRAIN</dt><dd>7G-DCT 4MATIC AWD</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">POWER</dt><dd>2.0L Turbo · 211 HP</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">CLEARING</dt><dd class="text-emerald-400">PHYSICALLY CLEARED</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">PICKUP</dt><dd>Lagos · Immediate</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">PRICE FLAG</dt><dd class="text-emerald-400">LOCKED FLYER PRICE</dd></div>
+          </dl>
+          <div class="mt-auto pt-6 flex flex-wrap gap-3">
+            <button data-open-inspect class="rounded-full bg-white text-zinc-950 font-semibold px-6 py-3.5 text-sm hover:bg-zinc-100 transition flex items-center gap-2"><i data-lucide="images" class="w-4 h-4"></i> 6 Lagos Photos</button>
+            <button data-wa-claim class="rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold px-6 py-3.5 text-sm transition flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i> Claim on WhatsApp</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- SECONDARY UNIT — KIA SPORTAGE -->
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pb-14">
+    <article class="rv tilt-card relative rounded-2xl border border-white/12 bg-[#101216] overflow-hidden cross">
+      <div class="cross-x"><i style="top:8px;left:8px">+</i><i style="top:8px;right:8px">+</i><i style="bottom:8px;left:8px">+</i><i style="bottom:8px;right:8px">+</i></div>
+      <div class="grid lg:grid-cols-[1.4fr_1fr]">
+        <div class="relative bg-black order-2 lg:order-1">
+          <div class="relative aspect-[16/10] overflow-hidden">
+            <img id="kiaMain" class="w-full h-full object-cover" alt="Kia Sportage view" src="">
+            <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top, rgba(10,11,14,.55), transparent 45%);"></div>
+            <div id="kiaPins" class="absolute inset-0 transition-opacity duration-300">
+              <button class="hot" style="left:30%;top:62%" data-pin="0"><span class="num">01</span><span class="lbl">01 // CANADIAN INSPECTION PASSED</span></button>
+              <button class="hot" style="left:70%;top:40%" data-pin="1"><span class="num">02</span><span class="lbl">02 // RORO BOOKED · B/L ISSUED</span></button>
+              <button class="hot" style="left:52%;top:78%" data-pin="2"><span class="num">03</span><span class="lbl">03 // DUTY PAID · TIN CAN</span></button>
+            </div>
+            <div class="absolute left-3 top-3 flex items-center gap-2">
+              <span class="led bg-amber-500"></span>
+              <span class="mono text-[10px] tracking-[.16em] text-white">● SOURCED IN ONTARIO — VERIFIED FLYER PRICE</span>
+            </div>
+            <div class="absolute right-3 top-3 mono text-[10px] tracking-[.14em] bg-black/70 border border-white/20 px-2 py-1">2 VIEWS</div>
+          </div>
+          <div class="flex items-center gap-2 p-3 overflow-x-auto" id="kiaThumbs"></div>
+          <label class="flex items-center gap-2 px-3 pb-3 mono text-[10px] tracking-[.14em] text-white/55 cursor-pointer select-none">
+            <input type="checkbox" id="kiaPinToggle" checked class="accent-emerald-500 w-3.5 h-3.5"> SHOW INSPECTION HOTSPOT PINS
+          </label>
+        </div>
+        <div class="p-5 sm:p-7 border-t lg:border-t-0 lg:border-l border-white/10 flex flex-col order-1 lg:order-2">
+          <p class="eyebrow text-white/40">LOT // MFC-2013-KSP-04 · ORIGIN // ONTARIO, CA</p>
+          <h3 class="mt-2 text-2xl sm:text-[27px] font-bold leading-tight">2013 Upgraded<br>Kia Sportage <span class="text-white/35">(White)</span></h3>
+          <div class="mt-4 flex items-baseline gap-3">
+            <span class="mono text-3xl font-bold text-emerald-400 tnum">₦11,500,000</span>
+            <span class="mono text-[11px] text-white/45">LANDED</span>
+          </div>
+          <p class="mono text-[11px] text-white/55 mt-1">Shipping &amp; Clearing Included</p>
+          <dl class="mt-5 mono text-[11.5px] divide-y divide-white/8 border-y border-white/8">
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">BASE (CAD)</dt><dd class="tnum" id="kiaBase">$6,450</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">FREIGHT · RORO</dt><dd class="tnum">$1,780</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">DUTY + CLEARING</dt><dd class="tnum">₦3,240,000</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">PORT</dt><dd>Tin Can / PTML</dd></div>
+            <div class="flex justify-between py-2.5"><dt class="text-white/45">FX RATE</dt><dd class="tnum">₦1,180 / CAD · Nov 2026</dd></div>
+          </dl>
+          <div class="mt-auto pt-6 flex flex-wrap gap-3">
+            <button data-open-cost class="rounded-full border border-white/25 hover:border-white/60 hover:bg-white/10 px-6 py-3.5 text-sm font-medium transition flex items-center gap-2"><i data-lucide="receipt-text" class="w-4 h-4"></i> Inspect Landed Cost Breakdown</button>
+            <button data-wa-kia class="rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold px-6 py-3.5 text-sm transition flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- ARCHIVE / RESOLUTION GUARD -->
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pb-20">
+    <div class="rv border-t border-white/10 pt-8">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+        <div>
+          <p class="eyebrow text-amber-400">Recent Sourcing Archive &amp; Flyer Captures</p>
+          <p class="mt-2 text-sm text-white/60 max-w-2xl">Rendered at native thumbnail scale (never stretched). Request full inspection dossier on WhatsApp.</p>
+        </div>
+        <span class="mono text-[10px] tracking-[.16em] text-amber-400/90 border border-amber-500/40 rounded-full px-3 py-1.5 self-start">[VERIFY] 04 INDICATIVE ESTIMATES</span>
+      </div>
+
+      <div class="mt-6 border border-white/10 rounded-xl overflow-hidden divide-y divide-white/8">
+        <!-- rows injected below as static markup -->
+        <div class="group flex flex-wrap sm:flex-nowrap items-center gap-4 p-3.5 hover:bg-white/[.04] transition">
+          <div class="relative shrink-0 border border-white/20" style="width:140px;height:96px;">
+            <img class="w-[140px] h-[96px] object-cover" style="object-position:50% 50%;" loading="lazy" alt="2014 Toyota Venza flyer capture" src="https://images.pexels.com/photos/13598897/pexels-photo-13598897.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=192&w=280">
+            <span class="absolute inset-0 pointer-events-none" style="background:linear-gradient(140deg, rgba(255,255,255,.06), transparent 55%);"></span>
+            <span class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-amber-500/80"></span>
+            <span class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-amber-500/80"></span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="font-semibold text-[15px] leading-tight">2014 Toyota Venza <span class="text-white/40 font-normal">(AWD V6)</span></p>
+            <p class="mono text-[10.5px] text-white/45 mt-1">LOT MFC-2014-VNZ-02 · FLYER CAPTURE · 140×96 NATIVE</p>
+          </div>
+          <span class="mono text-[10px] tracking-[.12em] text-amber-400 border border-amber-500/40 rounded px-2 py-1">[VERIFY] INDICATIVE ESTIMATE</span>
+          <p class="mono text-[15px] font-bold text-white/85 tnum w-[150px] text-right">₦23.2M <span class="text-white/40 text-[11px] font-normal">Landed</span></p>
+        </div>
+
+        <div class="group flex flex-wrap sm:flex-nowrap items-center gap-4 p-3.5 hover:bg-white/[.04] transition">
+          <div class="relative shrink-0 border border-white/20" style="width:140px;height:96px;">
+            <img class="w-[140px] h-[96px] object-cover" loading="lazy" alt="2013 Lexus RX 350 flyer capture" src="https://images.pexels.com/photos/16789399/pexels-photo-16789399.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=192&w=280">
+            <span class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-amber-500/80"></span>
+            <span class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-amber-500/80"></span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="font-semibold text-[15px] leading-tight">2013 Lexus RX 350 <span class="text-white/40 font-normal">(F-Sport / Navigation)</span></p>
+            <p class="mono text-[10.5px] text-white/45 mt-1">LOT MFC-2013-RX350-07 · FLYER CAPTURE · 140×96 NATIVE</p>
+          </div>
+          <span class="mono text-[10px] tracking-[.12em] text-amber-400 border border-amber-500/40 rounded px-2 py-1">[VERIFY] INDICATIVE ESTIMATE</span>
+          <p class="mono text-[15px] font-bold text-white/85 tnum w-[150px] text-right">₦24.8M <span class="text-white/40 text-[11px] font-normal">Landed</span></p>
+        </div>
+
+        <div class="group flex flex-wrap sm:flex-nowrap items-center gap-4 p-3.5 hover:bg-white/[.04] transition">
+          <div class="relative shrink-0 border border-white/20" style="width:140px;height:96px;">
+            <img class="w-[140px] h-[96px] object-cover" loading="lazy" alt="2011 Toyota Camry flyer capture" src="https://images.pexels.com/photos/8332625/pexels-photo-8332625.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=192&w=280">
+            <span class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-amber-500/80"></span>
+            <span class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-amber-500/80"></span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="font-semibold text-[15px] leading-tight">2011 Toyota Camry <span class="text-white/40 font-normal">(LE Upgraded)</span></p>
+            <p class="mono text-[10.5px] text-white/45 mt-1">LOT MFC-2011-CMY-11 · FLYER CAPTURE · 140×96 NATIVE</p>
+          </div>
+          <span class="mono text-[10px] tracking-[.12em] text-amber-400 border border-amber-500/40 rounded px-2 py-1">[VERIFY] INDICATIVE ESTIMATE</span>
+          <p class="mono text-[15px] font-bold text-white/85 tnum w-[150px] text-right">₦10.8M <span class="text-white/40 text-[11px] font-normal">Landed</span></p>
+        </div>
+
+        <div class="group flex flex-wrap sm:flex-nowrap items-center gap-4 p-3.5 hover:bg-white/[.04] transition">
+          <div class="relative shrink-0 border border-white/20" style="width:140px;height:96px;">
+            <img class="w-[140px] h-[96px] object-cover" loading="lazy" alt="2014 Acura MDX flyer capture" src="https://images.pexels.com/photos/13578691/pexels-photo-13578691.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=192&w=280">
+            <span class="absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-amber-500/80"></span>
+            <span class="absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-amber-500/80"></span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="font-semibold text-[15px] leading-tight">2014 Acura MDX <span class="text-white/40 font-normal">(SH-AWD 7-Seater)</span></p>
+            <p class="mono text-[10.5px] text-white/45 mt-1">LOT MFC-2014-MDX-05 · FLYER CAPTURE · 140×96 NATIVE</p>
+          </div>
+          <span class="mono text-[10px] tracking-[.12em] text-amber-400 border border-amber-500/40 rounded px-2 py-1">[VERIFY] INDICATIVE ESTIMATE</span>
+          <p class="mono text-[15px] font-bold text-white/85 tnum w-[150px] text-right">₦21.5M <span class="text-white/40 text-[11px] font-normal">Landed</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hot{ position:absolute; transform:translate(-50%,-50%); display:flex; align-items:center; gap:0; }
+  .hot .num{ width:26px; height:26px; border-radius:99px; background:rgba(10,11,14,.82); border:1.5px solid #10B981; color:#10B981;
+    font-family:'JetBrains Mono',monospace; font-size:10px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 4px rgba(16,185,129,.14); transition:.2s ease; }
+  .hot .lbl{ max-width:0; overflow:hidden; white-space:nowrap; opacity:0; background:rgba(10,11,14,.9); border:1px solid rgba(255,255,255,.18);
+    color:#fff; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.08em; padding:0; transition:.28s cubic-bezier(.16,1,.3,1); }
+  .hot:hover .num, .hot.open .num{ background:#10B981; color:#0A0B0E; }
+  .hot:hover .lbl, .hot.open .lbl{ max-width:280px; opacity:1; padding:6px 10px; margin-left:8px; }
+  .hot.pinned .num{ animation:pinPulse 2.2s ease-in-out infinite; }
+  @keyframes pinPulse{ 0%,100%{ box-shadow:0 0 0 4px rgba(16,185,129,.14);} 50%{ box-shadow:0 0 0 9px rgba(16,185,129,0);} }
+  .thumb-btn{ position:relative; width:64px; height:44px; flex:0 0 auto; border:1px solid rgba(255,255,255,.16); overflow:hidden; opacity:.5; transition:.2s ease; }
+  .thumb-btn img{ width:100%; height:100%; object-fit:cover; }
+  .thumb-btn:hover{ opacity:.85; }
+  .thumb-btn.active{ opacity:1; border-color:#10B981; box-shadow:0 0 0 2px rgba(16,185,129,.3); }
+  .thumb-btn span{ position:absolute; left:2px; bottom:1px; font-family:'JetBrains Mono',monospace; font-size:8px; background:rgba(0,0,0,.7); padding:0 3px; }
+</style>
+
+<!-- ===================== LANDED COST DRAWER ===================== -->
+<div id="costDrawer" class="fixed inset-0 z-[130] hidden">
+  <div class="absolute inset-0 bg-black/75 backdrop-blur-sm" data-close-cost></div>
+  <aside class="absolute right-0 top-0 h-full w-full sm:max-w-[520px] bg-[#0D0F13] border-l border-white/12 overflow-y-auto" id="costPanel" style="transform:translateX(100%);transition:transform .5s cubic-bezier(.16,1,.3,1)">
+    <div class="sticky top-0 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0D0F13]/95 backdrop-blur z-10">
+      <div>
+        <p class="eyebrow text-emerald-400">Landed Cost &amp; Spec Sheet Drawer</p>
+        <h3 class="text-lg font-bold mt-1">2013 Kia Sportage — CAD → NGN</h3>
+      </div>
+      <button data-close-cost class="w-9 h-9 rounded-full border border-white/20 hover:bg-white/10 flex items-center justify-center" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+    <div class="px-6 py-6">
+      <div class="mono text-[10px] tracking-[.18em] text-white/40 flex justify-between border-b border-white/10 pb-2"><span>LINE ITEM</span><span>AMOUNT</span></div>
+      <div id="costLines" class="mono text-[12.5px]"></div>
+      <div class="mt-5 border-t border-emerald-500/40 pt-4 flex items-baseline justify-between">
+        <span class="mono text-[11px] tracking-[.16em] text-white/55">TOTAL LANDED · LAGOS</span>
+        <span class="mono text-3xl font-bold text-emerald-400 tnum">₦11,500,000</span>
+      </div>
+      <p class="mono text-[10.5px] text-white/40 mt-3 leading-relaxed">CAD lines converted at ₦1,180 / CAD (Nov 2026). Age-tiered Nigerian Customs duty &amp; Tin Can clearing formulas pending clearing-agent sign-off — item 04 on the operator register.</p>
+      <div class="mt-6 rounded-xl border border-white/10 bg-[#12141A] p-4">
+        <p class="eyebrow text-white/40 mb-2">Proof sent before next milestone</p>
+        <ul class="mono text-[11.5px] space-y-1.5 text-white/65">
+          <li>› Canadian pre-purchase inspection report</li>
+          <li>› Bill of Lading (RoRo) + vessel tracking</li>
+          <li>› Nigerian Customs duty assessment sheet</li>
+          <li>› Tin Can port clearance release</li>
+        </ul>
+      </div>
+      <button data-wa-kia class="mt-6 w-full rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-4 text-sm transition flex items-center justify-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i> Send this breakdown to Modfem</button>
+    </div>
+  </aside>
+</div>
+
+<!-- ===================== 6. GEAR-SHIFT GATE PROCESS ===================== -->
+<section id="process" class="relative bg-[#0A0B0E] border-t border-white/10 overflow-hidden">
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
+    <div class="rv max-w-3xl">
+      <p class="eyebrow text-emerald-400">Transmission // 5-Stage Shift Gate</p>
+      <h2 class="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.06]">Spec → Inspect → Acquire → Ship → Deliver</h2>
+      <p class="mt-4 text-white/60 text-[15px] leading-relaxed">Hover or tap a gate stage. Each position lights its telemetry readout: what we do in Ontario, what you pay at that exact milestone, and the proof that lands on your WhatsApp before we shift to the next stage.</p>
+    </div>
+
+    <!-- gate -->
+    <div class="mt-10 rv">
+      <div class="relative rounded-2xl border border-white/12 bg-[#101216] p-4 sm:p-7 cross overflow-x-auto">
+        <div class="cross-x"><i style="top:8px;left:8px">+</i><i style="top:8px;right:8px">+</i><i style="bottom:8px;left:8px">+</i><i style="bottom:8px;right:8px">+</i></div>
+        <div class="relative min-w-[720px]">
+          <!-- shift gate rail -->
+          <div class="absolute left-0 right-0 top-[46px] h-px bg-gradient-to-r from-white/10 via-white/25 to-white/10"></div>
+          <div id="gateTrack" class="relative flex justify-between gap-2"></div>
+        </div>
+      </div>
+
+      <!-- readout -->
+      <div id="gateReadout" class="mt-4 grid lg:grid-cols-3 gap-4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7. SOURCING & CAR SWAP CONCIERGE ===================== -->
+<section id="concierge" class="relative bg-[#0B0D11] border-t border-white/10">
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
+    <div class="rv grid lg:grid-cols-[1.1fr_1fr] gap-10 items-start">
+      <div>
+        <p class="eyebrow text-emerald-400">Concierge // Dual-Mode Mandate Builder</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.06]">Tell us the car.<br><span class="text-white/40">We source it from Ontario.</span></h2>
+        <p class="mt-4 text-white/60 text-[15px] leading-relaxed max-w-xl">Two modes. <strong class="text-white font-semibold">Direct Canadian Sourcing</strong> when you know exactly what you want, or <strong class="text-white font-semibold">Car Upgrading &amp; Swapping</strong> — <em class="serif italic text-white/80">Same You. A Better Ride!</em> — when you want to trade what you're driving in Lagos for something better.</p>
+        <div class="mt-8 grid sm:grid-cols-3 gap-3 max-w-xl">
+          <div class="border border-white/10 rounded-lg p-3.5 bg-white/[.03]"><p class="mono text-[10px] tracking-[.16em] text-white/40">STEP</p><p class="text-[13px] mt-1 font-semibold">Fill the mandate</p></div>
+          <div class="border border-white/10 rounded-lg p-3.5 bg-white/[.03]"><p class="mono text-[10px] tracking-[.16em] text-white/40">STEP</p><p class="text-[13px] mt-1 font-semibold">Get a ticket ref</p></div>
+          <div class="border border-white/10 rounded-lg p-3.5 bg-white/[.03]"><p class="mono text-[10px] tracking-[.16em] text-white/40">STEP</p><p class="text-[13px] mt-1 font-semibold">Dispatch on WhatsApp</p></div>
+        </div>
+        <div class="mt-8 border border-white/10 rounded-xl p-5 bg-[#101216] max-w-xl">
+          <p class="eyebrow text-amber-400">Operator note</p>
+          <p class="text-[13.5px] text-white/65 mt-2 leading-relaxed">Every mandate is answered personally from Vaughan, Ontario. No call centre, no anonymous escrow — you get a named contact in Canada and a named clearing contact in Lagos.</p>
+        </div>
+      </div>
+
+      <div class="rv rounded-2xl border border-white/12 bg-[#101216] overflow-hidden cross relative">
+        <div class="cross-x"><i style="top:8px;left:8px">+</i><i style="top:8px;right:8px">+</i><i style="bottom:8px;left:8px">+</i><i style="bottom:8px;right:8px">+</i></div>
+        <!-- mode gate -->
+        <div class="grid grid-cols-2 border-b border-white/10">
+          <button data-mode="1" class="mode-btn px-4 py-4 text-left transition">
+            <span class="mono text-[10px] tracking-[.16em] block">MODE 01</span>
+            <span class="text-[13px] font-semibold block mt-1">Direct Canadian Sourcing</span>
+          </button>
+          <button data-mode="2" class="mode-btn px-4 py-4 text-left transition border-l border-white/10">
+            <span class="mono text-[10px] tracking-[.16em] block">MODE 02</span>
+            <span class="text-[13px] font-semibold block mt-1">Car Upgrade &amp; Swap</span>
+          </button>
+        </div>
+
+        <form id="mandateForm" class="p-5 sm:p-6 space-y-4" novalidate>
+          <input type="hidden" id="mMode" value="1">
+
+          <!-- MODE 2 extra block -->
+          <div id="tradeBlock" class="hidden rounded-xl border border-emerald-500/30 bg-emerald-500/[.05] p-4 space-y-3">
+            <p class="eyebrow text-emerald-400">Your Current Trade-In Vehicle</p>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div><label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="tYear">CURRENT VEHICLE YEAR</label><input id="tYear" class="field mono" placeholder="2012" inputmode="numeric"></div>
+              <div><label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="tModel">CURRENT MAKE / MODEL</label><input id="tModel" class="field" placeholder="Toyota Camry LE"></div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div><label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="tMiles">MILEAGE / CONDITION</label><input id="tMiles" class="field" placeholder="128,000 km · clean, minor bumper scuff"></div>
+              <div><label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="tLoc">CURRENT LOCATION IN NIGERIA</label><input id="tLoc" class="field" placeholder="Ikeja, Lagos"></div>
+            </div>
+            <p class="mono text-[10px] text-white/45 leading-relaxed">Swap value is assessed after photo inspection of the trade-in. <span class="text-emerald-400">Same You. A Better Ride!</span></p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="sm:col-span-2"><label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="mTarget">TARGET MAKE / MODEL *</label><input id="mTarget" class="field" placeholder="Mercedes-Benz GLC300 4MATIC"></div>
+            <div><label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="mYear">YEAR RANGE *</label><input id="mYear" class="field mono" placeholder="2016 – 2021"></div>
+            <div>
+              <label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="mCurrency">BUDGET CURRENCY</label>
+              <select id="mCurrency" class="field mono"><option value="NGN">₦ NGN</option><option value="CAD">$ CAD</option></select>
+            </div>
+            <div class="sm:col-span-2"><label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="mBudget">MAX BUDGET *</label><input id="mBudget" class="field mono tnum" placeholder="14,500,000" inputmode="numeric"></div>
+            <div class="sm:col-span-2">
+              <label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="mPort">PREFERRED PORT</label>
+              <select id="mPort" class="field"><option>Tin Can Island Lagos</option><option>PTML Apapa</option></select>
+            </div>
+            <div class="sm:col-span-2"><label class="mono text-[10px] tracking-[.14em] text-white/45 block mb-1.5" for="mWa">YOUR WHATSAPP NUMBER *</label><input id="mWa" class="field mono" placeholder="+234 803 000 0000" inputmode="tel"></div>
+          </div>
+
+          <p id="mErr" class="hidden mono text-[11px] text-red-400 border border-red-500/40 bg-red-500/10 rounded-lg px-3 py-2"></p>
+
+          <button type="submit" class="w-full rounded-full bg-white text-zinc-950 font-semibold py-4 text-sm hover:bg-zinc-100 transition flex items-center justify-center gap-2">
+            Generate Mandate Ticket <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </form>
+
+        <!-- confirmation ticket -->
+        <div id="mandateTicket" class="hidden p-5 sm:p-6 border-t border-white/10 bg-[#0D0F13]">
+          <div class="flex items-center justify-between">
+            <p class="eyebrow text-emerald-400">Monroney Mandate Confirmation Ticket</p>
+            <span class="mono text-[10px] text-white/40" id="ticketRef">—</span>
+          </div>
+          <pre id="ticketBody" class="mono text-[11.5px] leading-relaxed text-white/75 mt-3 whitespace-pre-wrap border border-white/10 rounded-lg p-4 bg-black/40"></pre>
+          <button id="dispatchBtn" class="mt-4 w-full rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold py-4 text-sm transition flex items-center justify-center gap-2">
+            Dispatch Mandate Directly to Modfem on WhatsApp ↗
+          </button>
+          <button id="editBtn" class="mt-2 w-full rounded-full border border-white/20 hover:bg-white/10 py-3 text-[13px] transition">Edit mandate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 8. SHIPMENT TRACKER + VREG ===================== -->
+<section id="track" class="relative bg-[#0A0B0E] border-t border-white/10">
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
+    <div class="rv flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-7">
+      <div>
+        <p class="eyebrow text-emerald-400">Radical Transparency // Shipment Tracker</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.06]">Where your car actually is.</h2>
+      </div>
+      <p class="mono text-[11px] text-white/45 max-w-sm leading-relaxed">Telemetry is pushed from Ontario and the Lagos clearing desk. Independent verification links sit below the progress bar — check us without us.</p>
+    </div>
+
+    <!-- lookup -->
+    <div class="rv mt-8 flex flex-col lg:flex-row gap-4 lg:items-center">
+      <div class="flex flex-wrap gap-2" id="trackChips">
+        <button class="chip active" data-track="g">GLA250 — LAGOS READY</button>
+        <button class="chip" data-track="kia">KIA SPORTAGE — ONTARIO LOT</button>
+        <button class="chip" data-track="rx">LEXUS RX 350 — APAPA CLEARING</button>
+      </div>
+      <div class="flex gap-2 lg:ml-auto w-full lg:w-auto">
+        <input id="trackInput" class="field mono lg:w-72" placeholder="Order ref / VIN (e.g. MFC-2016-GLA-01)">
+        <button id="trackGo" class="shrink-0 rounded-lg bg-white text-zinc-950 font-semibold px-5 text-sm hover:bg-zinc-100 transition">Lookup</button>
+      </div>
+    </div>
+    <p id="trackErr" class="hidden mono text-[11px] text-red-400 mt-2"></p>
+
+    <!-- progress -->
+    <div class="rv mt-7 rounded-2xl border border-white/12 bg-[#101216] p-5 sm:p-7 cross relative overflow-hidden">
+      <div class="cross-x"><i style="top:8px;left:8px">+</i><i style="top:8px;right:8px">+</i><i style="bottom:8px;left:8px">+</i><i style="bottom:8px;right:8px">+</i></div>
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <div>
+          <p class="mono text-[10px] tracking-[.18em] text-white/40">ORDER REF</p>
+          <p id="trackRef" class="mono text-lg font-bold mt-0.5">MFC-2016-GLA-01</p>
+        </div>
+        <div class="text-right">
+          <p class="mono text-[10px] tracking-[.18em] text-white/40">UNIT</p>
+          <p id="trackUnit" class="text-[15px] font-semibold mt-0.5">2016 Mercedes-Benz GLA250 4MATIC</p>
+        </div>
+        <span class="mono text-[10px] tracking-[.14em] px-3 py-1.5 rounded-full border border-emerald-500/45 text-emerald-400 bg-emerald-500/10" id="trackFlag">CLEARED · READY</span>
+      </div>
+
+      <div id="trackStages" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-3"></div>
+
+      <!-- staleness -->
+      <div class="mt-7 flex flex-col sm:flex-row items-start sm:items-center gap-4 justify-between rounded-xl border border-amber-500/35 bg-amber-500/[.07] px-4 py-3.5">
+        <div class="flex items-center gap-3">
+          <span class="led bg-amber-500"></span>
+          <div>
+            <p class="mono text-[11px] tracking-[.14em] text-amber-300" id="stalenessText">LAST TELEMETRY SYNC: 2 DAYS AGO</p>
+            <p class="mono text-[10px] text-white/45 mt-0.5">Cached record — request a fresh capture</p>
+          </div>
+        </div>
+        <button data-wa-status class="rounded-full bg-white text-zinc-950 font-semibold px-5 py-3 text-[13px] hover:bg-zinc-100 transition flex items-center gap-2 shrink-0">
+          <i data-lucide="camera" class="w-4 h-4"></i> Ask Modfem for a Live Photo/Status Update on WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <!-- independent verification -->
+    <div class="rv mt-6 grid lg:grid-cols-2 gap-4">
+      <div class="rounded-2xl border border-white/12 bg-[#101216] p-5 sm:p-6">
+        <p class="eyebrow text-emerald-400">Independent Verification // Nigeria</p>
+        <h3 class="text-lg font-bold mt-2">VREG Portal</h3>
+        <p class="text-[13.5px] text-white/60 mt-2 leading-relaxed">Every vehicle we clear is registered with the Vehicle Registration Office. Enter the VIN yourself — do not take our word for it.</p>
+        <ol class="mono text-[11.5px] text-white/55 mt-4 space-y-1.5 list-decimal pl-4">
+          <li>Copy the VIN from any inspection photo we send.</li>
+          <li>Open <span class="text-white">vreg.gov.ng</span> → Vehicle Search.</li>
+          <li>Match owner, make, model and year against our sheet.</li>
+        </ol>
+        <a href="https://vreg.gov.ng" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex items-center gap-2 rounded-full border border-white/25 hover:border-white/60 hover:bg-white/10 px-5 py-3 text-[13px] font-medium transition">Open vreg.gov.ng ↗</a>
+      </div>
+      <div class="rounded-2xl border border-white/12 bg-[#101216] p-5 sm:p-6">
+        <p class="eyebrow text-emerald-400">Independent Verification // North America</p>
+        <h3 class="text-lg font-bold mt-2">NHTSA &amp; VIN Decoders</h3>
+        <p class="text-[13.5px] text-white/60 mt-2 leading-relaxed">Cross-check recall history, build spec and theft records directly against manufacturer databases before any deposit leaves your account.</p>
+        <ol class="mono text-[11.5px] text-white/55 mt-4 space-y-1.5 list-decimal pl-4">
+          <li>Run the 17-digit VIN at NHTSA for open recalls.</li>
+          <li>Decode factory options with a Carfax / NMVTIS report.</li>
+          <li>Compare against the Monroney sheet we send you.</li>
+        </ol>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <a href="https://www.nhtsa.gov/recalls" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-white/25 hover:border-white/60 hover:bg-white/10 px-5 py-3 text-[13px] font-medium transition">NHTSA Recalls ↗</a>
+          <a href="https://www.nhtsa.gov/vin-decoder" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-white/25 hover:border-white/60 hover:bg-white/10 px-5 py-3 text-[13px] font-medium transition">NHTSA VIN Decoder ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 9. MODFEM & CO. ALABASTER EDITORIAL ===================== -->
+<section id="operator" class="relative bg-[#EAEAEA] text-[#111111] transition-colors duration-700">
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-24 grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+
+    <!-- LEFT 7 — overhead studio visual -->
+    <div class="lg:col-span-7 relative">
+      <div class="relative w-full overflow-hidden bg-[#EAEAEA] rounded-sm" style="aspect-ratio:4/5;">
+        <img id="editorialImg" src="/images/modfem-editorial-overhead.png" alt="Overhead studio: Modfem seated beside a black Mercedes-Benz on alabaster seamless paper"
+             class="absolute inset-0 w-full h-full object-cover" style="object-position:50% 40%;"
+             onerror="this.style.display='none';document.getElementById('editorialFallback').style.display='block';">
+
+        <!-- automatic fallback composite -->
+        <svg id="editorialFallback" class="absolute inset-0 w-full h-full" viewBox="0 0 800 1000" style="display:none" aria-label="Overhead studio composite">
+          <rect width="800" height="1000" fill="#EAEAEA"/>
+          <g opacity=".5">
+            <path d="M0 760 Q400 700 800 790 L800 1000 L0 1000 Z" fill="#E3E3E3"/>
+            <ellipse cx="230" cy="330" rx="240" ry="120" fill="#DEDEDE"/>
+          </g>
+          <!-- SUV, upper-left quadrant, overhead -->
+          <g transform="translate(40,90) rotate(-13)">
+            <ellipse cx="200" cy="140" rx="215" ry="120" fill="#000" opacity=".10"/>
+            <rect x="0" y="20" width="400" height="230" rx="58" fill="#141518"/>
+            <rect x="10" y="30" width="380" height="210" rx="52" fill="#1B1D21"/>
+            <path d="M96 60 H300 L330 128 H66 Z" fill="#2A2D33"/>
+            <path d="M110 66 H292 L316 122 H84 Z" fill="#0E0F12"/>
+            <rect x="128" y="150" width="140" height="84" rx="26" fill="#202329"/>
+            <rect x="132" y="4" width="36" height="34" rx="10" fill="#141518"/>
+            <rect x="232" y="4" width="36" height="34" rx="10" fill="#141518"/>
+            <rect x="132" y="232" width="36" height="34" rx="10" fill="#141518"/>
+            <rect x="232" y="232" width="36" height="34" rx="10" fill="#141518"/>
+            <g transform="translate(200,140)">
+              <circle r="27" fill="none" stroke="#9BA1AA" stroke-width="4"/>
+              <path d="M0 -24 V24 M-21 12 L21 12 M-13 -18 L13 18" stroke="#9BA1AA" stroke-width="4" fill="none"/>
+            </g>
+            <rect x="150" y="196" width="100" height="24" rx="5" fill="#EDEDED"/>
+          </g>
+          <!-- Modfem seated, lower-right quadrant -->
+          <g transform="translate(500,600)">
+            <ellipse cx="20" cy="255" rx="150" ry="46" fill="#000" opacity=".10"/>
+            <g stroke="#8FA6B8" stroke-width="10" stroke-linecap="round" fill="none">
+              <path d="M-70 90 L60 240"/><path d="M70 90 L-60 240"/><path d="M-84 60 L84 60"/>
+            </g>
+            <rect x="-84" y="24" width="168" height="44" rx="14" fill="#7C97AC"/>
+            <path d="M-70 -40 q70 -34 140 0 l16 76 q-86 26 -172 0 Z" fill="#14161A"/>
+            <path d="M-58 -34 q58 -26 116 0" stroke="#2C3138" stroke-width="6" fill="none"/>
+            <circle cx="0" cy="-86" r="42" fill="#1A1C20"/>
+            <path d="M-40 -96 q40 -46 80 0" fill="#0D0E11"/>
+            <rect x="-46" y="72" width="34" height="120" rx="16" fill="#14161A" transform="rotate(6 -29 132)"/>
+            <rect x="14" y="72" width="34" height="120" rx="16" fill="#14161A" transform="rotate(-6 31 132)"/>
+            <ellipse cx="-40" cy="204" rx="30" ry="16" fill="#D9D9D9"/>
+            <ellipse cx="52" cy="204" rx="30" ry="16" fill="#D9D9D9"/>
+            <rect x="44" y="16" width="46" height="14" rx="7" fill="#C8A15A"/>
+            <path d="M60 -46 q34 12 30 52" stroke="#14161A" stroke-width="26" stroke-linecap="round" fill="none"/>
+          </g>
+          <text x="58" y="880" font-family="'Instrument Serif',Georgia,serif" font-size="86" fill="#111111">Modfem &amp; Co.</text>
+          <text x="60" y="920" font-family="'JetBrains Mono',monospace" font-size="15" letter-spacing="4" fill="#111111" opacity=".55">VAUGHAN, ONTARIO → LAGOS, NIGERIA</text>
+        </svg>
+
+        <div class="absolute left-0 bottom-0 p-5 sm:p-7 pointer-events-none">
+          <p class="serif text-[#111111] leading-none" style="font-size:clamp(44px,7vw,86px)">Modfem &amp; Co.</p>
+        </div>
+        <div class="absolute right-4 top-4 mono text-[9.5px] tracking-[.2em] text-[#111111]/55">STUDIO · OVERHEAD · 01</div>
+      </div>
+      <p class="mono text-[10.5px] tracking-[.14em] text-[#111111]/50 mt-3">Seamless alabaster floor · black GLA250 upper-left · operator seated lower-right</p>
+    </div>
+
+    <!-- RIGHT 5 — operator dossier -->
+    <div class="lg:col-span-5 flex flex-col">
+      <p class="mono text-[10px] tracking-[.2em] text-[#111111]/60 uppercase">Direct Operator Accountability // Vaughan, Ontario → Lagos, Nigeria</p>
+
+      <h2 class="serif mt-5 text-[#111111] leading-[1.08]" style="font-size:clamp(28px,3.1vw,44px)">
+        You aren't wiring millions of Naira to a faceless website. You deal directly with me in Ontario and our clearing team on the ground in Lagos.
+      </h2>
+
+      <p class="mt-4 text-[14.5px] leading-relaxed text-[#111111]/70">
+        Sourcing, inspection, purchase paperwork, RoRo or container freight, clearing and hand-over — run end to end by one operator with a Canadian address you can verify and a Lagos desk that meets you at the port.
+      </p>
+
+      <!-- 6 pillars -->
+      <div class="mt-8 border-t border-[#111111]/15">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 divide-y divide-[#111111]/12 lg:divide-y-0 lg:[&>*:not(:first-child)]:border-t lg:[&>*:not(:first-child)]:border-[#111111]/12">
+          <div class="flex items-baseline gap-4 py-3.5"><span class="mono text-[10.5px] text-[#111111]/45 w-6">01</span><div><p class="font-semibold text-[15px]">Car Sourcing</p><p class="text-[13px] text-[#111111]/60">Ontario auctions, dealer trade-ins and private lots matched to your budget.</p></div></div>
+          <div class="flex items-baseline gap-4 py-3.5"><span class="mono text-[10.5px] text-[#111111]/45 w-6">02</span><div><p class="font-semibold text-[15px]">Thorough Pre-Purchase Inspection</p><p class="text-[13px] text-[#111111]/60">Lift, OBD and cold-start video before a cent is committed.</p></div></div>
+          <div class="flex items-baseline gap-4 py-3.5"><span class="mono text-[10.5px] text-[#111111]/45 w-6">03</span><div><p class="font-semibold text-[15px]">Purchase &amp; Paperwork Support</p><p class="text-[13px] text-[#111111]/60">Title, safety, export documents and Canadian tax handling.</p></div></div>
+          <div class="flex items-baseline gap-4 py-3.5"><span class="mono text-[10.5px] text-[#111111]/45 w-6">04</span><div><p class="font-semibold text-[15px]">RoRo &amp; Container Shipping</p><p class="text-[13px] text-[#111111]/60">Bill of Lading, vessel tracking and port-side clearing at Tin Can / PTML.</p></div></div>
+          <div class="flex items-baseline gap-4 py-3.5"><span class="mono text-[10.5px] text-[#111111]/45 w-6">05</span><div><p class="font-semibold text-[15px]">Car Upgrading &amp; Swapping</p><p class="text-[13px] text-[#111111]/60">Trade what you drive now toward something better. Same You. A Better Ride!</p></div></div>
+          <div class="flex items-baseline gap-4 py-3.5"><span class="mono text-[10.5px] text-[#111111]/45 w-6">06</span><div><p class="font-semibold text-[15px]">Flexible Financing Support</p><p class="text-[13px] text-[#111111]/60">Staged payment structures agreed in writing before shipment.</p></div></div>
+        </div>
+      </div>
+
+      <!-- contact card -->
+      <div class="mt-8 border border-[#111111]/20 bg-white/60 p-5">
+        <p class="mono text-[10px] tracking-[.2em] text-[#111111]/55">DIRECT CONTACT</p>
+        <dl class="mt-3 mono text-[12.5px] divide-y divide-[#111111]/12">
+          <div class="flex justify-between gap-4 py-2.5"><dt class="text-[#111111]/55">CANADIAN WHATSAPP</dt><dd class="font-bold">+1 (437) 776-5303</dd></div>
+          <div class="flex justify-between gap-4 py-2.5"><dt class="text-[#111111]/55">NIGERIAN WHATSAPP</dt><dd class="font-bold">+234 807 42961 <span class="text-[#B45309]">[VERIFY]</span></dd></div>
+          <div class="flex justify-between gap-4 py-2.5"><dt class="text-[#111111]/55">EMAIL</dt><dd class="font-bold break-all">Modfemtidings@yahoo.com</dd></div>
+          <div class="flex justify-between gap-4 py-2.5"><dt class="text-[#111111]/55">OPERATING BASE</dt><dd class="font-bold text-right">Vaughan, Ontario, Canada</dd></div>
+          <div class="flex justify-between gap-4 py-2.5"><dt class="text-[#111111]/55">LAGOS HUB</dt><dd class="font-bold text-right">Tin Can / PTML &amp; Mainland</dd></div>
+        </dl>
+        <button data-wa-general class="mt-5 w-full rounded-full bg-[#111111] text-white font-semibold py-4 text-sm hover:bg-black transition flex items-center justify-center gap-2">
+          Message Modfem on WhatsApp (+1 437-776-5303) ↗
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="bg-[#0A0B0E] border-t border-white/10">
+  <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-12">
+    <div class="grid md:grid-cols-[1.4fr_1fr_1fr] gap-8">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-white/8 border border-white/15 flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 40 40" fill="none"><path d="M7 30 V10 L20 24 L33 10 V30" stroke="#fff" stroke-width="3.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+          </div>
+          <span class="font-bold tracking-tight">Modfem Autos Canada</span>
+        </div>
+        <p class="text-[13.5px] text-white/55 mt-3 leading-relaxed max-w-md">Vehicle sourcing, upgrading and Lagos distress-sale concierge. Vaughan, Ontario → Tin Can / PTML, Lagos. Prices in ₦; conversion at ₦1,180 / CAD (Nov 2026).</p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <a id="footerWa" href="#" target="_blank" rel="noopener" class="mono text-[11px] border border-white/20 hover:border-white/50 rounded-full px-4 py-2 transition">+1 (437) 776-5303</a>
+          <a href="mailto:Modfemtidings@yahoo.com" class="mono text-[11px] border border-white/20 hover:border-white/50 rounded-full px-4 py-2 transition">Modfemtidings@yahoo.com</a>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow text-white/40">Navigate</p>
+        <ul class="mt-3 space-y-2 text-[13.5px] text-white/65">
+          <li><a href="#fleet" class="hover:text-white transition">Sourced Fleet</a></li>
+          <li><a href="#process" class="hover:text-white transition">How It Works</a></li>
+          <li><a href="#concierge" class="hover:text-white transition">Car Upgrade &amp; Swap</a></li>
+          <li><a href="#track" class="hover:text-white transition">Track Order</a></li>
+          <li><a href="#operator" class="hover:text-white transition">The Operator</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow text-white/40">Verification</p>
+        <ul class="mt-3 space-y-2 text-[13.5px] text-white/65">
+          <li><a href="https://vreg.gov.ng" target="_blank" rel="noopener" class="hover:text-white transition">VREG Portal ↗</a></li>
+          <li><a href="https://www.nhtsa.gov/recalls" target="_blank" rel="noopener" class="hover:text-white transition">NHTSA Recalls ↗</a></li>
+          <li><a href="https://www.nhtsa.gov/vin-decoder" target="_blank" rel="noopener" class="hover:text-white transition">VIN Decoder ↗</a></li>
+        </ul>
+        <button id="footerReplay" class="mt-5 mono text-[10px] tracking-[.16em] uppercase text-white/55 hover:text-white border border-white/20 hover:border-white/45 rounded-full px-4 py-2 transition">Skip / Replay Ignition</button>
+      </div>
+    </div>
+    <div class="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3 justify-between mono text-[10.5px] text-white/40">
+      <span>© <span id="year">2026</span> Modfem &amp; Co. — Modfem Autos Canada. All rights reserved.</span>
+      <span>OPERATOR PREVIEW BUILD · <span class="text-amber-400/80">06 ITEMS PENDING SIGN-OFF</span></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== STICKY WHATSAPP DISPATCH ===================== -->
+<a id="fabWa" href="#" target="_blank" rel="noopener" class="fixed bottom-5 right-5 z-[95] w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-zinc-950 flex items-center justify-center shadow-[0_10px_40px_rgba(16,185,129,.4)] transition hover:scale-105" aria-label="Dispatch WhatsApp to Modfem">
+  <i data-lucide="message-circle" class="w-6 h-6"></i>
+  <span class="absolute -top-1 -left-1 w-3.5 h-3.5 rounded-full bg-red-500 border-2 border-[#0A0B0E]"></span>
+</a>
+
+<style>
+  .chip{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    border:1px solid rgba(255,255,255,.16); color:rgba(255,255,255,.65); padding:10px 14px; border-radius:999px; transition:.18s ease; background:rgba(255,255,255,.03); }
+  .chip:hover{ color:#fff; border-color:rgba(255,255,255,.4); }
+  .chip.active{ color:#0A0B0E; background:#10B981; border-color:#10B981; font-weight:700; }
+  .mode-btn{ color:rgba(255,255,255,.5); background:transparent; }
+  .mode-btn:hover{ color:#fff; background:rgba(255,255,255,.05); }
+  .mode-btn.active{ color:#fff; background:rgba(16,185,129,.10); box-shadow:inset 0 -2px 0 #10B981; }
+  .mode-btn .mono{ letter-spacing:.16em; }
+  .gear{ position:relative; flex:1; text-align:left; padding:14px 12px 16px; border:1px solid rgba(255,255,255,.10); background:#0D0F13; transition:.22s ease; }
+  .gear:hover{ border-color:rgba(255,255,255,.3); background:#13161B; }
+  .gear.active{ border-color:#10B981; background:rgba(16,185,129,.09); box-shadow:0 0 0 1px rgba(16,185,129,.35), 0 12px 34px -18px rgba(16,185,129,.7); }
+  .gear .dot{ width:10px; height:10px; border-radius:99px; background:#2A2F38; display:block; margin-bottom:12px; transition:.22s ease; }
+  .gear.active .dot, .gear:hover .dot{ background:#10B981; box-shadow:0 0 0 5px rgba(16,185,129,.16); }
+  .gear .gnum{ font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; color:rgba(255,255,255,.22); transition:.22s ease; }
+  .gear.active .gnum{ color:#10B981; }
+  .gear .gname{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.72); margin-top:6px; }
+  .gear.active .gname{ color:#fff; }
+  .stage-cell{ border:1px solid rgba(255,255,255,.10); border-radius:10px; padding:12px; background:#0D0F13; transition:.25s ease; }
+  .stage-cell.done{ border-color:rgba(16,185,129,.45); background:rgba(16,185,129,.07); }
+  .stage-cell.current{ border-color:#10B981; background:rgba(16,185,129,.13); }
+  .stage-cell.pending{ opacity:.5; }
+</style>
+
+<style>
+  #tachWrap{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:2; }
+  #preStage{ position:static; }
+  .free{ transition:none !important; }
+  @keyframes brakeDive{ 0%{ transform:rotate(.6deg) scale(1.012); } 62%{ transform:rotate(.18deg) scale(1.003); } 100%{ transform:rotate(0deg) scale(1); } }
+  #tint{ position:absolute; inset:0; pointer-events:none; mix-blend-mode:soft-light; opacity:0; transition:opacity .7s ease, background .7s ease; }
+  #fx{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .hot.flip{ flex-direction:row-reverse; }
+  .hot.flip .lbl{ margin-left:0 !important; margin-right:8px; text-align:right; }
+  i[data-lucide]{ display:inline-block; width:1em; height:1em; }
+  .stage-cell .sc-num{ font-family:'JetBrains Mono',monospace; font-size:9.5px; letter-spacing:.14em; }
+</style>
+<script>
+(function(){
+  "use strict";
+  var CFG = window.MODFEM_CONFIG, OP = CFG.operator, IMG = CFG.images;
+  var $ = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+  var clamp = function(v,a,b){ return Math.min(b, Math.max(a,v)); };
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function wa(msg){ return CFG.getWhatsAppUrl(msg); }
+  function openWa(msg){ window.open(wa(msg), '_blank', 'noopener'); }
+
+  if (window.lucide) { try { lucide.createIcons(); } catch(e){} }
+
+  /* ================= OPERATOR RIBBON ================= */
+  var vToggle = $('#verifyToggle'), vDrawer = $('#verifyDrawer');
+  vToggle.addEventListener('click', function(){
+    var open = !vDrawer.classList.contains('hidden');
+    vDrawer.classList.toggle('hidden', open);
+    vToggle.textContent = open ? 'View 6 Items to Verify ▾' : 'Hide Items to Verify ▴';
+  });
+
+  /* ================= IGNITION PRELOADER ================= */
+  var pre = $('#preloader'), tachWrap = $('#tachWrap'), tachSvg = $('#tachSvg');
+  var preCount = $('#preCount'), preBar = $('#preBar'), preStatus = $('#preStatus');
+  var stage = $('#stage'), scene = $('#scene'), speed = $('#speedlines');
+  var timers = [], rafPre = null, arrived = false;
+
+  function clearTimers(){ timers.forEach(clearTimeout); timers = []; if(rafPre) cancelAnimationFrame(rafPre); }
+
+  function finishIgnition(){
+    clearTimers();
+    pre.classList.add('split');
+    setTimeout(function(){ pre.classList.add('gone'); }, 360);
+    playArrival();
+  }
+
+  function runIgnition(){
+    clearTimers();
+    arrived = false;
+    pre.className = '';
+    tachWrap.style.cssText = '';
+    tachWrap.style.opacity = '1';
+    preCount.textContent = '00'; preBar.style.width = '0%';
+    preStatus.textContent = 'TELEMETRY PRIME';
+    stage.className = 'arrive'; stage.style.transform = '';
+    scene.style.animation = '';
+
+    if (reduce) { finishIgnition(); return; }
+
+    void tachSvg.offsetWidth;
+    tachSvg.classList.remove('run'); void tachSvg.offsetWidth; tachSvg.classList.add('run');
+
+    var t0 = performance.now();
+    (function tick(now){
+      var p = clamp((now - t0) / 1000, 0, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      var val = Math.round(e * 100);
+      preCount.textContent = (val < 10 ? '0' : '') + val;
+      preBar.style.width = val + '%';
+      if (p < 1) rafPre = requestAnimationFrame(tick);
+    })(t0);
+
+    /* Phase 2 — 1.0s : M slides left, wordmark expands, wheel spins */
+    timers.push(setTimeout(function(){
+      var m = $('.pre-letters .ltr');
+      var mr = m.getBoundingClientRect(), sr = $('.pre-core').getBoundingClientRect();
+      var dx = (mr.left + mr.width/2) - (sr.left + sr.width/2);
+      var dy = (mr.top + mr.height/2) - (sr.top + sr.height/2);
+      tachWrap.style.transition = 'transform .75s cubic-bezier(.16,1,.3,1), opacity .55s ease .2s';
+      tachWrap.style.transform = 'translate(calc(-50% + ' + dx.toFixed(1) + 'px), calc(-50% + ' + dy.toFixed(1) + 'px)) scale(.34)';
+      tachWrap.style.opacity = '0';
+      pre.classList.add('p2');
+      preStatus.textContent = 'WORDMARK EXPAND';
+    }, 1000));
+
+    timers.push(setTimeout(function(){ pre.classList.add('locked'); preStatus.textContent = 'WHEEL LOCK 12 O\u2019CLOCK'; }, 1740));
+    timers.push(setTimeout(function(){ preStatus.textContent = 'GARAGE DOORS OPEN'; }, 1950));
+    timers.push(setTimeout(finishIgnition, 2000));
+  }
+
+  function playArrival(){
+    if (arrived) return; arrived = true;
+    stage.style.transform = '';
+    stage.className = 'arrive';
+    void stage.offsetWidth;
+    stage.classList.add('settle');
+    if (!reduce){
+      scene.style.animation = 'none'; void scene.offsetWidth;
+      scene.style.animation = 'brakeDive 1.8s cubic-bezier(.16,1,.3,1)';
+      speed.style.transition = 'opacity 1.5s ease';
+      speed.style.opacity = '.85';
+      setTimeout(function(){ speed.style.opacity = '0'; }, 120);
+    }
+    setTimeout(function(){
+      stage.className = 'free';
+      applyScroll();
+    }, reduce ? 30 : 1880);
+  }
+
+  $('#preSkip').addEventListener('click', function(){ runIgnition(); });
+  $('#footerReplay').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+    setTimeout(runIgnition, 260);
+  });
+  $('#railReplay').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior:'smooth' });
+    arrived = false;
+    setTimeout(playArrival, 300);
+  });
+
+  /* ================= SCROLL RE-ACCELERATION ================= */
+  var scrollP = 0;
+  function applyScroll(){
+    if (!stage.classList.contains('free')) return;
+    var y = window.scrollY || window.pageYOffset || 0;
+    scrollP = clamp(y / 650, 0, 1);
+    stage.style.transform = 'scale(' + (1 + 0.22 * scrollP).toFixed(4) + ') translateY(' + (30 * scrollP).toFixed(2) + 'px)';
+    speed.style.transition = 'opacity .25s ease';
+    speed.style.opacity = (0.55 * scrollP).toFixed(3);
+    applyCone();
+  }
+  var scrollTick = false;
+  window.addEventListener('scroll', function(){
+    if (scrollTick) return; scrollTick = true;
+    requestAnimationFrame(function(){ applyScroll(); scrollTick = false; });
+  }, { passive:true });
+
+  /* ================= WEATHER ENGINE ================= */
+  var MODES = [
+    { key:'dusk',  name:'DUSK',   label:'GOLDEN DUSK',      icon:'\u2600',
+      grade:'saturate(1.14) contrast(1.06) brightness(1.02)', cone:.55, sun:.55,
+      tint:{ bg:'linear-gradient(180deg,#F5A524 0%,#7A4B12 55%,#12141A 100%)', op:.45 }, particle:'mist' },
+    { key:'sunny', name:'DAY',    label:'SUNNY DAY',        icon:'\u2600',
+      grade:'saturate(1.08) contrast(1.14) brightness(1.1)', cone:.16, sun:.9,
+      tint:{ bg:'linear-gradient(180deg,#FFE7B0 0%,#9EC6E8 60%,#2A2E33 100%)', op:.35 }, particle:'dust' },
+    { key:'night', name:'NIGHT',  label:'NIGHT HIGH-BEAMS', icon:'\u263D',
+      grade:'brightness(.55) contrast(1.25) saturate(.85)', cone:1, sun:0,
+      tint:{ bg:'linear-gradient(180deg,#0A1030 0%,#05070F 70%,#000 100%)', op:.6 }, particle:'night' },
+    { key:'rain',  name:'RAIN',   label:'TROPICAL RAIN',    icon:'\u2614',
+      grade:'brightness(.74) contrast(1.06) saturate(.66) hue-rotate(-8deg)', cone:.8, sun:0,
+      tint:{ bg:'linear-gradient(180deg,#4A5560 0%,#2B333C 60%,#0D1014 100%)', op:.55 }, particle:'rain' },
+    { key:'fog',   name:'FOG',    label:'ATLANTIC FOG',     icon:'\u2601',
+      grade:'brightness(.95) contrast(.82) saturate(.55)', cone:.62, sun:.12,
+      tint:{ bg:'linear-gradient(180deg,#C9CDD2 0%,#8E959C 60%,#3A3F45 100%)', op:.5 }, particle:'fog' },
+    { key:'snow',  name:'SNOW',   label:'ONTARIO SNOWFALL', icon:'\u2744',
+      grade:'saturate(.72) brightness(1.08) contrast(1.04) sepia(.3) hue-rotate(175deg)', cone:.5, sun:.18,
+      tint:{ bg:'linear-gradient(180deg,#DCE9FF 0%,#A8C4E8 55%,#2A3444 100%)', op:.4 }, particle:'snow' }
+  ];
+  var modeIdx = 0, hub = 'lagos', manual = false;
+  var HUBS = { lagos:{ lat:6.5244, lon:3.3792, label:'LAGOS' }, vaughan:{ lat:43.8361, lon:-79.4983, label:'VAUGHAN ON' } };
+  var temps = { lagos:29, vaughan:4 };
+  var wxLabel = $('#wxLabel'), wxIcon = $('#wxIcon');
+  var tintEl = document.createElement('div'); tintEl.id = 'tint'; stage.appendChild(tintEl);
+
+  function applyCone(){
+    var base = MODES[modeIdx].cone;
+    stage.style.setProperty('--cone', (base * (0.78 + 0.55 * scrollP)).toFixed(3));
+  }
+  function applyMode(){
+    var m = MODES[modeIdx];
+    stage.style.setProperty('--grade', m.grade);
+    stage.style.setProperty('--sun', m.sun);
+    tintEl.style.background = m.tint.bg;
+    tintEl.style.opacity = m.tint.op;
+    applyCone();
+    seed();
+    renderPill();
+  }
+  function renderPill(){
+    var m = MODES[modeIdx];
+    wxIcon.textContent = m.icon;
+    wxLabel.innerHTML = HUBS[hub].label + ' \u00B7 ' + Math.round(temps[hub]) + '\u00B0C \u00B7 ' + m.name +
+      ' <span class="hidden sm:inline">[CLICK TO CYCLE WEATHER]</span>';
+    wxLabel.classList.add('whitespace-nowrap');
+  }
+  $('#weatherPill').addEventListener('click', function(){
+    manual = true; modeIdx = (modeIdx + 1) % MODES.length; applyMode();
+  });
+  $('#railHub').addEventListener('click', function(){
+    hub = (hub === 'lagos') ? 'vaughan' : 'lagos';
+    manual = false; fetchWeather();
+    renderPill();
+  });
+
+  function codeToMode(code, isDay, hour){
+    if (code === 45 || code === 48) return 4;
+    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82) || code >= 95) return 3;
+    if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 5;
+    if (!isDay) return 2;
+    if (hour >= 17 && hour < 19.5) return 0;
+    if (hour < 6.5 || hour >= 21) return 2;
+    return 1;
+  }
+  function fetchWeather(){
+    Object.keys(HUBS).forEach(function(k){
+      var h = HUBS[k];
+      var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + h.lat + '&longitude=' + h.lon +
+                '&current=temperature_2m,is_day,weather_code';
+      fetch(url).then(function(r){ return r.json(); }).then(function(j){
+        if (!j || !j.current) return;
+        temps[k] = j.current.temperature_2m;
+        if (k === hub && !manual){
+          var local = new Date();
+          var hr = (k === 'lagos')
+            ? ((local.getUTCHours() + 1) % 24)
+            : ((((local.getUTCHours() + local.getTimezoneOffset() / 60) % 24) + 24) % 24);
+          modeIdx = codeToMode(j.current.weather_code, j.current.is_day, hr);
+          applyMode();
+        } else { renderPill(); }
+      }).catch(function(){
+        if (k === hub && !manual){ fallbackClock(); }
+        renderPill();
+      });
+    });
+  }
+  function fallbackClock(){
+    var d = new Date();
+    var hr = d.getHours() + d.getMinutes()/60;
+    modeIdx = codeToMode(0, (hr > 6.4 && hr < 19.4) ? 1 : 0, hr);
+    applyMode();
+  }
+
+  /* ---- canvas particles ---- */
+  var cv = $('#fx'), ctx = cv.getContext('2d'), W = 0, H = 0, DPR = 1, parts = [], rafFx = null, visible = true;
+  function resizeCanvas(){
+    var r = cv.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = Math.round(r.width * DPR); cv.height = Math.round(r.height * DPR);
+    W = r.width; H = r.height;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    seed();
+  }
+  function seed(){
+    parts = [];
+    var type = MODES[modeIdx].particle, i, n;
+    if (type === 'rain'){ n = 110;
+      for (i=0;i<n;i++) parts.push({ x:Math.random()*W, y:Math.random()*H, l:12+Math.random()*26, s:520+Math.random()*520, a:.16+Math.random()*.4 });
+    } else if (type === 'snow'){ n = 130;
+      for (i=0;i<n;i++){ var d = Math.random(); parts.push({ x:Math.random()*W, y:Math.random()*H, d:d, r:.8+d*3.2, s:22+ d*70, sway:8+Math.random()*22, ph:Math.random()*6.28, a:.22+d*.62 }); }
+    } else if (type === 'fog'){ n = 14;
+      for (i=0;i<n;i++) parts.push({ x:Math.random()*W, y:H*(.35+Math.random()*.62), r:120+Math.random()*240, s:6+Math.random()*16, a:.05+Math.random()*.1 });
+    } else if (type === 'mist'){ n = 16;
+      for (i=0;i<n;i++) parts.push({ x:Math.random()*W, y:H*(.6+Math.random()*.38), r:70+Math.random()*150, s:5+Math.random()*13, a:.03+Math.random()*.07 });
+    } else if (type === 'dust'){ n = 70;
+      for (i=0;i<n;i++) parts.push({ x:Math.random()*W, y:Math.random()*H, r:.6+Math.random()*1.7, s:6+Math.random()*16, a:.1+Math.random()*.32, ph:Math.random()*6.28 });
+    } else { n = 55;
+      for (i=0;i<n;i++) parts.push({ x:Math.random()*W, y:Math.random()*H, r:.5+Math.random()*1.6, s:4+Math.random()*10, a:.06+Math.random()*.2, ph:Math.random()*6.28 });
+    }
+  }
+  function drawFx(t){
+    if (!W) { resizeCanvas(); }
+    ctx.clearRect(0,0,W,H);
+    var type = MODES[modeIdx].particle, i, p;
+    if (type === 'rain'){
+      ctx.lineCap = 'round';
+      for (i=0;i<parts.length;i++){ p = parts[i];
+        ctx.strokeStyle = 'rgba(206,226,255,' + p.a + ')'; ctx.lineWidth = 1.15;
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.l*0.34, p.y + p.l); ctx.stroke();
+        p.y += p.s/60; p.x -= p.s/170;
+        if (p.y > H + 40){ p.y = -40; p.x = Math.random()*(W+160); }
+        if (p.x < -60) p.x = W + 60;
+      }
+    } else if (type === 'snow'){
+      for (i=0;i<parts.length;i++){ p = parts[i];
+        ctx.fillStyle = 'rgba(255,255,255,' + p.a + ')';
+        ctx.beginPath(); ctx.arc(p.x + Math.sin(t/1000 + p.ph)*p.sway, p.y, p.r, 0, 6.2832); ctx.fill();
+        p.y += p.s/60;
+        if (p.y > H + 8){ p.y = -8; p.x = Math.random()*W; }
+      }
+    } else if (type === 'fog' || type === 'mist'){
+      for (i=0;i<parts.length;i++){ p = parts[i];
+        var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+        var col = type === 'fog' ? '255,255,255' : '226,232,240';
+        g.addColorStop(0, 'rgba(' + col + ',' + p.a + ')');
+        g.addColorStop(1, 'rgba(' + col + ',0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill();
+        p.x += p.s/60;
+        if (p.x - p.r > W){ p.x = -p.r; p.y = H*(type === 'fog' ? .3+Math.random()*.65 : .58+Math.random()*.4); }
+      }
+    } else {
+      for (i=0;i<parts.length;i++){ p = parts[i];
+        ctx.fillStyle = 'rgba(255,240,214,' + p.a + ')';
+        ctx.beginPath(); ctx.arc(p.x + Math.sin(t/1600 + p.ph)*6, p.y + Math.cos(t/2200 + p.ph)*4, p.r, 0, 6.2832); ctx.fill();
+        p.y -= p.s/60;
+        if (p.y < -6){ p.y = H + 6; p.x = Math.random()*W; }
+      }
+    }
+    rafFx = requestAnimationFrame(drawFx);
+  }
+  function startFx(){ if (!rafFx && visible) rafFx = requestAnimationFrame(drawFx); }
+  function stopFx(){ if (rafFx){ cancelAnimationFrame(rafFx); rafFx = null; } }
+
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        visible = e.isIntersecting;
+        if (visible){ resizeCanvas(); startFx(); } else { stopFx(); }
+      });
+    }, { threshold:0.02 }).observe($('#hero'));
+  }
+  window.addEventListener('resize', function(){ resizeCanvas(); });
+
+  /* ================= REVEALS ================= */
+  if ('IntersectionObserver' in window){
+    var rvObs = new IntersectionObserver(function(en){
+      en.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); rvObs.unobserve(e.target); } });
+    }, { threshold:.12 });
+    $$('.rv').forEach(function(el){ rvObs.observe(el); });
+  } else { $$('.rv').forEach(function(el){ el.classList.add('in'); }); }
+
+  /* ================= GALLERY SWITCHERS ================= */
+  function buildThumbs(container, items, onPick){
+    container.innerHTML = '';
+    items.forEach(function(it, i){
+      var b = document.createElement('button');
+      b.className = 'thumb-btn' + (i === 0 ? ' active' : '');
+      b.innerHTML = '<img src="' + it.src + '" alt="' + it.label + '"><span>' + it.n + '</span>';
+      b.addEventListener('click', function(){
+        $$('.thumb-btn', container).forEach(function(x){ x.classList.remove('active'); });
+        b.classList.add('active'); onPick(i, it);
+      });
+      container.appendChild(b);
+    });
+  }
+  var inspectMain = $('#inspectMain'), inspectNum = $('#inspectNum'), inspectLabel = $('#inspectLabel');
+  function setGla(i, it){
+    inspectMain.src = it.src; inspectNum.textContent = it.n; inspectLabel.textContent = it.label;
+    var fm = $('#glaMain'); if (fm) fm.src = it.src;
+    var gt = $$('#glaThumbs .thumb-btn'); gt.forEach(function(x,k){ x.classList.toggle('active', k === i); });
+  }
+  buildThumbs($('#inspectThumbs'), IMG.glaInspection, setGla);
+  buildThumbs($('#glaThumbs'), IMG.glaInspection, function(i, it){
+    $('#glaMain').src = it.src;
+    var it2 = $$('#inspectThumbs .thumb-btn')[i]; if (it2) it2.click();
+  });
+  $('#glaMain').src = IMG.glaInspection[0].src;
+  inspectMain.src = IMG.glaInspection[0].src;
+  inspectNum.textContent = IMG.glaInspection[0].n;
+  inspectLabel.textContent = IMG.glaInspection[0].label;
+
+  buildThumbs($('#kiaThumbs'), IMG.kiaViews, function(i, it){ $('#kiaMain').src = it.src; });
+  $('#kiaMain').src = IMG.kiaViews[0].src;
+
+  /* ================= HOTSPOT PINS ================= */
+  $$('.hot').forEach(function(h){
+    if (parseFloat(h.style.left) > 55) h.classList.add('flip');
+    h.addEventListener('click', function(e){ e.preventDefault(); h.classList.toggle('open'); });
+  });
+  $$('.hot').forEach(function(h,i){ if (i % 3 === 0) h.classList.add('pinned'); });
+  function wirePinToggle(cb, pins){
+    var box = $(cb); if (!box) return;
+    box.addEventListener('change', function(){
+      var el = $(pins);
+      el.style.opacity = box.checked ? '1' : '0';
+      el.style.pointerEvents = box.checked ? 'auto' : 'none';
+    });
+  }
+  wirePinToggle('#glaPinToggle', '#glaPins');
+  wirePinToggle('#kiaPinToggle', '#kiaPins');
+
+  /* ================= 3D TILT ================= */
+  if (!reduce && window.matchMedia('(hover:hover)').matches){
+    $$('.tilt-card').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+        card.style.transform = 'perspective(1400px) rotateX(' + (-py*3.2).toFixed(2) + 'deg) rotateY(' + (px*3.8).toFixed(2) + 'deg)';
+      });
+      card.addEventListener('mouseleave', function(){ card.style.transform = 'perspective(1400px) rotateX(0) rotateY(0)'; });
+    });
+  }
+
+  /* ================= MODALS / DRAWERS ================= */
+  var inspectModal = $('#inspectModal');
+  function openInspect(){ inspectModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+  function closeInspect(){ inspectModal.classList.add('hidden'); document.body.style.overflow = ''; }
+  $$('[data-open-inspect]').forEach(function(b){ b.addEventListener('click', openInspect); });
+  $$('[data-close-inspect]').forEach(function(b){ b.addEventListener('click', closeInspect); });
+
+  var costDrawer = $('#costDrawer'), costPanel = $('#costPanel');
+  function openCost(){ costDrawer.classList.remove('hidden'); requestAnimationFrame(function(){ costPanel.style.transform = 'translateX(0)'; }); }
+  function closeCost(){ costPanel.style.transform = 'translateX(100%)'; setTimeout(function(){ costDrawer.classList.add('hidden'); }, 450); }
+  $$('[data-open-cost]').forEach(function(b){ b.addEventListener('click', openCost); });
+  $$('[data-close-cost]').forEach(function(b){ b.addEventListener('click', closeCost); });
+  $('#railCost').addEventListener('click', openCost);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){ closeInspect(); if (!costDrawer.classList.contains('hidden')) closeCost(); }
+  });
+
+  /* landed cost lines */
+  var COST = [
+    { l:'Base vehicle (CAD)',                    c:'$6,450',  n:'\u20A67,611,000', v:false },
+    { l:'Canadian pre-purchase inspection & towing', c:'$320', n:'\u20A6377,600', v:false },
+    { l:'Export docs, title & Canadian tax',     c:'$265',    n:'\u20A6312,700', v:false },
+    { l:'RoRo freight \u00B7 Halifax \u2192 Lagos', c:'$1,780', n:'\u20A62,100,400', v:false },
+    { l:'Marine cargo insurance',                c:'$145',    n:'\u20A6171,100', v:false },
+    { l:'Age-tiered Nigerian Customs duty',      c:'\u2014',  n:'\u20A61,947,200', v:true },
+    { l:'Tin Can clearing, terminal & agent',    c:'\u2014',  n:'\u20A61,254,000', v:false },
+    { l:'Mainland delivery to Lagos buyer',      c:'\u2014',  n:'\u20A686,000',   v:false }
+  ];
+  $('#costLines').innerHTML = COST.map(function(r){
+    return '<div class="flex items-start justify-between gap-4 py-2.5 border-b border-white/8">' +
+      '<span class="text-white/60">' + r.l + (r.v ? ' <span class="text-amber-400">[VERIFY]</span>' : '') + '</span>' +
+      '<span class="text-right whitespace-nowrap"><span class="text-white/45">' + r.c + '</span><br><span class="text-white font-bold">' + r.n + '</span></span></div>';
+  }).join('');
+
+  /* ================= GEAR GATE ================= */
+  var GATES = [
+    { n:'01', name:'SPEC',    where:'We lock the exact spec, budget ceiling and port of arrival in Vaughan, Ontario — then quote the landed number in \u20A6 before you move a kobo.', pay:'Nothing. Zero commitment at this stage.', proof:'Written spec sheet + indicative landed-cost line items on WhatsApp.' },
+    { n:'02', name:'INSPECT', where:'Independent pre-purchase inspection in Ontario: lift, OBD scan, cold-start video, paint depth and full photo set.', pay:'Inspection fee only (waived once you proceed).', proof:'Inspection video, lift photos, VIN report and fault list.' },
+    { n:'03', name:'ACQUIRE', where:'Purchase, payment handling, title transfer and export paperwork executed under Modfem\u2019s Canadian entity.', pay:'Agreed purchase price + staged payment structure in writing.', proof:'Bill of sale, title/ownership transfer and Canadian tax receipt.' },
+    { n:'04', name:'SHIP',    where:'RoRo or container booked from Halifax/Toronto to Tin Can or PTML; vessel tracked door to door.', pay:'Freight, marine insurance and export handling.', proof:'Bill of Lading, vessel name, tracking link and ETA.' },
+    { n:'05', name:'DELIVER', where:'Age-tiered Customs duty assessed, Tin Can clearing completed and the unit released to you in Lagos.', pay:'Nigerian Customs duty + clearing, then hand-over.', proof:'Customs assessment sheet, clearing release and hand-over photos.' }
+  ];
+  var gateIdx = -1;
+  $('#gateTrack').innerHTML = GATES.map(function(g, i){
+    return '<button class="gear' + (i === 0 ? ' active' : '') + '" data-g="' + i + '">' +
+      '<span class="dot"></span><span class="gnum">' + g.n + '</span><span class="gname">' + g.name + '</span></button>';
+  }).join('');
+  function renderGate(){
+    if (gateIdx < 0) return;
+    $$('#gateTrack .gear').forEach(function(btn, i){ btn.classList.toggle('active', i === gateIdx); });
+    var g = GATES[gateIdx];
+    var cells = [
+      ['WHAT MODFEM DOES IN ONTARIO', g.where],
+      ['WHAT YOU PAY AT THIS MILESTONE', g.pay],
+      ['VERIFICATION PROOF SENT TO WHATSAPP', g.proof]
+    ];
+    $('#gateReadout').innerHTML = cells.map(function(c, i){
+      return '<div class="rounded-xl border border-white/12 bg-[#101216] p-5 cross relative">' +
+        '<div class="cross-x"><i style="top:8px;left:8px">+</i><i style="bottom:8px;right:8px">+</i></div>' +
+        '<p class="eyebrow ' + (i === 2 ? 'text-emerald-400' : 'text-white/40') + '">' + c[0] + '</p>' +
+        '<p class="mt-3 text-[14px] leading-relaxed text-white/75">' + c[1] + '</p></div>';
+    }).join('');
+  }
+  $$('#gateTrack .gear').forEach(function(btn){
+    var i = +btn.dataset.g;
+    btn.addEventListener('click', function(){ gateIdx = i; renderGate(); });
+    btn.addEventListener('mouseenter', function(){
+      if (window.matchMedia('(hover:hover)').matches && gateIdx !== i){ gateIdx = i; renderGate(); }
+    });
+  });
+  gateIdx = 0;
+  renderGate();
+
+  /* ================= CONCIERGE ================= */
+  var modeBtns = $$('.mode-btn'), tradeBlock = $('#tradeBlock'), mMode = $('#mMode');
+  function setMode(m){
+    mMode.value = String(m);
+    tradeBlock.classList.toggle('hidden', m !== 2);
+    modeBtns.forEach(function(b){ b.classList.toggle('active', b.dataset.mode === String(m)); });
+  }
+  modeBtns.forEach(function(b){ b.addEventListener('click', function(){ setMode(+b.dataset.mode); }); });
+  setMode(1);
+
+  var mandateForm = $('#mandateForm'), mErr = $('#mErr'), ticket = $('#mandateTicket'), lastMsg = '';
+  function fail(msgs){
+    mErr.classList.remove('hidden');
+    mErr.textContent = 'INCOMPLETE MANDATE \u2014 ' + msgs.join(' \u00B7 ');
+    $$('#mandateForm .field').forEach(function(f){ f.classList.remove('err'); });
+    msgs.forEach(function(m){
+      var map = { 'target make/model':'mTarget','year range':'mYear','max budget':'mBudget','whatsapp number':'mWa','trade-in year':'tYear','trade-in make/model':'tModel','mileage & condition':'tMiles','location in nigeria':'tLoc' };
+      var id = map[m.toLowerCase()]; if (id) $('#' + id).classList.add('err');
+    });
+    return false;
+  }
+  mandateForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var errs = [];
+    if (!$('#mTarget').value.trim()) errs.push('Target Make/Model');
+    if (!$('#mYear').value.trim()) errs.push('Year Range');
+    if (!$('#mBudget').value.trim()) errs.push('Max Budget');
+    if (!$('#mWa').value.trim().replace(/\D/g,'')) errs.push('WhatsApp Number');
+    if (mMode.value === '2'){
+      if (!$('#tYear').value.trim()) errs.push('Trade-in Year');
+      if (!$('#tModel').value.trim()) errs.push('Trade-in Make/Model');
+      if (!$('#tMiles').value.trim()) errs.push('Mileage & Condition');
+      if (!$('#tLoc').value.trim()) errs.push('Location in Nigeria');
+    }
+    if (errs.length){ fail(errs); return; }
+    mErr.classList.add('hidden');
+
+    var cur = $('#mCurrency').value === 'CAD' ? 'CAD' : 'NGN';
+    var budget = $('#mBudget').value.trim().replace(/[^\d.]/g,'');
+    var bLabel = cur === 'CAD' ? 'CA$' + budget : '\u20A6' + budget;
+    var ref = 'MFC-' + Date.now().toString().slice(-6) + '-' + (mMode.value === '2' ? 'SWAP' : 'SRC');
+    var lines = [];
+    lines.push('MODE            : ' + (mMode.value === '2' ? '02 // CAR UPGRADE & SWAP' : '01 // DIRECT CANADIAN SOURCING'));
+    lines.push('TARGET VEHICLE  : ' + $('#mTarget').value.trim());
+    lines.push('YEAR RANGE      : ' + $('#mYear').value.trim());
+    lines.push('MAX BUDGET      : ' + bLabel);
+    lines.push('PREFERRED PORT  : ' + $('#mPort').value);
+    lines.push('BUYER WHATSAPP  : ' + $('#mWa').value.trim());
+    if (mMode.value === '2'){
+      lines.push('--- TRADE-IN ---');
+      lines.push('CURRENT VEHICLE : ' + $('#tYear').value.trim() + ' ' + $('#tModel').value.trim());
+      lines.push('MILEAGE/COND.   : ' + $('#tMiles').value.trim());
+      lines.push('LOCATION        : ' + $('#tLoc').value.trim());
+    }
+    var body = 'MODFEM & CO. \u2014 MANDATE TICKET\nREF: ' + ref + '\nISSUED: ' + new Date().toLocaleString() + '\n' + new Array(34).join('-') + '\n' + lines.join('\n');
+    $('#ticketRef').textContent = 'REF ' + ref;
+    $('#ticketBody').textContent = body;
+    ticket.classList.remove('hidden');
+    lastMsg = 'Hello Modfem, here is my mandate from modfemautos.com (' + ref + '):\n\n' + body + '\n\nPlease confirm availability and next steps.';
+    ticket.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  });
+  $('#dispatchBtn').addEventListener('click', function(){ openWa(lastMsg); });
+  $('#editBtn').addEventListener('click', function(){ ticket.classList.add('hidden'); $('#mTarget').focus(); });
+
+  /* ================= TRACKER ================= */
+  var STAGES = ['Sourced','Inspected','Purchased','Shipped','In Transit','Arrived Port','Customs Cleared','Delivered'];
+  var TRACKS = {
+    g   : { ref:'MFC-2016-GLA-01', unit:'2016 Mercedes-Benz GLA250 4MATIC', flag:'CLEARED \u00B7 READY', done:7, sync:'LAST TELEMETRY SYNC: 2 DAYS AGO' },
+    kia : { ref:'MFC-2013-KSP-04', unit:'2013 Upgraded Kia Sportage', flag:'ONTARIO LOT \u00B7 AWAITING SAILING', done:2, sync:'LAST TELEMETRY SYNC: 5 DAYS AGO' },
+    rx  : { ref:'MFC-2013-RX350-07', unit:'2013 Lexus RX 350 F-Sport', flag:'APAPA \u00B7 IN CLEARING', done:6, sync:'LAST TELEMETRY SYNC: 11 HOURS AGO' }
+  };
+  var curTrack = 'g';
+  function renderTrack(){
+    var t = TRACKS[curTrack];
+    $('#trackRef').textContent = t.ref;
+    $('#trackUnit').textContent = t.unit;
+    $('#trackFlag').textContent = t.flag;
+    $('#stalenessText').textContent = t.sync;
+    $('#trackStages').innerHTML = STAGES.map(function(s, i){
+      var cls = i < t.done ? 'done' : (i === t.done ? 'current' : 'pending');
+      var mark = i < t.done ? '\u2713' : (i === t.done ? '\u25CF' : '\u25CB');
+      return '<div class="stage-cell ' + cls + '">' +
+        '<p class="sc-num ' + (i <= t.done ? 'text-emerald-400' : 'text-white/40') + '">' + (i+1 < 10 ? '0' : '') + (i+1) + ' ' + mark + '</p>' +
+        '<p class="text-[12.5px] font-semibold mt-1.5">' + s + '</p>' +
+        '<p class="mono text-[9.5px] text-white/40 mt-0.5">' + (i < t.done ? 'VERIFIED' : (i === t.done ? 'ACTIVE' : 'PENDING')) + '</p></div>';
+    }).join('');
+  }
+  $$('#trackChips .chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      $$('#trackChips .chip').forEach(function(x){ x.classList.remove('active'); });
+      c.classList.add('active'); curTrack = c.dataset.track; renderTrack();
+      $('#trackErr').classList.add('hidden');
+    });
+  });
+  $('#trackGo').addEventListener('click', function(){
+    var q = $('#trackInput').value.trim().toUpperCase();
+    var err = $('#trackErr');
+    if (!q){ err.textContent = 'ENTER AN ORDER REF OR 17-DIGIT VIN TO LOOK UP.'; err.classList.remove('hidden'); return; }
+    var hit = null;
+    Object.keys(TRACKS).forEach(function(k){ if (TRACKS[k].ref.indexOf(q) > -1 || q.indexOf(TRACKS[k].ref) > -1) hit = k; });
+    if (!hit && /^[A-HJ-NPR-Z0-9]{13,17}$/.test(q)) hit = 'g';
+    if (!hit){ err.textContent = 'NO MATCHING RECORD FOR "' + q + '". TRY MFC-2016-GLA-01, MFC-2013-KSP-04 OR MFC-2013-RX350-07.'; err.classList.remove('hidden'); return; }
+    err.classList.add('hidden');
+    curTrack = hit;
+    $$('#trackChips .chip').forEach(function(x){ x.classList.toggle('active', x.dataset.track === hit); });
+    renderTrack();
+  });
+  renderTrack();
+
+  /* ================= WHATSAPP DISPATCHES ================= */
+  var MSG = {
+    claim: 'Hello Modfem, I want to claim the 2016 Mercedes-Benz GLA250 4MATIC at \u20A619,000,000 flat — available for immediate pick up in Lagos. Please send the full 6-photo inspection dossier and VREG/VIN verification. Lot MFC-2016-GLA-01.',
+    kia:   'Hello Modfem, please send the full landed-cost breakdown for the 2013 Upgraded Kia Sportage at \u20A611,500,000 landed (shipping & clearing included), plus the Canadian inspection report and Bill of Lading.',
+    general:'Hello Modfem, I found you on modfemautos.com. I would like to discuss vehicle sourcing from Vaughan, Ontario to Lagos, Nigeria.',
+    status:'Hello Modfem, please send a live photo and current status update for my order. Order ref: ',
+    fleet: 'Hello Modfem, please send the full sourcing archive dossiers (Venza, RX 350, Camry, Acura MDX) — the flyer thumbnails on your site are marked [VERIFY].'
+  };
+  $$('[data-wa-claim]').forEach(function(b){ b.addEventListener('click', function(){ openWa(MSG.claim); }); });
+  $$('[data-wa-kia]').forEach(function(b){ b.addEventListener('click', function(){ openWa(MSG.kia); }); });
+  $$('[data-wa-general]').forEach(function(b){ b.addEventListener('click', function(){ openWa(MSG.general); }); });
+  $$('[data-wa-status]').forEach(function(b){ b.addEventListener('click', function(){ openWa(MSG.status + $('#trackRef').textContent); }); });
+  $('#fabWa').href = wa(MSG.general);
+  $('#footerWa').href = wa(MSG.general);
+  $('#year').textContent = new Date().getFullYear();
+
+  /* ================= BOOT ================= */
+  applyMode();
+  fetchWeather();
+  resizeCanvas();
+  startFx();
+  window.addEventListener('load', function(){ resizeCanvas(); });
+  if (document.readyState === 'complete') runIgnition();
+  else window.addEventListener('DOMContentLoaded', function(){ setTimeout(runIgnition, 120); });
+  /* safety: never trap the page behind the preloader */
+  setTimeout(function(){ if (!pre.classList.contains('gone')) { try { finishIgnition(); } catch(e){ pre.classList.add('gone'); } } }, 7000);
+
+  if (window.lucide) { try { lucide.createIcons(); } catch(e){} }
+})();
+</script>
+</body>
+</html>

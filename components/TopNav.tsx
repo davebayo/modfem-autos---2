@@ -1,10 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useExchangeRate } from "@/lib/fx";
+import { GLASS_NAV } from "@/lib/glass-tokens";
+import { ModfemLogoMark } from "@/components/ui/ModfemLogoMark";
 
 interface TopNavProps {
   announcement?: string;
@@ -12,19 +15,19 @@ interface TopNavProps {
 }
 
 const NAV_LINKS = [
-  { label: "SHOWROOM", href: "/" },
+  { label: "HOME", href: "/" },
   { label: "INVENTORY", href: "/inventory" },
   { label: "TRACK", href: "/track" },
   { label: "SOURCING", href: "/request" },
-  { label: "ADMIN", href: "/admin" },
 ];
 
 export function TopNav({
-  announcement = "Live Customs Exchange Rate: $1 CAD = ₦1,180",
+  announcement = "Based in Vaughan, Ontario — Direct Vehicle Sourcing & Shipping to Lagos",
   onOpenMenu,
 }: TopNavProps) {
   const pathname = usePathname();
   const fx = useExchangeRate();
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null);
 
   const fxDotColor =
     fx.source === "live"
@@ -34,22 +37,22 @@ export function TopNav({
         : "bg-zinc-500";
 
   return (
-    <header className="shrink-0 border-b border-white/10">
-      <div className="grid h-16 grid-cols-2 md:h-20 md:grid-cols-4">
-        <div className="flex flex-col justify-center px-4 md:px-8">
-          <span className="font-panchang text-lg font-black uppercase tracking-widest text-white">
-            MODFEM AUTOS
-          </span>
-          <span className="hidden font-mono text-[10px] uppercase tracking-widest text-zinc-500 md:block">
-            Canada &rarr; Nigeria
-          </span>
-          <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-zinc-500 md:hidden">
+    <header className="sticky top-0 z-30 px-3 pt-3 sm:px-4">
+      <div className={`mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 rounded-full px-4 sm:px-6 ${GLASS_NAV}`}>
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2">
+            <ModfemLogoMark className="h-4 w-auto text-white" />
+            <span className="font-[family-name:var(--font-brand)] text-sm font-semibold tracking-[-0.02em] text-white sm:text-base">
+              MODFEM AUTOS
+            </span>
+          </div>
+          <span className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[9px] uppercase tracking-widest text-zinc-400 lg:flex">
             <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${fxDotColor}`} />
-            &#8362;{fx.rate.toLocaleString("en-NG")}/CAD
+            ₦{fx.rate.toLocaleString("en-NG")}/CAD
           </span>
         </div>
 
-        <div className="col-span-2 hidden items-center overflow-hidden pl-8 md:flex">
+        <div className="hidden flex-1 items-center justify-center overflow-hidden md:flex">
           <AnimatePresence mode="wait">
             <motion.span
               key={announcement}
@@ -57,52 +60,55 @@ export function TopNav({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 1, ease: "easeInOut" }}
-              className="truncate text-xs font-light uppercase tracking-wider text-zinc-300"
+              className="truncate text-[10px] font-light uppercase tracking-wider text-zinc-400"
             >
               {announcement}
             </motion.span>
           </AnimatePresence>
         </div>
 
-        <div className="flex items-center justify-end gap-3 px-4 md:flex-col md:items-end md:justify-center md:gap-2 md:px-8">
-          <nav className="hidden items-center gap-3 md:flex">
-            {NAV_LINKS.map((link, index) => {
+        <div className="flex shrink-0 items-center gap-2">
+          <nav
+            className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] p-1 md:flex"
+            onMouseLeave={() => setHoveredHref(null)}
+          >
+            {NAV_LINKS.map((link) => {
               const active = pathname === link.href;
+              const showPill = hoveredHref ? hoveredHref === link.href : active;
               return (
-                <div key={link.href} className="flex items-center gap-3">
-                  <Link
-                    href={link.href}
-                    className={`text-[10px] uppercase tracking-widest transition-colors ${
-                      active ? "text-white" : "text-zinc-500 hover:text-zinc-300"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                  {index < NAV_LINKS.length - 1 && (
-                    <span className="text-zinc-700">/</span>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  prefetch={true}
+                  onMouseEnter={() => setHoveredHref(link.href)}
+                  className={`relative rounded-full px-3 py-1.5 text-[10px] uppercase tracking-widest transition-colors duration-300 ${
+                    showPill ? "text-white" : "text-zinc-400 hover:text-white"
+                  }`}
+                >
+                  {showPill && (
+                    <motion.span
+                      layoutId="modfem-nav-pill"
+                      className="absolute inset-0 -z-10 rounded-full border border-white/25 bg-white/10 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.22)]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32, mass: 0.7 }}
+                    />
                   )}
-                </div>
+                  <span className="relative">{link.label}</span>
+                </Link>
               );
             })}
           </nav>
 
-          <div className="hidden items-center gap-4 md:flex">
-            <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-zinc-500">
-              <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${fxDotColor}`} />
-              FX &#8362;{fx.rate.toLocaleString("en-NG")}/CAD
-            </span>
-            <button
-              type="button"
-              className="flex items-center gap-2 text-xs font-medium text-white"
-            >
-              <span>Destination: Lagos (Tin Can)</span>
-              <ChevronDown className="h-3 w-3" strokeWidth={1.5} />
-            </button>
-          </div>
+          <button
+            type="button"
+            className="hidden items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-2 text-[10px] font-medium uppercase tracking-widest text-white transition-all duration-300 hover:bg-white/[0.12] lg:flex"
+          >
+            <span>Lagos (Tin Can)</span>
+            <ChevronDown className="h-3 w-3" strokeWidth={1.5} />
+          </button>
 
           <button
             type="button"
-            className="flex items-center gap-1 text-[10px] uppercase tracking-widest text-white md:hidden"
+            className="flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-1.5 text-[10px] uppercase tracking-widest text-white md:hidden"
           >
             Lagos
             <ChevronDown className="h-3 w-3" strokeWidth={1.5} />
@@ -113,15 +119,15 @@ export function TopNav({
               type="button"
               onClick={onOpenMenu}
               aria-label="Open menu"
-              className="flex min-h-[44px] min-w-[44px] items-center justify-center text-white md:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white transition-all duration-300 hover:bg-white/[0.12] md:hidden"
             >
-              <Menu className="h-5 w-5" strokeWidth={1.5} />
+              <Menu className="h-4.5 w-4.5" strokeWidth={1.5} />
             </button>
           )}
         </div>
       </div>
 
-      <div className="overflow-hidden border-t border-white/10 px-4 py-2 md:hidden">
+      <div className="mx-auto mt-2 max-w-6xl overflow-hidden rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-xl md:hidden">
         <AnimatePresence mode="wait">
           <motion.span
             key={announcement}

@@ -33,150 +33,193 @@ export const SEED_USERS: User[] = [
 
 export const SEED_VEHICLES: VehicleRecord[] = [
   {
-    id: "mercedes-amg-gle53",
-    vin: "4JGFB4KE1NA123456",
-    name: "2022 Mercedes-AMG GLE 53",
-    year: 2022,
-    make: "Mercedes-AMG",
-    model: "GLE 53 4MATIC+",
-    basePriceCAD: 54_800,
-    location: "Ontario, Canada",
+    // Real unit from Modfem's 2026-11-02 WhatsApp distress-sale flyer —
+    // already landed, duty-paid, and sitting in Lagos. The flyer quotes a
+    // flat ₦19,000,000 pickup price directly (not a Canada-sourcing
+    // estimate), so calculateLandedCost() returns distressPriceNGN exactly
+    // via its isDistressSale branch rather than computing one from
+    // basePriceCAD — basePriceCAD below is only a back-solved reference
+    // figure so the itemized breakdown still reads as internally consistent.
+    id: "mercedes-gla250-4matic",
+    vin: "WDCTG4GB0FJ123456", // TODO(UNCLE-VERIFY): Placeholder VIN — confirm real VIN
+    name: "2016 Mercedes-Benz GLA250 4MATIC",
+    year: 2016,
+    make: "Mercedes-Benz",
+    model: "GLA250 4MATIC",
+    basePriceCAD: 9_470, // Back-solved reference only — see note above
+    location: "Lagos, Nigeria",
+    locationStatus: "AVAILABLE FOR PICK UP IN LAGOS",
+    status: "DELIVERED",
+    isSampleEstimate: false,
+    isDistressSale: true,
+    distressPriceNGN: 19_000_000,
+    imageResolution: "full",
+    specs: {
+      engine: "2.0L Turbocharged 4-Cylinder",
+      mileageKm: 98_000, // TODO(UNCLE-VERIFY): Odometer not stated on the flyer
+      drivetrain: "4MATIC All-Wheel Drive (AWD)",
+      exteriorColor: "Black",
+    },
+    verifiedSpecs: {
+      engine: "2.0L Turbocharged 4-Cylinder",
+      horsepower: "211 HP",
+      transmission: "7-Speed Dual-Clutch (7G-DCT)",
+      drivetrain: "4MATIC All-Wheel Drive (AWD)",
+      features: [
+        "Infotainment Display with Navigation",
+        "Reverse Camera",
+        "Premium Leather Seats",
+        "Panoramic Sunroof",
+        "Dual-Zone Climate Control",
+        "Advanced Safety (Airbags, ABS, ESP, Brake Assist)",
+      ],
+    },
+    // Real, unedited Lagos inspection photos cropped from Modfem's
+    // 2026-11-02 distress-sale flyer — the "Dual-Layer Visual Truth"
+    // evidence layer backing the polished hero/stage imagery.
+    inspectionGallery: [
+      { url: "/images/cars/mercedes-gla-front.webp", label: "Front Three-Quarter View" },
+      { url: "/images/cars/gla/gla-cockpit.webp", label: "Cockpit & Dashboard" },
+      { url: "/images/cars/gla/gla-engine.webp", label: "2.0L Turbo Engine Bay" },
+      { url: "/images/cars/gla/gla-trunk.webp", label: "Open Trunk" },
+      { url: "/images/cars/gla/gla-rear-cabin.webp", label: "Rear Leather Seats" },
+      { url: "/images/cars/gla/gla-side-lagos.webp", label: "Lagos Street Side Profile" },
+    ],
+    frontImageUrl: "/images/cars/mercedes-gla-front.webp",
+    rearImageUrl: "/images/cars/mercedes-gla-front.webp",
+    thumbnailUrl: "/images/cars/mercedes-gla-front.webp",
+  },
+  {
+    // Real unit from Modfem's WhatsApp status. basePriceCAD below is
+    // back-solved through calculateLandedCost() (RoRo, Tin Can Island, the
+    // default FX rate) to reproduce his flyer's landed price of ~₦11.5M —
+    // the landed figure itself is still derived at render time, never
+    // hand-entered, per the pricing-module rule in CLAUDE.md.
+    id: "kia-sportage-2013-upgraded",
+    vin: "KNDPB3AC4D7123456", // TODO(UNCLE-VERIFY): Placeholder VIN — confirm real VIN
+    name: "2013 Kia Sportage (Upgraded)",
+    year: 2013,
+    make: "Kia",
+    model: "Sportage",
+    basePriceCAD: 4_630, // Back-solved to match flyer: "2013 upgraded kia sportage just for 11.5m shipping & clearing included"
+    location: "Vaughan, Ontario, Canada",
     status: "AVAILABLE",
+    isSampleEstimate: false,
+    imageResolution: "full",
     specs: {
-      engine: "3.0L Inline-6 Turbo + EQ Boost",
-      mileageKm: 18_400,
-      drivetrain: "4MATIC+ AWD",
-      exteriorColor: "Obsidian Black Metallic",
-    },
-    frontImageUrl:
-      "https://images.unsplash.com/photo-1773866796453-27ced06f8984?auto=format&fit=crop&w=2000&q=85",
-    rearImageUrl:
-      "https://images.unsplash.com/photo-1767373926801-833d96b26c73?auto=format&fit=crop&w=2000&q=85",
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1773866796453-27ced06f8984?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "bmw-x7-m60i",
-    vin: "5UX53DP04P9L12345",
-    name: "2023 BMW X7 M60i",
-    year: 2023,
-    make: "BMW",
-    model: "X7 M60i",
-    basePriceCAD: 68_500,
-    location: "Mid-Atlantic — En Route to Lagos",
-    status: "IN_TRANSIT",
-    specs: {
-      engine: "4.4L V8 Twin-Turbo",
-      mileageKm: 9_200,
-      drivetrain: "xDrive AWD",
-      exteriorColor: "Carbon Black Metallic",
-    },
-    frontImageUrl:
-      "https://images.unsplash.com/photo-1731988666894-482242ceae2f?auto=format&fit=crop&w=2000&q=85",
-    rearImageUrl:
-      "https://images.unsplash.com/photo-1731988666769-ed4dabc44d53?auto=format&fit=crop&w=2000&q=85",
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1731988666894-482242ceae2f?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "range-rover-autobiography-p530",
-    vin: "SALGS2SE0NA234567",
-    name: "2022 Range Rover Autobiography P530",
-    year: 2022,
-    make: "Land Rover",
-    model: "Range Rover Autobiography P530",
-    basePriceCAD: 79_900,
-    location: "British Columbia, Canada",
-    status: "RESERVED",
-    ownerId: "user-customer-1",
-    specs: {
-      engine: "4.4L V8 Twin-Turbo",
-      mileageKm: 12_100,
-      drivetrain: "Permanent All-Wheel Drive",
-      exteriorColor: "Santorini Black",
-    },
-    frontImageUrl:
-      "https://images.unsplash.com/photo-1653641305372-a084f9b78858?auto=format&fit=crop&w=2000&q=85",
-    rearImageUrl:
-      "https://images.unsplash.com/photo-1758545241974-ea76f6e8edfa?auto=format&fit=crop&w=2000&q=85",
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1653641305372-a084f9b78858?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "lexus-rx350-fsport",
-    vin: "2T2HZMDA8MC345678",
-    name: "2021 Lexus RX 350 F-Sport",
-    year: 2021,
-    make: "Lexus",
-    model: "RX 350 F-Sport",
-    basePriceCAD: 42_300,
-    location: "Quebec, Canada",
-    status: "AVAILABLE",
-    specs: {
-      engine: "3.5L V6",
-      mileageKm: 31_500,
+      engine: "2.4L Inline-4",
+      mileageKm: 120_000, // TODO(UNCLE-VERIFY): Odometer not shown on the flyer
       drivetrain: "AWD",
-      exteriorColor: "Caviar Black",
+      exteriorColor: "White",
     },
-    frontImageUrl:
-      "https://images.unsplash.com/photo-1753030148206-4f6cd95e7512?auto=format&fit=crop&w=2000&q=85",
-    rearImageUrl:
-      "https://images.unsplash.com/photo-1753030148276-75f09f40e6d9?auto=format&fit=crop&w=2000&q=85",
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1753030148206-4f6cd95e7512?auto=format&fit=crop&w=600&q=80",
+    frontImageUrl: "/images/cars/kia-sportage-front.webp",
+    rearImageUrl: "/images/cars/kia-sportage-side.webp",
+    thumbnailUrl: "/images/cars/kia-sportage-front.webp",
   },
   {
-    id: "toyota-land-cruiser-300",
-    vin: "JTMHY7AJ9ND456789",
-    name: "2022 Toyota Land Cruiser 300",
-    year: 2022,
+    // TODO(UNCLE-VERIFY): Cropped from the 6-car grid flyer thumbnail — low
+    // resolution. All specs below are placeholder estimates.
+    id: "toyota-camry-se",
+    vin: "4T1BF1FK0HU123456",
+    name: "Toyota Camry SE",
+    year: 2017,
     make: "Toyota",
-    model: "Land Cruiser 300 VX-R",
-    basePriceCAD: 85_200,
+    model: "Camry SE",
+    basePriceCAD: 14_500,
+    location: "Vaughan, Ontario, Canada",
+    status: "AVAILABLE",
+    isSampleEstimate: true,
+    imageResolution: "thumbnail",
+    specs: {
+      engine: "2.5L Inline-4",
+      mileageKm: 110_000,
+      drivetrain: "FWD",
+      exteriorColor: "Silver",
+    },
+    frontImageUrl: "/images/cars/toyota-camry.webp",
+    rearImageUrl: "/images/cars/toyota-camry.webp",
+    thumbnailUrl: "/images/cars/toyota-camry.webp",
+  },
+  {
+    // TODO(UNCLE-VERIFY): Cropped from the 6-car grid flyer thumbnail — low
+    // resolution. All specs below are placeholder estimates.
+    id: "lexus-rx-350",
+    vin: "2T2BZMCA0JC123456",
+    name: "Lexus RX 350",
+    year: 2018,
+    make: "Lexus",
+    model: "RX 350",
+    basePriceCAD: 24_800,
     location: "Tin Can Island Port, Lagos",
     status: "CLEARING",
+    isSampleEstimate: true,
+    imageResolution: "thumbnail",
     specs: {
-      engine: "3.5L V6 Twin-Turbo",
-      mileageKm: 14_700,
-      drivetrain: "Full-Time 4WD",
-      exteriorColor: "Black Onyx",
+      engine: "3.5L V6",
+      mileageKm: 88_000,
+      drivetrain: "AWD",
+      exteriorColor: "Dark Grey",
     },
-    frontImageUrl:
-      "https://images.unsplash.com/photo-1753030505007-98ceef668415?auto=format&fit=crop&w=2000&q=85",
-    rearImageUrl:
-      "https://images.unsplash.com/photo-1753030148324-d42f168825ef?auto=format&fit=crop&w=2000&q=85",
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1753030505007-98ceef668415?auto=format&fit=crop&w=600&q=80",
+    frontImageUrl: "/images/cars/lexus-rx.webp",
+    rearImageUrl: "/images/cars/lexus-rx.webp",
+    thumbnailUrl: "/images/cars/lexus-rx.webp",
   },
   {
-    id: "honda-accord-touring",
-    vin: "1HGCV1F34MA567890",
-    name: "2021 Honda Accord Touring 2.0T",
-    year: 2021,
-    make: "Honda",
-    model: "Accord Touring 2.0T",
-    basePriceCAD: 33_800,
-    location: "Ontario, Canada",
-    status: "AVAILABLE",
+    // TODO(UNCLE-VERIFY): Cropped from the 6-car grid flyer thumbnail — low
+    // resolution. All specs below are placeholder estimates.
+    id: "toyota-venza",
+    vin: "4T3BA3BB0EU123456",
+    name: "Toyota Venza",
+    year: 2014,
+    make: "Toyota",
+    model: "Venza",
+    basePriceCAD: 12_200,
+    location: "Vaughan, Ontario, Canada",
+    status: "RESERVED",
+    ownerId: "user-customer-1",
+    isSampleEstimate: true,
+    imageResolution: "thumbnail",
     specs: {
-      engine: "2.0L Turbo I4",
-      mileageKm: 28_900,
-      drivetrain: "FWD",
-      exteriorColor: "Crystal Black Pearl",
+      engine: "3.5L V6",
+      mileageKm: 135_000,
+      drivetrain: "AWD",
+      exteriorColor: "Dark Grey",
     },
-    frontImageUrl:
-      "https://images.unsplash.com/photo-1485291571150-772bcfc10da5?auto=format&fit=crop&w=2000&q=85",
-    rearImageUrl:
-      "https://images.unsplash.com/photo-1626621394541-b9a48e35a95d?auto=format&fit=crop&w=2000&q=85",
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1485291571150-772bcfc10da5?auto=format&fit=crop&w=600&q=80",
+    frontImageUrl: "/images/cars/toyota-venza.webp",
+    rearImageUrl: "/images/cars/toyota-venza.webp",
+    thumbnailUrl: "/images/cars/toyota-venza.webp",
+  },
+  {
+    // TODO(UNCLE-VERIFY): Cropped from the 6-car grid flyer thumbnail — low
+    // resolution. Flyer only labels this "Black Acura MDX/RDX"; exact model
+    // and all specs below are placeholder estimates.
+    id: "acura-mdx",
+    vin: "5FRYD4H80GB123456",
+    name: "Acura MDX",
+    year: 2016,
+    make: "Acura",
+    model: "MDX",
+    basePriceCAD: 19_400,
+    location: "Vaughan, Ontario, Canada",
+    status: "AVAILABLE",
+    isSampleEstimate: true,
+    imageResolution: "thumbnail",
+    specs: {
+      engine: "3.5L V6",
+      mileageKm: 102_000,
+      drivetrain: "AWD",
+      exteriorColor: "Black",
+    },
+    frontImageUrl: "/images/cars/acura-mdx.webp",
+    rearImageUrl: "/images/cars/acura-mdx.webp",
+    thumbnailUrl: "/images/cars/acura-mdx.webp",
   },
 ];
 
 export const SEED_SHIPMENTS: Shipment[] = [
   {
-    id: "shipment-bmw-x7-m60i",
-    vehicleId: "bmw-x7-m60i",
+    id: "shipment-mercedes-gla250-4matic",
+    vehicleId: "mercedes-gla250-4matic",
     shippingMethod: "RoRo",
     vesselName: "Grande Lagos",
     bookingNumber: "GRIM-LAG-88213",
@@ -184,13 +227,13 @@ export const SEED_SHIPMENTS: Shipment[] = [
     arrivalPort: "Tin Can Island, Lagos",
     departureDate: "2026-09-29",
     etaLagos: "2026-10-24",
-    customsDutyNGN: 28_300_000,
-    clearingFeeNGN: 1_250_000,
+    customsDutyNGN: 4_210_664,
+    clearingFeeNGN: 1_450_000,
     billOfLadingVerified: true,
   },
   {
-    id: "shipment-toyota-land-cruiser-300",
-    vehicleId: "toyota-land-cruiser-300",
+    id: "shipment-lexus-rx-350",
+    vehicleId: "lexus-rx-350",
     shippingMethod: "Container",
     vesselName: "MSC Praia",
     bookingNumber: "MSC-APJ-40417",
@@ -198,36 +241,36 @@ export const SEED_SHIPMENTS: Shipment[] = [
     arrivalPort: "Tin Can Island, Lagos",
     departureDate: "2026-09-02",
     etaLagos: "2026-09-28",
-    customsDutyNGN: 35_100_000,
-    clearingFeeNGN: 1_250_000,
+    customsDutyNGN: 6_332_839,
+    clearingFeeNGN: 1_450_000,
     billOfLadingVerified: true,
   },
 ];
 
 export const SEED_TRACKING_LOGS: TrackingLog[] = [
   {
-    id: "log-bmw-1",
-    vehicleId: "bmw-x7-m60i",
+    id: "log-gla-1",
+    vehicleId: "mercedes-gla250-4matic",
     milestone: "PURCHASED_CANADA",
     title: "Vehicle Purchased",
-    location: "Calgary, Alberta",
+    location: "Vaughan, Ontario",
     description: "Purchase completed and ownership transferred to Modfem Autos.",
     timestamp: "2026-09-18T14:00:00Z",
     completed: true,
   },
   {
-    id: "log-bmw-2",
-    vehicleId: "bmw-x7-m60i",
+    id: "log-gla-2",
+    vehicleId: "mercedes-gla250-4matic",
     milestone: "EXPORT_INSPECTION",
     title: "Export Inspection Passed",
-    location: "Calgary, Alberta",
+    location: "Vaughan, Ontario",
     description: "Pre-export condition and VIN verification inspection passed.",
     timestamp: "2026-09-22T09:30:00Z",
     completed: true,
   },
   {
-    id: "log-bmw-3",
-    vehicleId: "bmw-x7-m60i",
+    id: "log-gla-3",
+    vehicleId: "mercedes-gla250-4matic",
     milestone: "AT_PORT_HALIFAX",
     title: "Arrived at Port of Halifax",
     location: "Halifax, Nova Scotia",
@@ -236,8 +279,8 @@ export const SEED_TRACKING_LOGS: TrackingLog[] = [
     completed: true,
   },
   {
-    id: "log-bmw-4",
-    vehicleId: "bmw-x7-m60i",
+    id: "log-gla-4",
+    vehicleId: "mercedes-gla250-4matic",
     milestone: "ON_VESSEL_ATLANTIC",
     title: "Loaded Aboard Grande Lagos",
     location: "Mid-Atlantic",
@@ -246,18 +289,38 @@ export const SEED_TRACKING_LOGS: TrackingLog[] = [
     completed: true,
   },
   {
-    id: "log-bmw-5",
-    vehicleId: "bmw-x7-m60i",
+    id: "log-gla-5",
+    vehicleId: "mercedes-gla250-4matic",
     milestone: "ARRIVED_LAGOS_PORT",
     title: "Arrival at Tin Can Island",
     location: "Tin Can Island, Lagos",
-    description: "Awaiting vessel arrival and berth allocation.",
-    timestamp: "2026-10-24T00:00:00Z",
-    completed: false,
+    description: "Vessel discharged; vehicle offloaded to bonded terminal.",
+    timestamp: "2026-10-24T09:00:00Z",
+    completed: true,
   },
   {
-    id: "log-ltc-1",
-    vehicleId: "toyota-land-cruiser-300",
+    id: "log-gla-6",
+    vehicleId: "mercedes-gla250-4matic",
+    milestone: "CUSTOMS_CLEARANCE",
+    title: "Customs Clearance Completed",
+    location: "Tin Can Island, Lagos",
+    description: "Nigerian Customs Service duty assessed and paid against Form M and bill of lading.",
+    timestamp: "2026-10-29T15:00:00Z",
+    completed: true,
+  },
+  {
+    id: "log-gla-7",
+    vehicleId: "mercedes-gla250-4matic",
+    milestone: "READY_FOR_DELIVERY",
+    title: "Cleared & Ready for Lagos Handover",
+    location: "Lagos, Nigeria",
+    description: "Cleared by NCS — available for buyer pickup in Lagos.",
+    timestamp: "2026-11-02T12:00:00Z",
+    completed: true,
+  },
+  {
+    id: "log-rx-1",
+    vehicleId: "lexus-rx-350",
     milestone: "PURCHASED_CANADA",
     title: "Vehicle Purchased",
     location: "Montreal, Quebec",
@@ -266,8 +329,8 @@ export const SEED_TRACKING_LOGS: TrackingLog[] = [
     completed: true,
   },
   {
-    id: "log-ltc-2",
-    vehicleId: "toyota-land-cruiser-300",
+    id: "log-rx-2",
+    vehicleId: "lexus-rx-350",
     milestone: "EXPORT_INSPECTION",
     title: "Export Inspection Passed",
     location: "Montreal, Quebec",
@@ -276,8 +339,8 @@ export const SEED_TRACKING_LOGS: TrackingLog[] = [
     completed: true,
   },
   {
-    id: "log-ltc-2b",
-    vehicleId: "toyota-land-cruiser-300",
+    id: "log-rx-2b",
+    vehicleId: "lexus-rx-350",
     milestone: "AT_PORT_HALIFAX",
     title: "Drayage & Port Reception",
     location: "Montreal, Quebec",
@@ -286,8 +349,8 @@ export const SEED_TRACKING_LOGS: TrackingLog[] = [
     completed: true,
   },
   {
-    id: "log-ltc-3",
-    vehicleId: "toyota-land-cruiser-300",
+    id: "log-rx-3",
+    vehicleId: "lexus-rx-350",
     milestone: "ON_VESSEL_ATLANTIC",
     title: "Loaded Aboard MSC Praia",
     location: "Mid-Atlantic",
@@ -296,8 +359,8 @@ export const SEED_TRACKING_LOGS: TrackingLog[] = [
     completed: true,
   },
   {
-    id: "log-ltc-4",
-    vehicleId: "toyota-land-cruiser-300",
+    id: "log-rx-4",
+    vehicleId: "lexus-rx-350",
     milestone: "ARRIVED_LAGOS_PORT",
     title: "Arrived at Tin Can Island",
     location: "Tin Can Island, Lagos",
@@ -306,8 +369,8 @@ export const SEED_TRACKING_LOGS: TrackingLog[] = [
     completed: true,
   },
   {
-    id: "log-ltc-5",
-    vehicleId: "toyota-land-cruiser-300",
+    id: "log-rx-5",
+    vehicleId: "lexus-rx-350",
     milestone: "CUSTOMS_CLEARANCE",
     title: "Customs Clearance in Progress",
     location: "Tin Can Island, Lagos",
@@ -322,6 +385,7 @@ export const SEED_SOURCING_REQUESTS: SourcingRequest[] = [
     id: "SR-2026-7K2Q",
     createdAt: "2026-10-01T09:15:00Z",
     status: "NEW",
+    mode: "DIRECT_SOURCING",
     buyer: {
       name: "Folarin Adeyemi",
       email: "folarin.adeyemi@example.com",
@@ -347,6 +411,7 @@ export const SEED_SOURCING_REQUESTS: SourcingRequest[] = [
     id: "SR-2026-4M8T",
     createdAt: "2026-10-06T14:40:00Z",
     status: "SOURCING_AT_AUCTION",
+    mode: "DIRECT_SOURCING",
     buyer: {
       name: "Zainab Bello",
       email: "zainab.bello@example.com",

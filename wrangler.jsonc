@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "modfem-autos",
+  "main": ".open-next/worker.js",
+  // Must not be newer than the workerd version bundled with the installed
+  // wrangler (check node_modules/workerd/package.json — "1.YYYYMMDD.x").
+  // OpenNext warns at build time once this is more than six months old.
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    // Runtime only. Next.js inlines NEXT_PUBLIC_* values at BUILD time and
+    // these pages prerender statically, so canonical/OpenGraph URLs are baked
+    // in when `npm run build:cf` runs — set NEXT_PUBLIC_SITE_URL in the build
+    // environment too (see .env.example) or they fall back to the
+    // production domain.
+    "NEXT_PUBLIC_SITE_URL": "https://modfemautos.com"
+  }
+  // Secrets (never put these in this file or any .env* file — see
+  // .env.example for why):
+  //   npx wrangler secret put ADMIN_SECRET
+  //   npx wrangler secret put DATABASE_URL
+}

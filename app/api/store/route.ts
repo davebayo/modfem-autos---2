@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { applyStoreActionPersisted, getStoreState } from "@/lib/db";
-import { computeSnapshot, StoreAction } from "@/lib/store-shared";
+import { computeSnapshot, redactSnapshotForPublic, StoreAction } from "@/lib/store-shared";
+import {
+  ADMIN_SESSION_COOKIE,
+  readCookieFromHeader,
+  verifyAdminSessionToken,
+} from "@/lib/admin-auth";
 
 const VALID_ACTIONS = new Set<StoreAction["action"]>([
   "updateVehicleStatus",
@@ -15,9 +20,27 @@ const VALID_ACTIONS = new Set<StoreAction["action"]>([
   "replaceState",
 ]);
 
-export async function GET() {
+/** Actions a buyer can trigger directly against their own data — booking a
+ * specific vehicle, submitting a sourcing mandate. Every other action
+ * mutates shared dealer-side state (inventory, shipments, status, or a
+ * wholesale state replace) and requires the admin passcode. */
+const CUSTOMER_ACTIONS = new Set<StoreAction["action"]>([
+  "reserveVehicle",
+  "createSourcingRequest",
+]);
+
+async function isAuthorizedAdmin(request: Request): Promise<boolean> {
+  const token = readCookieFromHeader(request.headers.get("cookie"), ADMIN_SESSION_COOKIE);
+  return verifyAdminSessionToken(token);
+}
+
+export async function GET(request: Request) {
   const state = await getStoreState();
-  return NextResponse.json(computeSnapshot(state));
+  const snapshot = computeSnapshot(state);
+  if (await isAuthorizedAdmin(request)) {
+    return NextResponse.json(snapshot);
+  }
+  return NextResponse.json(redactSnapshotForPublic(snapshot));
 }
 
 export async function POST(request: Request) {
@@ -39,6 +62,14 @@ export async function POST(request: Request) {
   }
 
   const action = body as StoreAction;
+  const isAdmin = await isAuthorizedAdmin(request);
+
+  if (!CUSTOMER_ACTIONS.has(action.action) && !isAdmin) {
+    return NextResponse.json(
+      { error: "Admin authorization required." },
+      { status: 401 }
+    );
+  }
 
   if (action.action === "replaceState") {
     const s = action.state;
@@ -56,5 +87,6 @@ export async function POST(request: Request) {
   }
 
   const nextState = await applyStoreActionPersisted(action);
-  return NextResponse.json(computeSnapshot(nextState));
+  const snapshot = computeSnapshot(nextState);
+  return NextResponse.json(isAdmin ? snapshot : redactSnapshotForPublic(snapshot));
 }

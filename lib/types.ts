@@ -83,6 +83,36 @@ export interface Vehicle {
   frontImageUrl: string;
   rearImageUrl: string;
   thumbnailUrl: string;
+  /** True when price/mileage/specs are a placeholder estimate rather than a
+   * figure confirmed against a real Modfem Autos flyer or WhatsApp status. */
+  isSampleEstimate?: boolean;
+  /** "full" = a real inspection-grade photo safe to stretch full-bleed.
+   * "thumbnail" = cropped from a tiny flyer collage cutout — too low-res to
+   * stretch large, so the UI renders it in a small framed viewport instead.
+   * Defaults to "full" when unset. */
+  imageResolution?: "full" | "thumbnail";
+  /** True when this unit is a one-off local Lagos distress sale — already
+   * landed, duty-paid, and sitting for pickup — rather than a Canada-side
+   * sourcing listing. */
+  isDistressSale?: boolean;
+  /** The flat, locked landed price (NGN) quoted on the distress-sale flyer.
+   * When set alongside isDistressSale, calculateLandedCost() returns this
+   * exact figure as the total instead of computing one from basePriceCAD. */
+  distressPriceNGN?: number;
+  /** Human-readable pickup/availability status, e.g. "AVAILABLE FOR PICK UP
+   * IN LAGOS" — distinct from the shipment-tracking VehicleStatus enum. */
+  locationStatus?: string;
+  /** Real, unedited inspection photos backing the polished hero/stage
+   * imagery — the "Dual-Layer Visual Truth" evidence trail. */
+  inspectionGallery?: { url: string; label: string }[];
+  /** Confirmed mechanical spec sheet, shown verbatim rather than inferred. */
+  verifiedSpecs?: {
+    engine: string;
+    horsepower: string;
+    transmission: string;
+    drivetrain: string;
+    features: string[];
+  };
 }
 
 export type SourcingRequestStatus =
@@ -105,6 +135,15 @@ export interface SourcingRequestVehicleSpec {
   maxMileageKm: number;
 }
 
+export type SourcingRequestMode = "DIRECT_SOURCING" | "CAR_SWAP";
+
+export interface SourcingRequestSwapVehicle {
+  year: number;
+  make: string;
+  model: string;
+  condition: string;
+}
+
 export interface SourcingRequestFinancials {
   totalBudgetNGN: number;
   maxBidCAD: number;
@@ -117,8 +156,10 @@ export interface SourcingRequest {
   id: string;
   createdAt: string;
   status: SourcingRequestStatus;
+  mode: SourcingRequestMode;
   buyer: SourcingRequestBuyer;
   vehicleSpec: SourcingRequestVehicleSpec;
+  swapVehicle?: SourcingRequestSwapVehicle;
   financials: SourcingRequestFinancials;
   dealerNotes?: string;
 }

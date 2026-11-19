@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { mkdir, readFile, rename, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
@@ -10,6 +11,7 @@ import {
   Shipment,
   ShippingMethod,
   SourcingRequest,
+  SourcingRequestMode,
   SourcingRequestStatus,
   TrackingLog,
   VehicleStatus,
@@ -32,6 +34,18 @@ import { applyStoreAction, StoreAction } from "./store-shared";
  * scale (a handful of vehicles/shipments/requests); a high-volume
  * production system would replace writeStateToDatabase with targeted
  * per-entity upserts instead.
+ *
+ * Known limitation: withLock() below only serializes reads/writes within
+ * this one server process. Each mutation's read-modify-write ($transaction-
+ * wrapped, so it's atomic — never a half-written row) is NOT isolated from a
+ * concurrent mutation on a DIFFERENT process/instance (e.g. two simultaneous
+ * serverless invocations), so two truly concurrent requests across instances
+ * can still race: both read the same prior state, both compute their own
+ * "next" state, and whichever writes last wins, silently discarding the
+ * other's change. At this app's current traffic (a handful of admin edits
+ * and buyer submissions, rarely concurrent) that risk is low; it would need
+ * a real row-level upsert strategy (or serializable transactions / a queue)
+ * before this should be trusted under meaningfully concurrent write load.
  */
 
 export function isDatabaseConfigured(): boolean {
@@ -42,13 +56,44 @@ export function isDatabaseConfigured(): boolean {
 // Prisma driver
 // ---------------------------------------------------------------------------
 
-let prismaClient: PrismaClient | null = null;
+// Under Node the client is stashed on globalThis, not a module-level
+// variable: Next.js dev hot-reload re-evaluates this module on nearly every
+// save, which would otherwise construct a brand new PrismaClient (and its
+// own connection pool) each time without closing the last one — a classic
+// Prisma+Next.js connection-exhaustion bug. globalThis survives module
+// re-evaluation, so dev keeps reusing one client/pool across reloads.
+declare global {
+  var __modfemPrisma: PrismaClient | undefined;
+}
 
-function getPrisma(): PrismaClient {
-  if (!prismaClient) {
-    prismaClient = new PrismaClient();
+// Cloudflare Workers set navigator.userAgent to exactly this string.
+export function isWorkerRuntime(): boolean {
+  return typeof navigator !== "undefined" && navigator.userAgent === "Cloudflare-Workers";
+}
+
+function createPrisma(): PrismaClient {
+  return new PrismaClient({
+    adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+  });
+}
+
+/** Under Workers the client is created and closed per call instead of
+ * cached: a TCP socket belongs to the request that opened it, so a pool
+ * reused by the next request fails with "Cannot perform I/O on behalf of a
+ * different request". Point DATABASE_URL at a pooled endpoint (Neon's
+ * pooled URL or Supabase's transaction pooler) so per-request connects stay
+ * cheap. */
+async function withPrisma<T>(fn: (prisma: PrismaClient) => Promise<T>): Promise<T> {
+  if (!isWorkerRuntime()) {
+    globalThis.__modfemPrisma ??= createPrisma();
+    return fn(globalThis.__modfemPrisma);
   }
-  return prismaClient;
+  const prisma = createPrisma();
+  try {
+    return await fn(prisma);
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 function destinationPortToPrisma(port: DestinationPort): "TinCanIsland" | "Apapa" {
@@ -59,8 +104,7 @@ function destinationPortFromPrisma(port: "TinCanIsland" | "Apapa"): DestinationP
   return port === "TinCanIsland" ? "Tin Can Island" : "Apapa";
 }
 
-async function readStateFromDatabase(): Promise<StoreState> {
-  const prisma = getPrisma();
+async function readStateFromDatabase(prisma: PrismaClient): Promise<StoreState> {
   const [users, vehicles, shipments, trackingLogs, sourcingRequests] = await Promise.all([
     prisma.user.findMany(),
     prisma.vehicle.findMany(),
@@ -97,6 +141,15 @@ async function readStateFromDatabase(): Promise<StoreState> {
         frontImageUrl: v.frontImageUrl,
         rearImageUrl: v.rearImageUrl,
         thumbnailUrl: v.thumbnailUrl,
+        isSampleEstimate: v.isSampleEstimate ?? undefined,
+        imageResolution: (v.imageResolution as "full" | "thumbnail" | null) ?? undefined,
+        isDistressSale: v.isDistressSale ?? undefined,
+        distressPriceNGN: v.distressPriceNGN ?? undefined,
+        locationStatus: v.locationStatus ?? undefined,
+        inspectionGallery:
+          (v.inspectionGallery as { url: string; label: string }[] | null) ?? undefined,
+        verifiedSpecs:
+          (v.verifiedSpecs as VehicleRecord["verifiedSpecs"] | null) ?? undefined,
       })
     ),
     shipments: shipments.map(
@@ -132,6 +185,7 @@ async function readStateFromDatabase(): Promise<StoreState> {
         id: r.id,
         createdAt: r.createdAt.toISOString(),
         status: r.status as SourcingRequestStatus,
+        mode: r.mode as SourcingRequestMode,
         buyer: { name: r.buyerName, email: r.buyerEmail, phone: r.buyerPhone },
         vehicleSpec: {
           year: r.specYear,
@@ -140,6 +194,15 @@ async function readStateFromDatabase(): Promise<StoreState> {
           trimOrColor: r.specTrimOrColor,
           maxMileageKm: r.specMaxMileageKm,
         },
+        swapVehicle:
+          r.swapYear != null && r.swapMake && r.swapModel && r.swapCondition
+            ? {
+                year: r.swapYear,
+                make: r.swapMake,
+                model: r.swapModel,
+                condition: r.swapCondition,
+              }
+            : undefined,
         financials: {
           totalBudgetNGN: r.totalBudgetNGN,
           maxBidCAD: r.maxBidCAD,
@@ -158,7 +221,10 @@ async function readStateFromDatabase(): Promise<StoreState> {
  * write action pipeline (there's nothing to "modify" — a seed replaces
  * everything). */
 export async function writeStateToDatabase(state: StoreState): Promise<void> {
-  const prisma = getPrisma();
+  await withPrisma((prisma) => writeStateWithClient(prisma, state));
+}
+
+async function writeStateWithClient(prisma: PrismaClient, state: StoreState): Promise<void> {
   await prisma.$transaction([
     // Children first (FK-safe delete order)...
     prisma.trackingLog.deleteMany(),
@@ -195,6 +261,13 @@ export async function writeStateToDatabase(state: StoreState): Promise<void> {
         rearImageUrl: v.rearImageUrl,
         thumbnailUrl: v.thumbnailUrl,
         ownerId: v.ownerId ?? null,
+        isSampleEstimate: v.isSampleEstimate ?? null,
+        imageResolution: v.imageResolution ?? null,
+        isDistressSale: v.isDistressSale ?? null,
+        distressPriceNGN: v.distressPriceNGN ?? null,
+        locationStatus: v.locationStatus ?? null,
+        inspectionGallery: v.inspectionGallery ?? undefined,
+        verifiedSpecs: v.verifiedSpecs ?? undefined,
       })),
     }),
     prisma.shipment.createMany({
@@ -230,6 +303,7 @@ export async function writeStateToDatabase(state: StoreState): Promise<void> {
         id: r.id,
         createdAt: new Date(r.createdAt),
         status: r.status,
+        mode: r.mode,
         buyerName: r.buyer.name,
         buyerEmail: r.buyer.email,
         buyerPhone: r.buyer.phone,
@@ -238,6 +312,10 @@ export async function writeStateToDatabase(state: StoreState): Promise<void> {
         specModel: r.vehicleSpec.model,
         specTrimOrColor: r.vehicleSpec.trimOrColor,
         specMaxMileageKm: r.vehicleSpec.maxMileageKm,
+        swapYear: r.swapVehicle?.year ?? null,
+        swapMake: r.swapVehicle?.make ?? null,
+        swapModel: r.swapVehicle?.model ?? null,
+        swapCondition: r.swapVehicle?.condition ?? null,
         totalBudgetNGN: r.financials.totalBudgetNGN,
         maxBidCAD: r.financials.maxBidCAD,
         shippingMethod: r.financials.shippingMethod,
@@ -261,11 +339,19 @@ export async function writeStateToDatabase(state: StoreState): Promise<void> {
 // turns out to be read-only. If even tmpdir access fails, every read/write
 // falls back to an in-memory globalThis cache so the app keeps serving
 // (ephemeral per cold start, but never a 500) instead of throwing.
+//
+// On Cloudflare Workers there's no persistent filesystem at all, so the
+// driver skips fs entirely and runs on the globalThis cache alone. Paths are
+// resolved lazily so process.cwd()/os.tmpdir() never even run there.
 // ---------------------------------------------------------------------------
 
-const PROJECT_DATA_DIR = path.join(process.cwd(), "data");
-const PROJECT_DB_PATH = path.join(PROJECT_DATA_DIR, "db.json");
-const TMP_DB_PATH = path.join(os.tmpdir(), "modfem-autos-db.json");
+function projectDbPath(): string {
+  return path.join(process.cwd(), "data", "db.json");
+}
+
+function tmpDbPath(): string {
+  return path.join(os.tmpdir(), "modfem-autos-db.json");
+}
 
 function isRunningOnVercel(): boolean {
   return process.env.VERCEL === "1";
@@ -276,12 +362,29 @@ function isFsAccessError(err: unknown): boolean {
   return code === "EROFS" || code === "EACCES" || code === "EPERM";
 }
 
-// Mutable: starts at the writable path for the current host, and permanently
-// fails over to the tmpdir path the first time a write proves it unwritable.
-let activeDbPath = isRunningOnVercel() ? TMP_DB_PATH : PROJECT_DB_PATH;
+// Starts at the writable path for the current host, and permanently fails
+// over to the tmpdir path the first time a write proves it unwritable.
+let activeDbPath: string | undefined;
+
+function getActiveDbPath(): string {
+  activeDbPath ??= isRunningOnVercel() ? tmpDbPath() : projectDbPath();
+  return activeDbPath;
+}
 
 declare global {
   var __modfemStore: StoreState | undefined;
+  var __modfemWarnedNoDurableStore: boolean | undefined;
+}
+
+function warnNoDurableStoreOnce(): void {
+  if (globalThis.__modfemWarnedNoDurableStore) return;
+  globalThis.__modfemWarnedNoDurableStore = true;
+  console.warn(
+    "[modfem/db] DATABASE_URL is not set and this Cloudflare Worker has no persistent " +
+      "filesystem — store state lives only in this isolate's memory, resets on every cold " +
+      "start, and isn't shared across isolates or regions. DATABASE_URL is required for " +
+      "durable persistence on Cloudflare: npx wrangler secret put DATABASE_URL"
+  );
 }
 
 async function writeStateToJsonFileAt(
@@ -306,11 +409,16 @@ async function writeStateToJsonFile(state: StoreState): Promise<void> {
   // still serves consistent state for the lifetime of this warm instance.
   globalThis.__modfemStore = state;
 
+  if (isWorkerRuntime()) {
+    warnNoDurableStoreOnce();
+    return;
+  }
+
   try {
-    await writeStateToJsonFileAt(activeDbPath, state);
+    await writeStateToJsonFileAt(getActiveDbPath(), state);
     return;
   } catch (err) {
-    if (activeDbPath === TMP_DB_PATH || !isFsAccessError(err)) {
+    if (getActiveDbPath() === tmpDbPath() || !isFsAccessError(err)) {
       // Already on the writable fallback, or the failure wasn't a
       // read-only/permission error worth failing over for — nothing more to
       // try on disk; the in-memory cache above is the last resort.
@@ -320,9 +428,9 @@ async function writeStateToJsonFile(state: StoreState): Promise<void> {
 
   // The project path proved unwritable (EROFS/EACCES/EPERM) — fail over to
   // tmpdir for this and every future call in this process.
-  activeDbPath = TMP_DB_PATH;
+  activeDbPath = tmpDbPath();
   try {
-    await writeStateToJsonFileAt(TMP_DB_PATH, state);
+    await writeStateToJsonFileAt(activeDbPath, state);
   } catch {
     // tmpdir write failed too — in-memory cache above still has the state.
   }
@@ -331,14 +439,20 @@ async function writeStateToJsonFile(state: StoreState): Promise<void> {
 async function readStateFromJsonFile(): Promise<StoreState> {
   if (globalThis.__modfemStore) return globalThis.__modfemStore;
 
+  if (isWorkerRuntime()) {
+    warnNoDurableStoreOnce();
+    globalThis.__modfemStore = cloneSeed();
+    return globalThis.__modfemStore;
+  }
+
   try {
-    const raw = await readFile(/* turbopackIgnore: true */ activeDbPath, "utf-8");
+    const raw = await readFile(/* turbopackIgnore: true */ getActiveDbPath(), "utf-8");
     const state = JSON.parse(raw) as StoreState;
     globalThis.__modfemStore = state;
     return state;
   } catch (err) {
-    if (isFsAccessError(err) && activeDbPath !== TMP_DB_PATH) {
-      activeDbPath = TMP_DB_PATH;
+    if (isFsAccessError(err) && getActiveDbPath() !== tmpDbPath()) {
+      activeDbPath = tmpDbPath();
       return readStateFromJsonFile();
     }
     // No file yet at this path (ENOENT, the normal first-run case) or it's
@@ -364,7 +478,7 @@ function withLock<T>(fn: () => Promise<T>): Promise<T> {
 }
 
 async function readState(): Promise<StoreState> {
-  return isDatabaseConfigured() ? readStateFromDatabase() : readStateFromJsonFile();
+  return isDatabaseConfigured() ? withPrisma(readStateFromDatabase) : readStateFromJsonFile();
 }
 
 async function writeState(state: StoreState): Promise<void> {

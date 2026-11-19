@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { GLASS_NAV } from "@/lib/glass-tokens";
+import { ModfemLogoMark } from "@/components/ui/ModfemLogoMark";
 
 interface NavigationDrawerProps {
   isOpen: boolean;
@@ -11,11 +13,10 @@ interface NavigationDrawerProps {
 }
 
 const LINKS = [
-  { number: "01", label: "SHOWROOM", href: "/" },
+  { number: "01", label: "HOME", href: "/" },
   { number: "02", label: "INVENTORY CATALOG", href: "/inventory" },
   { number: "03", label: "VIN & SHIPMENT TRACKER", href: "/track" },
-  { number: "04", label: "DEALER ADMIN", href: "/admin" },
-  { number: "05", label: "CUSTOM SOURCING CONCIERGE", href: "/request" },
+  { number: "04", label: "CUSTOM SOURCING CONCIERGE", href: "/request" },
 ];
 
 export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
@@ -32,7 +33,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             onClick={onClose}
-            className="fixed inset-0 z-40 bg-black/60"
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
           />
 
           <motion.div
@@ -41,23 +42,27 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed inset-y-0 right-0 z-50 flex h-full w-full flex-col justify-between overflow-y-auto overscroll-contain border-l border-white/15 bg-zinc-950 text-white sm:max-w-md"
+            className={`fixed inset-y-3 right-3 z-50 flex w-[calc(100%-1.5rem)] max-w-sm flex-col justify-between overflow-y-auto overscroll-contain rounded-3xl text-white ${GLASS_NAV}`}
           >
             <div>
-              <div className="sticky top-0 flex items-center justify-between border-b border-white/10 bg-zinc-950 px-8 py-6">
-                <span className="font-panchang text-sm font-black uppercase tracking-widest">
-                  MODFEM AUTOS
-                </span>
+              <div className="sticky top-0 flex items-center justify-between px-6 py-5">
+                <div className="flex items-center gap-2">
+                  <ModfemLogoMark className="h-4 w-auto" />
+                  <span className="font-[family-name:var(--font-brand)] text-sm font-semibold tracking-[-0.02em]">
+                    MODFEM AUTOS
+                  </span>
+                </div>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="flex min-h-[44px] min-w-[44px] items-center justify-center"
+                  aria-label="Close menu"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] transition-all duration-300 hover:bg-white/[0.12]"
                 >
-                  <X className="h-5 w-5" strokeWidth={1.5} />
+                  <X className="h-4.5 w-4.5" strokeWidth={1.5} />
                 </button>
               </div>
 
-              <nav className="flex flex-col">
+              <nav className="flex flex-col gap-2 px-4 pb-4">
                 {LINKS.map((link) => {
                   const active = pathname === link.href;
                   return (
@@ -65,19 +70,13 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
                       key={link.href}
                       href={link.href}
                       onClick={onClose}
-                      className={`flex items-center gap-4 border-b border-white/10 px-8 py-6 transition-colors ${
+                      className={`flex items-center gap-4 rounded-2xl border px-5 py-4 transition-all duration-300 ${
                         active
-                          ? "bg-white text-zinc-950"
-                          : "text-white hover:bg-white/5"
+                          ? "border-white/20 bg-white/[0.14] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)]"
+                          : "border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.08]"
                       }`}
                     >
-                      <span
-                        className={`font-mono text-xs ${
-                          active ? "text-zinc-500" : "text-zinc-500"
-                        }`}
-                      >
-                        {link.number}
-                      </span>
+                      <span className="font-mono text-xs text-zinc-500">{link.number}</span>
                       <span className="text-sm font-medium uppercase tracking-widest">
                         {link.label}
                       </span>
@@ -87,7 +86,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
               </nav>
             </div>
 
-            <div className="border-t border-white/10 px-8 py-6 text-[10px] uppercase tracking-widest text-zinc-500">
+            <div className="border-t border-white/10 px-6 py-5 text-[10px] uppercase tracking-widest text-zinc-500">
               Canada &mdash; Lagos Import Desk
             </div>
           </motion.div>

@@ -30,18 +30,37 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — .env.example is a template with no real secrets (every value
+# is blank/placeholder) and is meant to be committed so a clone has
+# deployment docs to work from; every actual .env/.env.local with real
+# values stays ignored.
 .env*
+!.env.example
 
 # vercel
 .vercel
+
+# cloudflare (OpenNext build output, wrangler local state, and wrangler's
+# local-secrets file — .dev.vars isn't matched by the .env* rule above)
+.open-next
+.wrangler
+.dev.vars*
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
-# local file-backed persistence (auto-seeded at runtime, never committed)
-/data/db.json
+# local file-backed persistence (auto-seeded at runtime, never committed) —
+# the whole directory, not just db.json itself: lib/db.ts's atomic write
+# writes a `db.json.<pid>.<timestamp>.tmp` file before renaming it into
+# place, and a crash mid-write could leave one of those behind holding real
+# local state (buyer PII included).
+/data/*
+
+# raw, unprocessed source photos (WhatsApp screenshots, personal contact
+# info) — never served publicly; only the cropped output in public/images
+# is committed
+/.raw-assets/
 
 CLAUDE.md
 .claude/

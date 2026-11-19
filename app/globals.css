@@ -2,13 +2,78 @@
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-panchang: var(--font-panchang-base), "Syne", "Syncopate", "Arial Black",
-    sans-serif;
+  --font-mono: var(--font-jetbrains-mono);
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
 }
 
 body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Arena carbon range slider — replaces the default browser track/thumb.
+   The emerald "active fill" up to the current value is painted via an
+   inline background gradient set on the element itself (computed from the
+   live value in JS, since neither track pseudo-element supports a native
+   fill); WebKit's own track pseudo-element is made transparent so that
+   gradient shows through, while Firefox's ::-moz-range-progress paints the
+   fill natively and simply ignores the inline gradient underneath it. */
+.range-slider {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+.range-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: transparent;
+}
+.range-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: #0a0b0e;
+}
+.range-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: #10b981;
+}
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -7px;
+  border-radius: 999px;
+  background: #101216;
+  border: 2px solid #10b981;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  cursor: pointer;
+}
+.range-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #101216;
+  border: 2px solid #10b981;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+  cursor: pointer;
+}
+
+/* Every VIN, LOT number, price, FX rate and status ticker on the site uses
+   the font-mono utility — guarantee tabular digits everywhere it's used
+   rather than hunting down every individual numeric span. */
+.font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Explicit opt-in for tabular digits on numeric values that aren't
+   otherwise set in font-mono (prices, VINs, dates, order refs). */
+.tnum {
+  font-variant-numeric: tabular-nums;
 }
 
 .no-scrollbar {
@@ -33,4 +98,340 @@ body {
     inset: 0;
     border: none !important;
   }
+}
+
+/* ============================================================================
+   ARENA AESTHETIC — custom cockpit-furniture classes ported verbatim from
+   reference-arena.html. Flat carbon surfaces (#101216/#0A0B0E), fine
+   border-white/12 hairlines, and precision crosshair/pin/gear/stage-cell
+   accents — the site's current non-negotiable visual system (see CLAUDE.md).
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0b0e;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2f38;
+  border-radius: 9px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a414d;
+}
+
+/* Corner crosshair accents on cockpit cards */
+.cross::before,
+.cross::after {
+  content: "";
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  pointer-events: none;
+  opacity: 0.55;
+}
+.cross::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+.cross::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+}
+.cross-x {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.cross-x i {
+  position: absolute;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  font-style: normal;
+  line-height: 1;
+}
+
+/* Inspection hotspot pins */
+.hot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.hot .num {
+  width: 26px;
+  height: 26px;
+  border-radius: 99px;
+  background: rgba(10, 11, 14, 0.82);
+  border: 1.5px solid #10b981;
+  color: #10b981;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);
+  transition: 0.2s ease;
+}
+.hot .lbl {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  background: rgba(10, 11, 14, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 0;
+  transition: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hot:hover .num,
+.hot.open .num {
+  background: #10b981;
+  color: #0a0b0e;
+}
+.hot:hover .lbl,
+.hot.open .lbl {
+  max-width: 280px;
+  opacity: 1;
+  padding: 6px 10px;
+  margin-left: 8px;
+}
+.hot.flip {
+  flex-direction: row-reverse;
+}
+.hot.flip .lbl {
+  margin-left: 0 !important;
+  margin-right: 8px;
+  text-align: right;
+}
+.hot.pinned .num {
+  animation: pinPulse 2.2s ease-in-out infinite;
+}
+@keyframes pinPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);
+  }
+  50% {
+    box-shadow: 0 0 0 9px rgba(16, 185, 129, 0);
+  }
+}
+
+/* Angle-switcher thumbnail strip */
+.thumb-btn {
+  position: relative;
+  width: 64px;
+  height: 44px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+  opacity: 0.5;
+  transition: 0.2s ease;
+}
+.thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumb-btn:hover {
+  opacity: 0.85;
+}
+.thumb-btn.active {
+  opacity: 1;
+  border-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+}
+.thumb-btn span {
+  position: absolute;
+  left: 2px;
+  bottom: 1px;
+  font-family: var(--font-mono), monospace;
+  font-size: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0 3px;
+}
+
+/* Filter/demo chips */
+.chip {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.65);
+  padding: 10px 14px;
+  border-radius: 999px;
+  transition: 0.18s ease;
+  background: rgba(255, 255, 255, 0.03);
+}
+.chip:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.chip.active {
+  color: #0a0b0e;
+  background: #10b981;
+  border-color: #10b981;
+  font-weight: 700;
+}
+
+/* Concierge MODE 01/02 gate */
+.mode-btn {
+  color: rgba(255, 255, 255, 0.5);
+  background: transparent;
+}
+.mode-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+.mode-btn.active {
+  color: #fff;
+  background: rgba(16, 185, 129, 0.1);
+  box-shadow: inset 0 -2px 0 #10b981;
+}
+
+/* 5-stage gear-shift track */
+.gear {
+  position: relative;
+  flex: 1;
+  text-align: left;
+  padding: 14px 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0d0f13;
+  transition: 0.22s ease;
+}
+.gear:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: #13161b;
+}
+.gear.active {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.09);
+  box-shadow:
+    0 0 0 1px rgba(16, 185, 129, 0.35),
+    0 12px 34px -18px rgba(16, 185, 129, 0.7);
+}
+.gear .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 99px;
+  background: #2a2f38;
+  display: block;
+  margin-bottom: 12px;
+  transition: 0.22s ease;
+}
+.gear.active .dot,
+.gear:hover .dot {
+  background: #10b981;
+  box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.16);
+}
+.gear .gnum {
+  font-family: var(--font-mono), monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.22);
+  transition: 0.22s ease;
+}
+.gear.active .gnum {
+  color: #10b981;
+}
+.gear .gname {
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  margin-top: 6px;
+}
+.gear.active .gname {
+  color: #fff;
+}
+
+/* Shipment tracker stage cells */
+.stage-cell {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px;
+  background: #0d0f13;
+  transition: 0.25s ease;
+}
+.stage-cell.done {
+  border-color: rgba(16, 185, 129, 0.45);
+  background: rgba(16, 185, 129, 0.07);
+}
+.stage-cell.current {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.13);
+}
+.stage-cell.pending {
+  opacity: 0.5;
+}
+.stage-cell .sc-num {
+  font-family: var(--font-mono), monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+}
+
+/* CustomSelect dropdown viewport — a thinner ambient scrollbar than the
+   site-wide 9px bar, so the listbox never reads as a native OS widget. */
+.select-viewport {
+  scrollbar-width: thin;
+}
+.select-viewport::-webkit-scrollbar {
+  width: 4px;
+}
+.select-viewport::-webkit-scrollbar-thumb {
+  background: #2a2f38;
+  border-radius: 4px;
+}
+.select-viewport::-webkit-scrollbar-thumb:hover {
+  background: #3a414d;
+}
+
+/* Strip native OS number-input spinners globally — replaced per-input by
+   bespoke dark -/+ steppers where needed, never the stark white browser
+   default. */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Form fields */
+.field {
+  background: #12141a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+  width: 100%;
+  transition: 0.18s ease;
+}
+.field:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.16);
+}
+.field::placeholder {
+  color: #6c727c;
+}
+.err {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.14) !important;
 }

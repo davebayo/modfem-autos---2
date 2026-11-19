@@ -65,7 +65,10 @@ export interface LandedCostOptions {
 }
 
 export function calculateLandedCost(
-  vehicle: Pick<Vehicle, "id" | "year" | "basePriceCAD">,
+  vehicle: Pick<
+    Vehicle,
+    "id" | "year" | "basePriceCAD" | "isDistressSale" | "distressPriceNGN"
+  >,
   options: LandedCostOptions = {}
 ): LandedCostBreakdown {
   const shippingMethod = options.shippingMethod ?? "RoRo";
@@ -93,7 +96,16 @@ export function calculateLandedCost(
 
   const portClearingNGN = PORT_CLEARING_FEES_NGN[destinationPort];
 
-  const totalNGN = dutyPaidValueNGN + statutoryTaxesNGN + portClearingNGN;
+  // Itemized rows above are always the standard Canada-import formula, kept
+  // fully transparent. For a locked Lagos distress sale, the TOTAL the buyer
+  // actually pays is the flyer's quoted flat price, not whatever this
+  // formula would otherwise compute — the breakdown above stays visible for
+  // context, but never silently overrides the real asking price.
+  const computedTotalNGN = dutyPaidValueNGN + statutoryTaxesNGN + portClearingNGN;
+  const totalNGN =
+    vehicle.isDistressSale && vehicle.distressPriceNGN
+      ? vehicle.distressPriceNGN
+      : computedTotalNGN;
   const totalCAD = totalNGN / exchangeRateCadToNgn;
 
   const baseCostNGN = basePriceCAD * exchangeRateCadToNgn;

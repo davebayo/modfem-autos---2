@@ -1,4 +1,18 @@
+import { VehicleStatus } from "./types";
+
 export const ANNOUNCEMENTS = [
-  "Next RoRo Vessel departs Halifax in 6 days",
-  "Live Customs Exchange Rate: $1 CAD = ₦1,180",
+  "Based in Vaughan, Ontario — Direct Vehicle Sourcing & Shipping to Lagos",
+  "Transparent Landed-Cost Breakdowns: Pre-Purchase Inspection, Shipping & Clearing",
 ];
+
+const VEHICLE_STATUS_LABELS: Record<VehicleStatus, string> = {
+  AVAILABLE: "Available to Source",
+  RESERVED: "Reserved for Client",
+  IN_TRANSIT: "In Transit to Lagos",
+  CLEARING: "Clearing at Port",
+  DELIVERED: "Delivered in Nigeria",
+};
+
+export function formatVehicleStatus(status: VehicleStatus): string {
+  return VEHICLE_STATUS_LABELS[status];
+}

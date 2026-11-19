@@ -20,6 +20,39 @@ export interface StoreSnapshot {
   sourcingRequests: SourcingRequest[];
 }
 
+// What an unauthenticated GET /api/store sees — vehicles are never
+// PII-bearing so they pass through unchanged, but every buyer-submitted
+// record is stripped down to its non-identifying fields. The buyer's own
+// name/email/phone and any dealer notes are dropped entirely (not sent as
+// empty strings) so they never reach the wire for anyone but an
+// authenticated admin session.
+export type PublicUser = Omit<User, "name" | "email">;
+export type PublicSourcingRequest = Omit<SourcingRequest, "buyer" | "dealerNotes">;
+
+export interface PublicStoreSnapshot {
+  vehicles: Vehicle[];
+  users: PublicUser[];
+  sourcingRequests: PublicSourcingRequest[];
+}
+
+export function redactSnapshotForPublic(snapshot: StoreSnapshot): PublicStoreSnapshot {
+  return {
+    vehicles: snapshot.vehicles,
+    users: snapshot.users.map((user): PublicUser => ({ id: user.id, role: user.role })),
+    sourcingRequests: snapshot.sourcingRequests.map(
+      (request): PublicSourcingRequest => ({
+        id: request.id,
+        createdAt: request.createdAt,
+        status: request.status,
+        mode: request.mode,
+        vehicleSpec: request.vehicleSpec,
+        swapVehicle: request.swapVehicle,
+        financials: request.financials,
+      })
+    ),
+  };
+}
+
 export function joinVehicle(record: VehicleRecord, state: StoreState): Vehicle {
   return {
     ...record,
@@ -39,8 +72,15 @@ export function computeSnapshot(state: StoreState): StoreSnapshot {
 }
 
 /** Converts a joined snapshot (as returned by GET /api/store) back into
- * the normalized shape the stores operate on internally. */
-export function normalizeSnapshot(snapshot: StoreSnapshot): StoreState {
+ * the normalized shape the stores operate on internally. Every anonymous
+ * caller gets the PII-redacted PublicStoreSnapshot shape (see
+ * redactSnapshotForPublic above) rather than the full admin one, so this
+ * accepts either and fills the dropped PII fields in with empty strings —
+ * StoreState always keeps the full User/SourcingRequest shape internally,
+ * it's just blank for fields this browser was never sent. */
+export function normalizeSnapshot(
+  snapshot: StoreSnapshot | PublicStoreSnapshot
+): StoreState {
   const shipments: Shipment[] = [];
   const trackingLogs: TrackingLog[] = [];
   const vehicles: VehicleRecord[] = snapshot.vehicles.map((vehicle) => {
@@ -49,12 +89,22 @@ export function normalizeSnapshot(snapshot: StoreSnapshot): StoreState {
     trackingLogs.push(...logs);
     return record;
   });
+  const users: User[] = snapshot.users.map((user) => ({
+    id: user.id,
+    role: user.role,
+    name: "name" in user ? user.name : "",
+    email: "email" in user ? user.email : "",
+  }));
+  const sourcingRequests: SourcingRequest[] = snapshot.sourcingRequests.map((request) => ({
+    ...request,
+    buyer: "buyer" in request ? request.buyer : { name: "", email: "", phone: "" },
+  }));
   return {
-    users: snapshot.users,
+    users,
     vehicles,
     shipments,
     trackingLogs,
-    sourcingRequests: snapshot.sourcingRequests,
+    sourcingRequests,
   };
 }
 

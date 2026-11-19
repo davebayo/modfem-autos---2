@@ -7,7 +7,7 @@ import {
   Vehicle,
   VehicleStatus,
 } from "./types";
-import { cloneSeed, SEED_STATE, StoreState } from "./seed-data";
+import { cloneSeed, SEED_STATE, StoreState, VehicleRecord } from "./seed-data";
 import {
   applyAddTrackingLog,
   applyAddVehicle,
@@ -24,6 +24,7 @@ import {
   NewSourcingRequestInput,
   NewVehicleInput,
   normalizeSnapshot,
+  PublicStoreSnapshot,
   ReservationResult,
   ReserveVehicleBuyer,
   ReserveVehicleOptions,
@@ -42,13 +43,47 @@ export type {
   VehicleFilter,
 };
 
-const STORAGE_KEY = "modfem.store.v1";
+// Bumped v1 -> v5: the Vehicle shape gained imageResolution, isDistressSale,
+// distressPriceNGN, inspectionGallery, and verifiedSpecs. A returning
+// browser's v1 cache predates all of these — rather than patch it in place,
+// the version bump orphans the old key outright so getState() falls back to
+// a fresh cloneSeed() with the current fields. The old key is simply never
+// read again; nothing explicitly deletes it (harmless dead localStorage).
+const STORAGE_KEY = "modfem.store.v5";
+
+const SEED_VEHICLE_BY_ID = new Map(SEED_STATE.vehicles.map((v) => [v.id, v]));
+
+// Fields added to Vehicle after a browser may have already cached a
+// StoreState under the CURRENT storage key (e.g. a vehicle reserved before
+// a later field was introduced). For any vehicle that still exists in
+// SEED_STATE, a missing field is backfilled from the seed rather than left
+// undefined — new admin-added vehicles with no seed counterpart are
+// untouched since undefined is the correct value for those.
+function mergeVehicleDefaults(vehicle: VehicleRecord): VehicleRecord {
+  const seedVehicle = SEED_VEHICLE_BY_ID.get(vehicle.id);
+  if (!seedVehicle) return vehicle;
+  return {
+    ...vehicle,
+    imageResolution: vehicle.imageResolution ?? seedVehicle.imageResolution,
+    isSampleEstimate: vehicle.isSampleEstimate ?? seedVehicle.isSampleEstimate,
+    isDistressSale: vehicle.isDistressSale ?? seedVehicle.isDistressSale,
+    distressPriceNGN: vehicle.distressPriceNGN ?? seedVehicle.distressPriceNGN,
+    locationStatus: vehicle.locationStatus ?? seedVehicle.locationStatus,
+    inspectionGallery: vehicle.inspectionGallery ?? seedVehicle.inspectionGallery,
+    verifiedSpecs: vehicle.verifiedSpecs ?? seedVehicle.verifiedSpecs,
+  };
+}
 
 function readStorage(): StoreState | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as StoreState) : null;
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as StoreState;
+    return {
+      ...parsed,
+      vehicles: parsed.vehicles.map(mergeVehicleDefaults),
+    };
   } catch {
     return null;
   }
@@ -90,7 +125,12 @@ function persist(state: StoreState): void {
  * file-backed store. The optimistic local write (persist() above) has
  * already happened and already notified subscribers, so a failure here
  * just means this change stays local-only until the next successful sync —
- * it never blocks or breaks the UI. */
+ * it never blocks or breaks the UI.
+ *
+ * Every admin-mutator function below (updateVehicleStatus, addVehicle, etc.)
+ * is only ever called from the already session-gated /admin console; POST
+ * /api/store checks that session via its httpOnly cookie, which this
+ * same-origin fetch sends automatically — no secret is attached here. */
 function postActionToServer(action: StoreAction): void {
   if (typeof window === "undefined") return;
   fetch("/api/store", {
@@ -110,13 +150,16 @@ let hasSyncedWithServer = false;
 // hydration pass are guaranteed to agree on, byte for byte.
 const SERVER_SNAPSHOT: StoreSnapshot = computeSnapshot(SEED_STATE);
 
-/** True when a snapshot is byte-for-byte the untouched seed data — used to
- * detect a cold-started, zero-DB server (e.g. a fresh Vercel lambda with no
- * DATABASE_URL, whose ephemeral /tmp store reset on this cold start) versus
- * one that genuinely has no mutations yet because nobody's made any. */
-function isPristineSnapshot(snapshot: StoreSnapshot): boolean {
+/** True when a snapshot's vehicles are byte-for-byte the untouched seed data
+ * — used to detect a cold-started, zero-DB server (e.g. a fresh Vercel
+ * lambda with no DATABASE_URL, whose ephemeral /tmp store reset on this cold
+ * start) versus one that genuinely has no mutations yet because nobody's
+ * made any. Compares vehicles only (never redacted, unlike users/
+ * sourcingRequests) so this works the same for an anonymous caller's
+ * PublicStoreSnapshot as it does for an admin's full StoreSnapshot. */
+function isPristineSnapshot(snapshot: { vehicles: StoreSnapshot["vehicles"] }): boolean {
   try {
-    return JSON.stringify(snapshot) === JSON.stringify(SERVER_SNAPSHOT);
+    return JSON.stringify(snapshot.vehicles) === JSON.stringify(SERVER_SNAPSHOT.vehicles);
   } catch {
     return false;
   }
@@ -130,7 +173,18 @@ function isPristineSnapshot(snapshot: StoreSnapshot): boolean {
  * browser's localStorage already has real mutations, a cold start wiped the
  * server's ephemeral store — adopting its pristine data here would silently
  * erase the local demo state instead. In that case we keep the newer local
- * state and push it back up to the server instead of overwriting it. */
+ * state and push it back up to the server instead of overwriting it.
+ *
+ * Known limitation: "pristine" is the only signal available, so a genuine
+ * admin "Reset Demo Data" is indistinguishable from an ephemeral cold start
+ * — if some OTHER browser still has stale pre-reset mutations cached when it
+ * next loads, this guard will push that stale state back up and undo the
+ * reset. This is a real risk once DATABASE_URL is configured (a real reset
+ * is persistent and meant to stick); against the JSON-file fallback it's
+ * moot, since that store is ephemeral by design anyway. Fixing it properly
+ * needs a real per-write version/timestamp to compare against, not just
+ * snapshot equality — out of scope for now, flagged for whoever adds
+ * multi-instance production persistence. */
 function syncWithServer(): void {
   if (hasSyncedWithServer || typeof window === "undefined") return;
   hasSyncedWithServer = true;
@@ -140,7 +194,7 @@ function syncWithServer(): void {
 
   fetch("/api/store")
     .then((res) => (res.ok ? res.json() : null))
-    .then((data: StoreSnapshot | null) => {
+    .then((data: StoreSnapshot | PublicStoreSnapshot | null) => {
       if (!data || !Array.isArray(data.vehicles) || !Array.isArray(data.users)) {
         return;
       }
@@ -297,12 +351,14 @@ export function createShipment(
     shipment
   );
   persist(nextState);
-  postActionToServer({
-    action: "createShipment",
-    vehicleId,
-    shipment,
-    shipmentId: created.id,
-  });
+  postActionToServer(
+    {
+      action: "createShipment",
+      vehicleId,
+      shipment,
+      shipmentId: created.id,
+    }
+  );
   return created;
 }
 

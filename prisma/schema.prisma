@@ -8,8 +8,14 @@
 // lib/store-shared.ts are required, since that logic already speaks in
 // terms of these same five entities.
 
+// engineType = "client" is the Rust-free Prisma Client: query planning runs
+// in WASM and all I/O goes through a JS driver adapter (@prisma/adapter-pg,
+// wired up in lib/db.ts). The default native query-engine binary can't load
+// inside a Cloudflare Worker isolate, so this is required for the OpenNext
+// deploy — and works identically under Node for `next dev`/`next start`.
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  engineType = "client"
 }
 
 datasource db {
@@ -57,6 +63,11 @@ enum SourcingRequestStatus {
   CONVERTED
 }
 
+enum SourcingRequestMode {
+  DIRECT_SOURCING
+  CAR_SWAP
+}
+
 model User {
   id       String   @id @default(cuid())
   name     String
@@ -87,6 +98,17 @@ model Vehicle {
   frontImageUrl String @map("front_image_url")
   rearImageUrl  String @map("rear_image_url")
   thumbnailUrl  String @map("thumbnail_url")
+
+  // Visual-truth / distress-sale fields — see lib/types.ts Vehicle for the
+  // authoritative shape; inspectionGallery and verifiedSpecs are stored as
+  // JSON since they're nested value objects with no independent identity.
+  isSampleEstimate  Boolean? @map("is_sample_estimate")
+  imageResolution   String?  @map("image_resolution") // "full" | "thumbnail"
+  isDistressSale    Boolean? @map("is_distress_sale")
+  distressPriceNGN  Float?   @map("distress_price_ngn")
+  locationStatus    String?  @map("location_status")
+  inspectionGallery Json?    @map("inspection_gallery")
+  verifiedSpecs     Json?    @map("verified_specs")
 
   owner   User?  @relation(fields: [ownerId], references: [id])
   ownerId String? @map("owner_id")
@@ -143,6 +165,7 @@ model SourcingRequest {
   id        String                 @id // e.g. "SR-2026-7K2Q"
   createdAt DateTime               @default(now()) @map("created_at")
   status    SourcingRequestStatus  @default(NEW)
+  mode      SourcingRequestMode    @default(DIRECT_SOURCING)
 
   // Buyer (value object — a sourcing request precedes any User account)
   buyerName  String @map("buyer_name")
@@ -155,6 +178,12 @@ model SourcingRequest {
   specModel         String @map("spec_model")
   specTrimOrColor   String @map("spec_trim_or_color")
   specMaxMileageKm  Int    @map("spec_max_mileage_km")
+
+  // Swap vehicle (value object — only populated when mode = CAR_SWAP)
+  swapYear      Int?    @map("swap_year")
+  swapMake      String? @map("swap_make")
+  swapModel     String? @map("swap_model")
+  swapCondition String? @map("swap_condition")
 
   // Financials (value object)
   totalBudgetNGN    Float           @map("total_budget_ngn")

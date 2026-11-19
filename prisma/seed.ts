@@ -10,6 +10,10 @@
  * DATABASE_URL to be set — this script always writes to Postgres via
  * Prisma, regardless of whether the app itself is currently running
  * against the JSON fallback.
+ *
+ * Wipes every existing row first — refuses to run against NODE_ENV=production
+ * unless ALLOW_PRODUCTION_SEED=true is also set, so it can't double as an
+ * accidental "delete all live data" command.
  */
 import { SEED_STATE } from "../lib/seed-data";
 import { writeStateToDatabase } from "../lib/db";
@@ -19,6 +23,19 @@ async function main() {
     console.error(
       "DATABASE_URL is not set — nothing to seed. Set it in your environment " +
         "(or .env.local) to a Postgres connection string and try again."
+    );
+    process.exit(1);
+  }
+
+  // This wipes every row before reseeding — safe against a fresh staging DB,
+  // destructive against a live one with real admin inventory edits or buyer
+  // sourcing mandates. Require an explicit opt-in once NODE_ENV says
+  // production, rather than let a stray `prisma migrate reset` or a copy-
+  // pasted CI step silently erase production data.
+  if (process.env.NODE_ENV === "production" && process.env.ALLOW_PRODUCTION_SEED !== "true") {
+    console.error(
+      "Refusing to seed: NODE_ENV=production. This wipes all existing data. " +
+        "If you really mean to reset a live database, set ALLOW_PRODUCTION_SEED=true and run again."
     );
     process.exit(1);
   }
