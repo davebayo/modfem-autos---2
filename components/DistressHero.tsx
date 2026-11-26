@@ -362,9 +362,13 @@ export function DistressHero({ vehicle, onOpenLandedCostDrawer, ignitionComplete
         {/* LEFT: Frosted glass architectural pillar — leaves the car and
             highway on the right 70% completely unobstructed */}
         <div className="flex w-full flex-col justify-between border-r border-white/[0.14] bg-black/45 p-8 shadow-[inset_-1px_0_0_0_rgba(255,255,255,0.12)] backdrop-blur-2xl lg:min-h-screen lg:w-[30%] lg:p-12">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-[#101216]">
+          <Link
+            href="/"
+            aria-label="Modfem Autos — Home"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-[#101216] transition-colors duration-200 hover:border-white/25 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0B0E]"
+          >
             <ModfemLogoMark className="h-auto w-7 text-white" />
-          </div>
+          </Link>
 
           <div className="mt-10 flex flex-col gap-5 lg:mt-0">
             <div className="inline-flex w-fit max-w-full flex-nowrap items-center gap-2 rounded-full border border-white/12 bg-[#101216] p-1 pr-3 shadow-[0_10px_30px_rgba(0,0,0,0.65)]">

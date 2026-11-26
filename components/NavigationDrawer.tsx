@@ -46,12 +46,17 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
           >
             <div>
               <div className="sticky top-0 flex items-center justify-between px-6 py-5">
-                <div className="flex items-center gap-2">
+                <Link
+                  href="/"
+                  onClick={onClose}
+                  aria-label="Modfem Autos — Home"
+                  className="flex items-center gap-2 rounded-full transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0A0B0E]"
+                >
                   <ModfemLogoMark className="h-4 w-auto" />
                   <span className="font-[family-name:var(--font-brand)] text-sm font-semibold tracking-[-0.02em]">
                     MODFEM AUTOS
                   </span>
-                </div>
+                </Link>
                 <button
                   type="button"
                   onClick={onClose}

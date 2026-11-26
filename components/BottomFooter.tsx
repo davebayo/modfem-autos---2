@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu, RotateCcw } from "lucide-react";
+import Link from "next/link";
 import { ModfemLogoMark } from "@/components/ui/ModfemLogoMark";
 
 interface BottomFooterProps {
@@ -14,12 +15,16 @@ export function BottomFooter({ onOpenMenu, onReplayIgnition }: BottomFooterProps
   return (
     <footer className="flex h-14 shrink-0 items-center justify-between gap-4 border-t border-white/10 px-4 md:h-16 md:px-8">
       <div className="flex min-w-0 items-center gap-3">
-        <div className="flex shrink-0 items-center gap-1.5">
+        <Link
+          href="/"
+          aria-label="Modfem Autos — Home"
+          className="flex shrink-0 items-center gap-1.5 rounded-full transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0A0B0E]"
+        >
           <ModfemLogoMark className="h-3.5 w-auto text-white" />
           <span className="font-[family-name:var(--font-brand)] text-xs font-semibold tracking-[-0.02em] text-white">
             MODFEM AUTOS
           </span>
-        </div>
+        </Link>
         <p className="min-w-0 truncate text-xs text-zinc-400">
           &copy; 2026 Modfem Autos. Vehicles independently inspected prior to
           export &mdash; landed cost is an estimate pending final agent

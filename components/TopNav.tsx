@@ -40,12 +40,16 @@ export function TopNav({
     <header className="sticky top-0 z-30 px-3 pt-3 sm:px-4">
       <div className={`mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 rounded-full px-4 sm:px-6 ${GLASS_NAV}`}>
         <div className="flex min-w-0 items-center gap-3">
-          <div className="flex shrink-0 items-center gap-2">
+          <Link
+            href="/"
+            aria-label="Modfem Autos — Home"
+            className="flex shrink-0 items-center gap-2 rounded-full transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0A0B0E]"
+          >
             <ModfemLogoMark className="h-4 w-auto text-white" />
             <span className="font-[family-name:var(--font-brand)] text-sm font-semibold tracking-[-0.02em] text-white sm:text-base">
               MODFEM AUTOS
             </span>
-          </div>
+          </Link>
           <span className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[9px] uppercase tracking-widest text-zinc-400 lg:flex">
             <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${fxDotColor}`} />
             ₦{fx.rate.toLocaleString("en-NG")}/CAD
