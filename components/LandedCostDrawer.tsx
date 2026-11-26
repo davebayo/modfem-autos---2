@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, MessageCircle, Plus, Printer, X } from "lucide-react";
@@ -16,6 +16,7 @@ import { MonroneyBadge } from "@/components/MonroneyBadge";
 import { SegmentedToggle } from "@/components/SegmentedToggle";
 import { NumberStepper } from "@/components/NumberStepper";
 import { useMounted } from "@/lib/use-mounted";
+import { useBodyScrollLock } from "@/lib/use-body-scroll-lock";
 
 interface LandedCostDrawerProps {
   vehicle: Vehicle;
@@ -112,6 +113,21 @@ export function LandedCostDrawer({
     null
   );
   const mounted = useMounted();
+  useBodyScrollLock(isOpen);
+
+  // The Reserve button lives in the sticky footer, but the buyer form renders
+  // at the END of the scrollable body — on a phone that's below the fold, so
+  // the tap would appear to do nothing. Bring the form into view and focus
+  // its first field as soon as that step opens.
+  const buyerFormRef = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (phase !== "buyer-form") return;
+    const form = buyerFormRef.current;
+    if (!form) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    form.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    form.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true });
+  }, [phase]);
 
   const breakdown = calculateLandedCost(vehicle, {
     shippingMethod,
@@ -234,7 +250,8 @@ export function LandedCostDrawer({
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition-colors hover:bg-white/10"
+                    aria-label="Close landed cost breakdown"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 transition-colors hover:bg-white/10"
                   >
                     <X className="h-4.5 w-4.5" strokeWidth={1.5} />
                   </button>
@@ -331,7 +348,8 @@ export function LandedCostDrawer({
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 transition-colors hover:bg-white/10"
+                    aria-label="Close landed cost breakdown"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 transition-colors hover:bg-white/10"
                   >
                     <X className="h-4.5 w-4.5" strokeWidth={1.5} />
                   </button>
@@ -493,8 +511,9 @@ export function LandedCostDrawer({
 
                   {vehicle.status === "AVAILABLE" && phase === "buyer-form" && (
                     <form
+                      ref={buyerFormRef}
                       onSubmit={handleReserveSubmit}
-                      className="mt-6 rounded-2xl border border-white/10 bg-[#0A0B0E] p-4"
+                      className="mt-6 scroll-mt-4 rounded-2xl border border-white/10 bg-[#0A0B0E] p-4"
                     >
                       <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-400">
                         Buyer Dossier

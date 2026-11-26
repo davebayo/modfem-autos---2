@@ -435,3 +435,18 @@ input[type="number"] {
   border-color: #ef4444 !important;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.14) !important;
 }
+
+/* iOS Safari zooms the page when focusing a form control whose font-size is
+   under 16px, and doesn't zoom back out. On touch (coarse-pointer) devices,
+   floor every text-entry control at 16px. This is deliberately UNLAYERED
+   CSS (see CLAUDE.md on cascade layers): it must beat the smaller Tailwind
+   text-* utilities on those inputs (text-xs search bar, text-[10px] admin
+   selects, the 14px `.field`), and it covers future fields automatically.
+   Mouse/trackpad devices keep the designed sizes. */
+@media (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="hidden"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

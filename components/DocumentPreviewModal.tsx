@@ -1,7 +1,10 @@
 "use client";
 
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Printer, ShieldCheck, X } from "lucide-react";
+import { useBodyScrollLock } from "@/lib/use-body-scroll-lock";
+import { useMounted } from "@/lib/use-mounted";
 import { Vehicle } from "@/lib/types";
 import { calculateLandedCost, formatNGN } from "@/lib/pricing";
 
@@ -46,12 +49,18 @@ export function DocumentPreviewModal({
   onClose,
 }: DocumentPreviewModalProps) {
   const isOpen = documentType !== null;
+  useBodyScrollLock(isOpen);
   const shipment = vehicle.shipment;
   const breakdown = calculateLandedCost(vehicle, {
     shippingMethod: shipment?.shippingMethod ?? "RoRo",
   });
+  const mounted = useMounted();
 
-  return (
+  // Portaled to <body> for the same reason as the other overlays: the route
+  // template's filter/transform would otherwise trap this `fixed` panel.
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && documentType && (
         <>
@@ -205,6 +214,7 @@ export function DocumentPreviewModal({
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

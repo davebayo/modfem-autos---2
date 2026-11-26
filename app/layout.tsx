@@ -70,7 +70,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${comfortaa.variable} h-full antialiased`}
     >
-      <body className="h-full bg-zinc-950">
+      <body className="h-full overflow-x-clip bg-zinc-950">
         {/* Ambient showroom rim-light — a fixed, subtle emerald glow behind
             every page so cards and hero content read as sitting inside a
             lit studio rather than a flat dashboard background. */}

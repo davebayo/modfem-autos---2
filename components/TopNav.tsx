@@ -123,7 +123,7 @@ export function TopNav({
               type="button"
               onClick={onOpenMenu}
               aria-label="Open menu"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white transition-all duration-300 hover:bg-white/[0.12] md:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white transition-all duration-300 hover:bg-white/[0.12] md:hidden"
             >
               <Menu className="h-4.5 w-4.5" strokeWidth={1.5} />
             </button>

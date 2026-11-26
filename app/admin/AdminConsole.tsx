@@ -674,7 +674,7 @@ export function AdminConsole() {
                     value={shipmentForm.etaLagos}
                     onChange={(v) => setShipmentForm((f) => ({ ...f, etaLagos: v }))}
                   />
-                  <label className="col-span-2 flex items-center gap-2 text-xs text-zinc-300">
+                  <label className="sm:col-span-2 flex items-center gap-2 text-xs text-zinc-300">
                     <input
                       type="checkbox"
                       checked={shipmentForm.billOfLadingVerified}
@@ -690,7 +690,7 @@ export function AdminConsole() {
                   </label>
                   <button
                     type="submit"
-                    className="col-span-2 mt-2 border border-white bg-white px-4 py-2.5 text-[10px] font-medium uppercase tracking-widest text-zinc-950"
+                    className="sm:col-span-2 mt-2 border border-white bg-white px-4 py-2.5 text-[10px] font-medium uppercase tracking-widest text-zinc-950"
                   >
                     {selectedVehicle.shipment ? "Update Shipment" : "Create Shipment"}
                   </button>
@@ -734,7 +734,7 @@ export function AdminConsole() {
                   />
                   <button
                     type="submit"
-                    className="col-span-2 mt-2 flex items-center justify-center gap-2 border border-emerald-400 px-4 py-2.5 text-[10px] font-medium uppercase tracking-widest text-emerald-400 transition-colors hover:bg-emerald-400/10"
+                    className="sm:col-span-2 mt-2 flex items-center justify-center gap-2 border border-emerald-400 px-4 py-2.5 text-[10px] font-medium uppercase tracking-widest text-emerald-400 transition-colors hover:bg-emerald-400/10"
                   >
                     <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
                     Dispatch Milestone

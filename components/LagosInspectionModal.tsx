@@ -10,6 +10,7 @@ import { formatNGN } from "@/lib/pricing";
 import { getVehicleInquiryUrl } from "@/lib/site-config";
 import { GLASS_CARD, GLASS_PILL } from "@/lib/glass-tokens";
 import { useMounted } from "@/lib/use-mounted";
+import { useBodyScrollLock } from "@/lib/use-body-scroll-lock";
 import { TelemetrySlash } from "@/components/ui/TelemetryEyebrow";
 
 interface LagosInspectionModalProps {
@@ -47,6 +48,7 @@ export function LagosInspectionModal({
   const active = gallery[activeIndex];
   const specs = vehicle.verifiedSpecs;
   const mounted = useMounted();
+  useBodyScrollLock(isOpen);
 
   if (!mounted) return null;
 
@@ -69,7 +71,7 @@ export function LagosInspectionModal({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className={`fixed left-1/2 top-1/2 z-50 flex max-h-[90vh] w-[94vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-white ${GLASS_CARD}`}
+            className={`fixed left-1/2 top-1/2 z-50 flex max-h-[90dvh] w-[94vw] max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden text-white ${GLASS_CARD}`}
           >
             <div className="flex shrink-0 items-start justify-between px-6 py-5">
               <div>

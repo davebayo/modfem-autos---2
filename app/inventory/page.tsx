@@ -110,8 +110,8 @@ function FeaturedVehicleCard({
       className="cross relative overflow-hidden rounded-2xl border border-white/12 bg-[#101216]"
     >
       <CrossX />
-      <div className="grid lg:grid-cols-[1.4fr_1fr]">
-        <div className="relative bg-black">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr]">
+        <div className="relative min-w-0 bg-black">
           <div className="relative aspect-[16/10] overflow-hidden">
             <Image
               src={activeImageUrl}
@@ -125,13 +125,13 @@ function FeaturedVehicleCard({
               style={{ background: "linear-gradient(to top, rgba(10,11,14,.55), transparent 45%)" }}
             />
             <InspectionHotspots />
-            <div className="absolute left-3 top-3 flex items-center gap-2">
+            <div className="absolute left-3 right-3 top-3 flex min-w-0 items-center gap-2 sm:right-36">
               <span className={`led ${ledColor}`} />
-              <span className="font-mono text-[10px] tracking-[0.16em] text-white">
+              <span className="truncate font-mono text-[10px] tracking-[0.16em] text-white">
                 ● {statusLine}
               </span>
             </div>
-            <div className="absolute right-3 top-3 border border-white/20 bg-black/70 px-2 py-1 font-mono text-[10px] tracking-[0.14em] text-white">
+            <div className="absolute right-3 top-3 hidden border border-white/20 bg-black/70 px-2 py-1 font-mono text-[10px] tracking-[0.14em] text-white sm:block">
               RAW · {Math.max(angles.length, 1)} VIEW{angles.length === 1 ? "" : "S"}
             </div>
             <div className="absolute left-4 top-1/2 hidden -translate-y-1/2 sm:block">
@@ -156,14 +156,14 @@ function FeaturedVehicleCard({
             </div>
           )}
         </div>
-        <div className="flex flex-col border-t border-white/10 p-5 sm:border-l sm:border-t-0 sm:p-7">
+        <div className="flex min-w-0 flex-col border-t border-white/10 p-5 sm:border-l sm:border-t-0 sm:p-7">
           <LotVinCapsule lot={lot} />
           <h3 className="mt-2 text-2xl font-bold leading-tight sm:text-[27px]">
             {vehicle.year} {vehicle.make}
             <br />
             {vehicle.model}
           </h3>
-          <div className="mt-4 flex items-baseline gap-3">
+          <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <span className="font-mono text-3xl font-bold tnum text-emerald-400">
               {priceMode === "LANDED" ? formatNGN(breakdown.totalNGN) : formatCAD(breakdown.basePriceCAD)}
             </span>
@@ -177,25 +177,25 @@ function FeaturedVehicleCard({
               : `${formatNGN(breakdown.totalNGN)} landed in Lagos`}
           </p>
           <dl className="mt-5 divide-y divide-white/8 border-y border-white/8 font-mono text-[11.5px]">
-            <div className="flex justify-between py-2.5">
-              <dt className="text-white/45">ORIGIN</dt>
-              <dd>{vehicle.location}</dd>
+            <div className="flex justify-between gap-4 py-2.5">
+              <dt className="shrink-0 text-white/45">ORIGIN</dt>
+              <dd className="min-w-0 break-words text-right">{vehicle.location}</dd>
             </div>
-            <div className="flex justify-between py-2.5">
-              <dt className="text-white/45">DRIVETRAIN</dt>
-              <dd>{vehicle.specs.drivetrain}</dd>
+            <div className="flex justify-between gap-4 py-2.5">
+              <dt className="shrink-0 text-white/45">DRIVETRAIN</dt>
+              <dd className="min-w-0 break-words text-right">{vehicle.specs.drivetrain}</dd>
             </div>
-            <div className="flex justify-between py-2.5">
-              <dt className="text-white/45">ENGINE</dt>
-              <dd>{vehicle.specs.engine}</dd>
+            <div className="flex justify-between gap-4 py-2.5">
+              <dt className="shrink-0 text-white/45">ENGINE</dt>
+              <dd className="min-w-0 break-words text-right">{vehicle.specs.engine}</dd>
             </div>
-            <div className="flex justify-between py-2.5">
-              <dt className="text-white/45">MILEAGE</dt>
-              <dd>{vehicle.specs.mileageKm.toLocaleString("en-CA")} KM</dd>
+            <div className="flex justify-between gap-4 py-2.5">
+              <dt className="shrink-0 text-white/45">MILEAGE</dt>
+              <dd className="min-w-0 break-words text-right">{vehicle.specs.mileageKm.toLocaleString("en-CA")} KM</dd>
             </div>
-            <div className="flex justify-between py-2.5">
-              <dt className="text-white/45">VIN</dt>
-              <dd>{vehicle.vin}</dd>
+            <div className="flex justify-between gap-4 py-2.5">
+              <dt className="shrink-0 text-white/45">VIN</dt>
+              <dd className="min-w-0 break-words text-right">{vehicle.vin}</dd>
             </div>
           </dl>
           <div className="mt-auto flex flex-wrap gap-3 pt-6">
@@ -335,7 +335,7 @@ export default function InventoryPage() {
 
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div
-            className="no-scrollbar flex min-w-0 items-center gap-2 overflow-x-auto rounded-2xl border border-white/12 bg-[#101216] p-3"
+            className="flex min-w-0 flex-wrap items-center gap-2 rounded-2xl border border-white/12 bg-[#101216] p-3"
             onMouseLeave={() => setHoveredStatusTab(null)}
           >
             {STATUS_TABS.map((tab) => {
@@ -347,7 +347,7 @@ export default function InventoryPage() {
                   type="button"
                   onClick={() => setStatusFilter(tab)}
                   onMouseEnter={() => setHoveredStatusTab(tab)}
-                  className={`${CHIP_BASE} relative overflow-hidden ${active ? CHIP_ACTIVE : CHIP_INACTIVE}`}
+                  className={`${CHIP_BASE} relative shrink-0 overflow-hidden whitespace-nowrap ${active ? CHIP_ACTIVE : CHIP_INACTIVE}`}
                 >
                   {active && (
                     <GlidingPill layoutId="inventory-status-active" className="rounded-full bg-[#10B981]" />

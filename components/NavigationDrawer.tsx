@@ -1,11 +1,14 @@
 "use client";
 
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GLASS_NAV } from "@/lib/glass-tokens";
 import { ModfemLogoMark } from "@/components/ui/ModfemLogoMark";
+import { useBodyScrollLock } from "@/lib/use-body-scroll-lock";
+import { useMounted } from "@/lib/use-mounted";
 
 interface NavigationDrawerProps {
   isOpen: boolean;
@@ -21,8 +24,16 @@ const LINKS = [
 
 export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
   const pathname = usePathname();
+  useBodyScrollLock(isOpen);
+  const mounted = useMounted();
 
-  return (
+  // Portaled to <body>: app/template.tsx wraps every route in a motion.div
+  // whose filter/transform creates a containing block for `position: fixed`
+  // descendants — rendered inside it, this drawer would scroll away with the
+  // page once useBodyScrollLock shifts <body> to the saved scroll offset.
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -50,7 +61,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
                   href="/"
                   onClick={onClose}
                   aria-label="Modfem Autos — Home"
-                  className="flex items-center gap-2 rounded-full transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0A0B0E]"
+                  className="flex min-h-[44px] items-center gap-2 rounded-full transition-opacity duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0A0B0E]"
                 >
                   <ModfemLogoMark className="h-4 w-auto" />
                   <span className="font-[family-name:var(--font-brand)] text-sm font-semibold tracking-[-0.02em]">
@@ -61,7 +72,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
                   type="button"
                   onClick={onClose}
                   aria-label="Close menu"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] transition-all duration-300 hover:bg-white/[0.12]"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] transition-all duration-300 hover:bg-white/[0.12]"
                 >
                   <X className="h-4.5 w-4.5" strokeWidth={1.5} />
                 </button>
@@ -97,6 +108,7 @@ export function NavigationDrawer({ isOpen, onClose }: NavigationDrawerProps) {
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
